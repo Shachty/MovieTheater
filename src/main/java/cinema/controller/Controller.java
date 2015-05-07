@@ -33,6 +33,7 @@ public class Controller {
         return "coffee started";
     }
 
+
     @RequestMapping("/hello")
     public String testIfAsync() {
 
