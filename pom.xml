@@ -34,17 +34,40 @@
             <artifactId>activemq-camel</artifactId>
             <version>5.11.1</version>
         </dependency>
+
+        <!-- Hibernate dependencies -->
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-twitter</artifactId>
-            <version>2.12.2</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.0.2.GA</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
 
     <properties>
         <java.version>1.7</java.version>
+        <hibernate.version>3.6.10.Final</hibernate.version>
     </properties>
-
 
     <build>
         <plugins>
