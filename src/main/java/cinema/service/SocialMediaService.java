@@ -28,7 +28,7 @@ public class SocialMediaService {
         camelContext.addRoutes(new RouteBuilder() {
             public void configure() {
                 FacebookConfiguration conf = new FacebookConfiguration();
-                conf.setOAuthAccessToken("CAAK8TT51AOQBADQrwNNIUNc39ofPMCJsdbwZA71ZAiod3d9uH8gZBuGUMP8Xm2BXOFeC0mBXFu3fT3ZCZBTiOLbCiAQjCVDwKtODMJuDE6DJaPbAhHHTuNsbCIo92NZBtsddQ0kZAHsva8Ru8HddUGu4yX2IIVnZBVCVdfl1lYRr1MkIOIcn6CdFL3mjZAYVukAMaSW9fmYp6ttZCnfrVdZBJha");
+                conf.setOAuthAccessToken("CAAK8TT51AOQBAOLIiOOCMdB33SXZCOU55S6iGn2juLgtaXlOurCcdgDvFCga3GZCzKhZBECpRZC7kjrPACVJYBdw04SbLufsujZCbGoemWjKUFwjFzEHt1A0FQyaSXPjsyWsEFp8bVr48PByOMOGqSAZBfloTNGNe407PKOd0OePjJp2m0hVGb8Bj8NVZCOUVNFt4OSJVKmjLvZAdqnTr3vm");
                 conf.setOAuthAppId("769989899780324");
                 conf.setOAuthAppSecret("1b3f6821328040af2e017b685b72ea5d");
                 Endpoint end = new FacebookEndpoint("facebook://postFeed?message=abc", new FacebookComponent(camelContext, conf), "", new FacebookEndpointConfiguration());
