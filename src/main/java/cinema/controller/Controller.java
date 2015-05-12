@@ -2,6 +2,7 @@ package cinema.controller;
 
 import cinema.HelloService;
 import cinema.service.CoffeeService;
+import cinema.service.SocialMediaService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,9 @@ public class Controller {
     @Autowired
     HelloService helloService;
 
+    @Autowired
+    SocialMediaService socialMediaService;
+
 
     @RequestMapping("/start-coffee")
     public String startCoffee() throws Exception {
@@ -39,6 +43,13 @@ public class Controller {
         logger.info("testIfAsync");
 
         return "yess";
+    }
+
+    @RequestMapping("/facebook")
+    public String startFacebookEndpoint() {
+
+        logger.info("started Facebook Endpoint");
+        return "facebook";
     }
 
 

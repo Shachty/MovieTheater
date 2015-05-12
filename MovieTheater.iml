@@ -87,5 +87,8 @@
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-client:5.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.fusesource.hawtbuf:hawtbuf:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-facebook:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:spi-annotations:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.facebook4j:facebook4j-core:1.1.12" level="project" />
   </component>
 </module>
