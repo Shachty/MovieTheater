@@ -1,9 +1,10 @@
 package cinema.jpa.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  */
@@ -13,7 +14,8 @@ public class Order {
     @Id
     private Double id;
     private String supplierProductId;
-    private Snacks snack;
+    @ManyToOne
+    private Snack snack;
     private Double orderSnackNumber;
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  */
 @Entity
-public class Snacks {
+public class Snack {
 
     @Id
     private Double id;
