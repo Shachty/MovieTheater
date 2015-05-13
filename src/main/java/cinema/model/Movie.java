@@ -1,12 +1,23 @@
 package cinema.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by Daniel on 07.05.2015.
  */
 public class Movie {
 
+
     private String movieName;
-    private int theaterRoonm;
+    private long movieId;
+
+    @JsonCreator
+    public Movie(@JsonProperty("movieName")String movieName,
+                 @JsonProperty("movieId")long movieId) {
+        this.movieName = movieName;
+        this.movieId = movieId;
+    }
 
     public String getMovieName() {
         return movieName;
@@ -16,11 +27,20 @@ public class Movie {
         this.movieName = movieName;
     }
 
-    public int getTheaterRoonm() {
-        return theaterRoonm;
+    public long getMovieId() {
+        return movieId;
     }
 
-    public void setTheaterRoonm(int theaterRoonm) {
-        this.theaterRoonm = theaterRoonm;
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
     }
+
+    /*
+    @Override
+    public String toString(){
+        return "{" +
+                "movieName=" + movieName.toString() + "," +
+                "theaterRoom=" + theaterRoonm +
+                "}";
+    }*/
 }
