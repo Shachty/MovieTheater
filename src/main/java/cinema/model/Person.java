@@ -5,6 +5,8 @@ package cinema.model;
  */
 public class Person {
 
+    public Person(){}
+
     private String firstName;
     private String lastName;
 
@@ -23,4 +25,13 @@ public class Person {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+/*
+    @Override
+    public String toString(){
+        return "{" +
+                "firstName= " + firstName.toString() + "," +
+                "lastName= " + lastName.toString() +
+                "}";
+
+    }*/
 }

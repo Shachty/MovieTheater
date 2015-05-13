@@ -5,6 +5,8 @@ package cinema.model;
  */
 public class Movie {
 
+    public Movie(){}
+
     private String movieName;
     private int theaterRoonm;
 
@@ -23,4 +25,12 @@ public class Movie {
     public void setTheaterRoonm(int theaterRoonm) {
         this.theaterRoonm = theaterRoonm;
     }
+/*
+    @Override
+    public String toString(){
+        return "{" +
+                "movieName=" + movieName.toString() + "," +
+                "theaterRoom=" + theaterRoonm +
+                "}";
+    }*/
 }
