@@ -45,15 +45,19 @@ public class MongoConfig {
     public MongoCredential mongoCredential(){
         return MongoCredential.createMongoCRCredential("shachty", "workflow", "workflow".toCharArray());
     }
-
-    @Bean
+/*
+    @Bean(name = "mongoBean")
     public Mongo mongoBean() throws Exception {
         try {
-            return new Mongo("ds031882.mongolab.com", 31882);
+            Mongo mongo = new Mongo("ds031882.mongolab.com", 31882);
+            mongo.getDB("workflow").authenticate("shachty","workflow".toCharArray());
+            return mongo;
         } catch (UnknownHostException e) {
             logger.error("Can not acces MongoClient. Message : " + e.getMessage());
         }
         throw new Exception();
-    }
 
+
+    }
+*/
 }
