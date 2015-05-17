@@ -2,6 +2,7 @@ package cinema.controller;
 
 import cinema.HelloService;
 import cinema.routes.CamelMongoRoute;
+import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
@@ -31,13 +32,14 @@ public class Controller {
     @Autowired
     HelloService helloService;
 
-    //beans for selfregistering
     @Autowired
-    Mongo mongoBean;
+    CamelContext camelContext;
 
     //injected routes
     @Autowired
     CamelMongoRoute camelMongoRoute;
+    @Autowired
+    CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
 
     @RequestMapping("/start-coffee")
     public String startCoffee() throws Exception {
@@ -51,20 +53,31 @@ public class Controller {
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
+/*
 
-        //If camelContext messed with the Spring registrated beans, register id yourself in the simpleRegistry
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
 
         CamelContext camelContext = new DefaultCamelContext(simpleRegistry);
+*/
 
         //Mongoroute
         RouteBuilder routeBuilder = camelMongoRoute;
         try {
-            camelContext.addRoutes(routeBuilder);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
+/*
+
+        //XMLFileToHttpRoute
+        routeBuilder = camelXmlFileToHttpRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+*/
 
         //add your routes right here
 
