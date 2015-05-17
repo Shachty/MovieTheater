@@ -15,15 +15,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class CamelMongoRoute extends RouteBuilder {
 
+
     @Override
     public void configure() throws Exception {
 
         final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
         xmlJsonFormat.setForceTopLevelObject(true);
 
-        from("file:tmp/mongo?noop=true").marshal(xmlJsonFormat).convertBodyTo(String.class)
-                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert")
+        from("file:tmp/mongo?noop=true")
+                .marshal(xmlJsonFormat)
+                .log("xml to json")
+                .convertBodyTo(String.class)
+                        .log("to String")
+                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB");
+    }
+
+/*
+
+    @Override
+    public void configure() throws Exception {
+
+        final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
+        xmlJsonFormat.setForceTopLevelObject(true);
+        from("timer://foo?fixedRate=true&delay=0&period=10000")
+                .to("http4://localhost/mon")
+                        .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert")
                 .to("file:tmp/mongoout");
     }
+*/
+
 
 }
