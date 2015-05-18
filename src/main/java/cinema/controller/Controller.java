@@ -1,6 +1,7 @@
 package cinema.controller;
 
 import cinema.HelloService;
+import cinema.jpa.model.dao.impl.MovieDAO;
 import cinema.routes.CamelMongoRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Date;
 
 /**
@@ -29,8 +29,8 @@ public class Controller {
 
     final static Logger logger = Logger.getLogger(Controller.class);
 
-    @PersistenceContext()
-    private EntityManager theEm;
+    @Autowired
+    private MovieDAO theDao;
 
     @Autowired
     CoffeeService coffeeService;
@@ -58,6 +58,9 @@ public class Controller {
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
+
+        System.out.println(theDao.findAll());
+
 /*
 
         SimpleRegistry simpleRegistry = new SimpleRegistry();
