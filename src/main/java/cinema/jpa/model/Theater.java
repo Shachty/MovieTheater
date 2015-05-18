@@ -6,15 +6,16 @@ import javax.persistence.*;
 public class Theater {
 
     @Id
-    private Double id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
     private Integer seatsTotal;
 
-    public Double getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Double id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
