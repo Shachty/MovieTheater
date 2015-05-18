@@ -5,6 +5,7 @@ import javax.persistence.*;
 /**
  */
 @Entity
+@Table(name = "CINEMA_Screening")
 public class Screening {
 
     @Id

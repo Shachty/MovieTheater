@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Date;
 
 /**
@@ -26,6 +28,9 @@ import java.util.Date;
 public class Controller {
 
     final static Logger logger = Logger.getLogger(Controller.class);
+
+    @PersistenceContext()
+    private EntityManager theEm;
 
     @Autowired
     CoffeeService coffeeService;

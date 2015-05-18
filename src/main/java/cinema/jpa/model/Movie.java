@@ -1,13 +1,11 @@
 package cinema.jpa.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  */
 @Entity
+@Table(name = "CINEMA_Movie")
 public class Movie {
 
     @Id

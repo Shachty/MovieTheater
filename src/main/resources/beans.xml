@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -13,6 +12,11 @@
         </constructor-arg>
     </bean>
 
-    <bean id="mongodb" class="org.apache.camel.component.mongodb.MongoDbComponent"></bean>
+    <bean id="mongodb" class="org.apache.camel.component.mongodb.MongoDbComponent" />
+
+    <!-- Database managed by Hibernate -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="thePersistenceUnit" />
+    </bean>
 
 </beans>

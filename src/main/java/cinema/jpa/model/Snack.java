@@ -6,6 +6,7 @@ import java.util.List;
 /**
  */
 @Entity
+@Table(name = "CINEMA_Snack")
 public class Snack {
 
     @Id

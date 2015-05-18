@@ -7,6 +7,7 @@ import javax.persistence.*;
 /**
  */
 @Entity
+@Table(name = "CINEMA_Order")
 public class Order {
 
     @Id

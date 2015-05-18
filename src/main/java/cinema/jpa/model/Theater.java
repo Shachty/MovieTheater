@@ -3,6 +3,7 @@ package cinema.jpa.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "CINEMA_Theater")
 public class Theater {
 
     @Id
