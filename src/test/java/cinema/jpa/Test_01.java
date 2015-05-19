@@ -104,16 +104,43 @@ public class Test_01 {
 
         theManager.getTransaction().commit();
 
-//        OrderDAO theOrderDao = new OrderDAO();
-        Order fetchOrder1 = theManager.find(Order.class, order1.getId());
-        Order fetchOrder2 = theManager.find(Order.class, order2.getId());
-
-        assertEquals(5, fetchOrder1.getItems().size());
-
-        assertEquals(7, fetchOrder2.getItems().size());
-
         for(int i = 1; i < snacks.length; i++) {
             assertNotNull(snacks[i].getId());
         }
+
+//        OrderDAO theOrderDao = new OrderDAO();
+        Order fetchOrder1 = (Order)theManager.find(Order.class, order1.getId());
+        Order fetchOrder2 = (Order)theManager.find(Order.class, order2.getId());
+
+        assertEquals(5, fetchOrder1.getItems().size());
+        assertEquals(7, fetchOrder2.getItems().size());
+
+        boolean found = false;
+        for(OrderItem oi : order1.getItems()) {
+            if(oi.getSnack().equals(snacks[1])) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
+
+        found = false;
+        for(OrderItem oi : order2.getItems()) {
+            if(oi.getSnack().equals(snacks[9])) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
+
+        found = false;
+        for(OrderItem oi : order2.getItems()) {
+            if(oi.getSnack().equals(snacks[1])) {
+                found = true;
+                break;
+            }
+        }
+        assertFalse(found);
+
     }
 }
