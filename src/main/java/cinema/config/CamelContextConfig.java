@@ -1,5 +1,6 @@
 package cinema.config;
 
+import cinema.jpa.model.bean.SnackService;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -24,6 +25,9 @@ public class CamelContextConfig {
     @Autowired
     Mongo mongoBean;
 
+    @Autowired
+    SnackService snackBean;
+
     @Bean()
     public CamelContext camelContext(){
 
@@ -31,6 +35,7 @@ public class CamelContextConfig {
         //If camelContext messed with the Spring registrated beans, register it yourself using the simpleRegistry
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
+        simpleRegistry.put("snackBean", snackBean);
 
         return new DefaultCamelContext(simpleRegistry);
 

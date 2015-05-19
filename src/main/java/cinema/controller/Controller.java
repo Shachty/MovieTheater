@@ -2,6 +2,7 @@ package cinema.controller;
 
 import cinema.HelloService;
 import cinema.jpa.model.dao.impl.MovieDAO;
+import cinema.routes.CamelCsvToHibernateRoute;
 import cinema.routes.CamelMongoRoute;
 import cinema.routes.CamelMongoToTwitterRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
@@ -37,7 +38,8 @@ public class Controller {
     CamelMongoRoute camelMongoRoute;
     @Autowired
     CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
-
+    @Autowired
+    CamelCsvToHibernateRoute camelCsvToHibernateRoute;
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
 
@@ -54,10 +56,7 @@ public class Controller {
     @RequestMapping("/start-routes")
     public String startRoutes(){
 
-        System.out.println(theDao.findAll());
-
 /*
-
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
 
@@ -79,6 +78,15 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilderTwitter.toString() + ". Failmessage: " + e.getMessage());
         }
+
+        //camelCsvToHibernateRoute
+        routeBuilder = camelCsvToHibernateRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
 /*
 
         //XMLFileToHttpRoute
