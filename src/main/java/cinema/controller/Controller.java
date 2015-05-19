@@ -7,7 +7,6 @@ import cinema.routes.CamelMongoRoute;
 import cinema.routes.CamelMongoToTwitterRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
-import cinema.service.SocialMediaService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -33,8 +32,6 @@ public class Controller {
 
     @Autowired
     CamelContext camelContext;
-    @Autowired
-    SocialMediaService socialMediaService;
 
     //injected routes
     @Autowired

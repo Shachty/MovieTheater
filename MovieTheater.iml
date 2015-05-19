@@ -35,6 +35,9 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-facebook:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:spi-annotations:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.facebook4j:facebook4j-core:1.1.12" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.2.3.RELEASE" level="project" />
