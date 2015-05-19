@@ -40,7 +40,6 @@ public class Controller {
     CamelMongoRoute camelMongoRoute;
     @Autowired
     CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
-
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
 
@@ -76,7 +75,7 @@ public class Controller {
         }
 
         //TwitterRoute
-        RouteBuilder routeBuilderTwitter = camelMongoRoute;
+        RouteBuilder routeBuilderTwitter = camelMongoToTwitterRoute;
         try {
             this.camelContext.addRoutes(routeBuilderTwitter);
         } catch (Exception e) {
