@@ -5,41 +5,38 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
-/**
- * Created by Daniel on 13.05.2015.
- */
 public class Ticket {
 
-    private boolean isReservation;
-    private BigDecimal overallPrice;
+    private boolean isPurchased;
+    private BigDecimal pricePerTicket;
     private Screening screening;
     private long customerId;
 
     @JsonCreator
-    public Ticket(@JsonProperty("isReservation") boolean isReservation,
-                  @JsonProperty("overallPrice")BigDecimal overallPrice,
+    public Ticket(@JsonProperty("isReservation") boolean isPurchased,
+                  @JsonProperty("overallPrice")BigDecimal pricePerTicket,
                   @JsonProperty("screening")Screening screening,
                   @JsonProperty("customerId")long customerId) {
-        this.isReservation = isReservation;
-        this.overallPrice = overallPrice;
+        this.isPurchased = isPurchased;
+        this.pricePerTicket = pricePerTicket;
         this.screening = screening;
         this.customerId = customerId;
     }
 
-    public boolean isReservation() {
-        return isReservation;
+    public boolean isPurchased() {
+        return isPurchased;
     }
 
-    public void setIsReservation(boolean isReservation) {
-        this.isReservation = isReservation;
+    public void setIsPurchased(boolean isPurchased) {
+        this.isPurchased = isPurchased;
     }
 
-    public BigDecimal getOverallPrice() {
-        return overallPrice;
+    public BigDecimal getPricePerTicket() {
+        return pricePerTicket;
     }
 
-    public void setOverallPrice(BigDecimal overallPrice) {
-        this.overallPrice = overallPrice;
+    public void setPricePerTicket(BigDecimal pricePerTicket) {
+        this.pricePerTicket = pricePerTicket;
     }
 
     public Screening getScreening() {
