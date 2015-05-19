@@ -14,6 +14,9 @@ public class Application {
 
         SpringApplication.run(Application.class, args);
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+
+
+
     }
 }
