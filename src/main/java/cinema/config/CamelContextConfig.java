@@ -35,7 +35,7 @@ public class CamelContextConfig {
         //If camelContext messed with the Spring registrated beans, register it yourself using the simpleRegistry
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
-        simpleRegistry.put("snackBean", snackBean);
+        simpleRegistry.put("snackService", snackBean);
 
         return new DefaultCamelContext(simpleRegistry);
 

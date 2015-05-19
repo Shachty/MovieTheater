@@ -5,14 +5,14 @@ import cinema.jpa.model.dao.impl.SnackDAO;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Header;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,22 +21,23 @@ import java.util.List;
 @Component
 public class SnackService {
 
+    private final Log log = LogFactory.getLog(SnackService.class);
+
     @PersistenceContext
     EntityManager theManager;
 
     @Autowired
     SnackDAO snackDao;
 
+    @Transactional
     public void importCsvList(@Header("user") String user, @Body List body, Exchange exchange) {
-        System.out.println("importCsv...");
+        log.debug("importCsv...");
 
         for(int i = 0; i < body.size(); i++) {
             Snack theSnack = new Snack();
             List bodyLineItem = (List)body.get(i);
-            theSnack.setId(new Long((String) bodyLineItem.get(0)));
-            theSnack.setName(new String((String) bodyLineItem.get(1)));
-            theSnack.setNumber(new Double((String) bodyLineItem.get(2)));
-
+            theSnack.setName(new String((String) bodyLineItem.get(0)));
+            theSnack.setNumber(new Double((String) bodyLineItem.get(1)));
             snackDao.save(theSnack);
         }
     }

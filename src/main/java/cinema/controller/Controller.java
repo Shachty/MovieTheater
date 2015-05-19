@@ -23,9 +23,6 @@ public class Controller {
     final static Logger logger = Logger.getLogger(Controller.class);
 
     @Autowired
-    private MovieDAO theDao;
-
-    @Autowired
     CoffeeService coffeeService;
     @Autowired
     HelloService helloService;
