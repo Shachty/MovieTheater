@@ -12,6 +12,7 @@
         </constructor-arg>
     </bean>
 
+
     <bean id="mongodb" class="org.apache.camel.component.mongodb.MongoDbComponent" />
 
     <!-- Database managed by Hibernate -->

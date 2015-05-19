@@ -43,11 +43,18 @@
             <version>5.11.1</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-cxf</artifactId>
+            <version>2.15.1</version>
+        </dependency>
         <!--mongoDB dependencies-->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-mongodb</artifactId>

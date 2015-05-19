@@ -24,13 +24,13 @@ public class CamelContextConfig {
     //beans for selfregistering
     @Autowired
     Mongo mongoBean;
+    @Autowired
 
     @Autowired
     SnackService snackBean;
 
     @Bean()
     public CamelContext camelContext(){
-
 
         //If camelContext messed with the Spring registrated beans, register it yourself using the simpleRegistry
         SimpleRegistry simpleRegistry = new SimpleRegistry();
