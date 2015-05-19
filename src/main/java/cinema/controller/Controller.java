@@ -3,26 +3,18 @@ package cinema.controller;
 import cinema.HelloService;
 import cinema.jpa.model.dao.impl.MovieDAO;
 import cinema.routes.CamelMongoRoute;
+import cinema.routes.CamelMongoToTwitterRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
-import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.SimpleRegistry;
-import org.apache.camel.model.dataformat.XmlJsonDataFormat;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
-
-/**
- * Created by Daniel on 06.05.2015.
- */
 
 @RestController
 public class Controller {
@@ -45,6 +37,9 @@ public class Controller {
     CamelMongoRoute camelMongoRoute;
     @Autowired
     CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
+
+    @Autowired
+    CamelMongoToTwitterRoute camelMongoToTwitterRoute;
 
     @RequestMapping("/start-coffee")
     public String startCoffee() throws Exception {
@@ -75,6 +70,14 @@ public class Controller {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //TwitterRoute
+        RouteBuilder routeBuilderTwitter = camelMongoRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilderTwitter);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilderTwitter.toString() + ". Failmessage: " + e.getMessage());
         }
 /*
 
