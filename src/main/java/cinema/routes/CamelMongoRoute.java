@@ -22,7 +22,7 @@ public class CamelMongoRoute extends RouteBuilder {
         final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
         xmlJsonFormat.setForceTopLevelObject(true);
 
-        from("file:tmp/mongo?noop=true")
+        from("file:src/main/resources/in/mongo?noop=true")
                 .marshal(xmlJsonFormat)
                 .log("xml to json")
                 .convertBodyTo(String.class)
