@@ -144,5 +144,11 @@
     <orderEntry type="library" name="Maven: org.apache.ws.commons:XmlSchema:1.1" level="project" />
     <orderEntry type="library" name="Maven: jdom:jdom:1.0" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache-core:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-facebook:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:spi-annotations:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.facebook4j:facebook4j-core:1.1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-twitter:2.12.2" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:3.0.5" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-stream:3.0.5" level="project" />
   </component>
 </module>

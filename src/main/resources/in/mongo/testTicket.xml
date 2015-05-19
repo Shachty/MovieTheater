@@ -1,0 +1,16 @@
+<Ticket>
+<isReservation>true</isReservation>
+<overallPrice>13.0</overallPrice>
+<customerId>1</customerId>
+<screening>
+	<theaterRoom>
+		<theaterRoomId>1</theaterRoomId>
+		<overAllSeats>200</overAllSeats>
+		<availableSeats>100</availableSeats>
+	</theaterRoom>
+	<movie>
+		<movieName>film01</movieName>
+		<movieId>1</movieId>
+	</movie>
+</screening>
+</Ticket>

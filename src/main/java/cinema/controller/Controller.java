@@ -7,6 +7,7 @@ import cinema.routes.CamelMongoRoute;
 import cinema.routes.CamelMongoToTwitterRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
+import cinema.service.SocialMediaService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -32,6 +33,8 @@ public class Controller {
 
     @Autowired
     CamelContext camelContext;
+    @Autowired
+    SocialMediaService socialMediaService;
 
     //injected routes
     @Autowired
@@ -72,7 +75,7 @@ public class Controller {
         }
 
         //TwitterRoute
-        RouteBuilder routeBuilderTwitter = camelMongoRoute;
+        RouteBuilder routeBuilderTwitter = camelMongoToTwitterRoute;
         try {
             this.camelContext.addRoutes(routeBuilderTwitter);
         } catch (Exception e) {
@@ -120,6 +123,13 @@ public class Controller {
         logger.info("testIfAsync");
 
         return "yess";
+    }
+
+    @RequestMapping("/facebook")
+    public String startFacebookEndpoint() {
+
+        logger.info("started Facebook Endpoint");
+        return "facebook";
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.PUT)
