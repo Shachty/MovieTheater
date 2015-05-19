@@ -1,6 +1,8 @@
 package cinema.service;
 
+import cinema.helper.LogProcessor;
 import facebook4j.FacebookResponse;
+import facebook4j.PostUpdate;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.ProducerTemplate;
@@ -13,6 +15,9 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.springframework.boot.autoconfigure.social.FacebookProperties;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Asus on 07.05.2015.
@@ -28,21 +33,32 @@ public class SocialMediaService {
         camelContext.addRoutes(new RouteBuilder() {
             public void configure() {
                 FacebookConfiguration conf = new FacebookConfiguration();
-                conf.setOAuthAccessToken("CAAK8TT51AOQBAOLIiOOCMdB33SXZCOU55S6iGn2juLgtaXlOurCcdgDvFCga3GZCzKhZBECpRZC7kjrPACVJYBdw04SbLufsujZCbGoemWjKUFwjFzEHt1A0FQyaSXPjsyWsEFp8bVr48PByOMOGqSAZBfloTNGNe407PKOd0OePjJp2m0hVGb8Bj8NVZCOUVNFt4OSJVKmjLvZAdqnTr3vm");
-                conf.setOAuthAppId("769989899780324");
-                conf.setOAuthAppSecret("1b3f6821328040af2e017b685b72ea5d");
-                Endpoint end = new FacebookEndpoint("facebook://postFeed?inBody=abc", new FacebookComponent(camelContext, conf), "", new FacebookEndpointConfiguration());
 
-                from("file:tmp/in").to(end);
-                //from("file:tmp/in").to("facebook://postFeed?message=abc&oAuthAppId=1643747599195694&oAuthAppSecret=b4308c6d220393a71e3b9d6ccfb4bcd3&oAuthAccessToken=CAAK8TT51AOQBAGwqhWBrt6Ss21Y4JEiXHsjVzs18j0U4mZB4cofqi1GbHJsOZBCaUYf5GMfbaBvD19Yf7O0Im5OI4EBZCrRygy6sxJVVQpNtXMt5IN75WEpnHkoGa9ZAxdlt2xyY2kPiWmN4I0FYHXjw7dl5o6PnTlMj4prvnR72ZCX47W9OmC0SGRpiagWIHsnKbJWFu9vfwIa61SZCLZB");
+                    System.out.println("XYZ");
+
+                //Endpoint end = new FacebookEndpoint("facebook://postFeed?inBody=postUpdate", new FacebookComponent(camelContext, conf), "", new FacebookEndpointConfiguration());
+                //from("file:tmp/in?noop=true").process(new LogProcessor()).to(end);
+
+                from("file:tmp/in?noop=true").process(new LogProcessor()).to("facebook://postStatusMessage?inBody=message&"+getOAuthKeys());
+                //from("file:tmp/in?noop=true").process(new LogProcessor()).to("facebook://postFeed?inBody=postUpdate&"+getOAuthKeys());
 
             }
         });
-        ProducerTemplate template = camelContext.createProducerTemplate();
+        //ProducerTemplate template = camelContext.createProducerTemplate();
         camelContext.start();
-        template.sendBody("facebook://postFeed?inBody=abc&oAuthAppId=769989899780324&oAuthAppSecret=1b3f6821328040af2e017b685b72ea5d&oAuthAccessToken=CAAK8TT51AOQBADQrwNNIUNc39ofPMCJsdbwZA71ZAiod3d9uH8gZBuGUMP8Xm2BXOFeC0mBXFu3fT3ZCZBTiOLbCiAQjCVDwKtODMJuDE6DJaPbAhHHTuNsbCIo92NZBtsddQ0kZAHsva8Ru8HddUGu4yX2IIVnZBVCVdfl1lYRr1MkIOIcn6CdFL3mjZAYVukAMaSW9fmYp6ttZCnfrVdZBJha", "Test Message: ");
+        System.out.println("123");
+        //template.sendBody("facebook://postFeed?inBody=abc&"+getOAuthKeys(), "Test Message: ");
         Thread.sleep(60 * 5 * 1000);
         camelContext.stop();
 
+    }
+
+    private String getOAuthKeys(){
+        String oAuthAccessToken="CAAK8TT51AOQBAB33Az8Q6NNKJmIPsYr9sFNFYHWRL23CZBF7l8oAvaZBOrDpXFzNWZC5Y0PykARHLBTVWyXtW3ySU6t0ZCsXHh7D2BPNZBdwrmtVmcqweXEQslZAP9iO1LqbM240cM4ftZBQ7mj0C8vrAdttLRafy3ZBmLbDkJ8aNmAOWm8KF71HRMblnsiggL4ZD";
+        String oAuthAppId="769989899780324";
+        String oAuthAppSecret="1b3f6821328040af2e017b685b72ea5d";
+
+
+        return "oAuthAppId="+oAuthAppId+"&oAuthAppSecret="+oAuthAppSecret+"&oAuthAccessToken="+oAuthAccessToken;
     }
 }
