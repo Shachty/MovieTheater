@@ -1,8 +1,9 @@
 package cinema.jpa.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  */
@@ -13,41 +14,35 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String supplierProductId;
-    @ManyToOne
-    private Snack snack;
-    private Long orderSnackNumber;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<OrderItem> items;
 
     public Long getId() {
         return this.id;
     }
 
-    public String getSupplierProductId() {
-        return this.supplierProductId;
-    }
-
-    public Snack getSnack() {
-        return this.snack;
-    }
-
-    public Long getOrderSnackNumber() {
-        return this.orderSnackNumber;
+    public List<OrderItem> getItems() {
+        return this.items;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setSupplierProductId(String id) {
-        this.supplierProductId = id;
+    public void addItemToOrder(OrderItem item) {
+        if(this.items == null) {
+            this.items = new ArrayList<>();
+        }
+        this.items.add(item);
     }
 
-    public void setSnack(Snack snack) {
-        this.snack = snack;
-    }
-
-    public void setOrderSnackNumber(Long nr) {
-        this.orderSnackNumber = nr;
+    public void addSnackToOrder(Snack snack, Long quantityToOrder, String supplierId)
+    {
+        OrderItem oi = new OrderItem();
+        oi.setSnack(snack);
+        oi.setOrderSnackNumber(quantityToOrder);
+        oi.setSupplierProductId(supplierId);
+        this.addItemToOrder(oi);
     }
 
 }

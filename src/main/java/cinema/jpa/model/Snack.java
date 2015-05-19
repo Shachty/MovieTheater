@@ -11,13 +11,11 @@ public class Snack {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Double id;
+    private Long id;
     private String name;
     private Double number;
-    @OneToMany
-    private List<Order> orders;
 
-    public Double getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -29,11 +27,11 @@ public class Snack {
         return this.number;
     }
 
-    public List<Order> getOrders() {
-        return this.orders;
-    }
+//    public List<Order> getOrders() {
+//        return this.orders;
+//    }
 
-    public void setId(Double param) {
+    public void setId(Long param) {
         this.id = param;
     }
 
@@ -45,8 +43,8 @@ public class Snack {
         this.number = param;
     }
 
-    public void setOrders(List<Order> param) {
-        this.orders = param;
-    }
+//    public void setOrders(List<Order> param) {
+//        this.orders = param;
+//    }
 
 }
