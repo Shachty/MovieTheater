@@ -70,9 +70,11 @@ public class Controller {
         CamelContext camelContext = new DefaultCamelContext(simpleRegistry);
 */
 
+        //starts the reservation async
         this.startReservationService.startReservations();
+
         //Mongoroute
-        RouteBuilder routeBuilder = camelMongoRoute;
+        RouteBuilder routeBuilder = this.camelMongoRoute;
         try {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
@@ -80,46 +82,53 @@ public class Controller {
         }
 
         //TwitterRoute
-        RouteBuilder routeBuilderTwitter = camelMongoToTwitterRoute;
+        routeBuilder = this.camelMongoToTwitterRoute;
         try {
-            this.camelContext.addRoutes(routeBuilderTwitter);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilderTwitter.toString() + ". Failmessage: " + e.getMessage());
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
         //FcaebookRoute
-        RouteBuilder routeBuilderFacebook = camelMongoToFacebookRoute;
+        routeBuilder = this.camelMongoToFacebookRoute;
         try {
-            this.camelContext.addRoutes(routeBuilderFacebook);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilderFacebook.toString() + ". Failmessage: " + e.getMessage());
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
         //camelCsvToHibernateRoute
-        RouteBuilder csvHibernateRouteBuilder = camelCsvToHibernateRoute;
+        routeBuilder = this.camelCsvToHibernateRoute;
         try {
-            this.camelContext.addRoutes(csvHibernateRouteBuilder);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
-            logger.error("Could not add route: " + csvHibernateRouteBuilder.toString() + ". Failmessage: " + e.getMessage());
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
         //CamelHibernateToSupplierRoute
-        RouteBuilder supplierHibernateRouteBuilder = camelHibernateToSupplierRoute;
+        routeBuilder = this.camelHibernateToSupplierRoute;
         try {
-            this.camelContext.addRoutes(supplierHibernateRouteBuilder);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
-            logger.error("Could not add route: " + supplierHibernateRouteBuilder .toString() + ". Failmessage: " + e.getMessage());
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
         //XMLFileToHttpRoute
-        RouteBuilder routeBuilderHttp = camelXmlFileToHttpRoute;
+        routeBuilder = this.camelXmlFileToHttpRoute;
         try {
-            this.camelContext.addRoutes(routeBuilderHttp);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilderHttp.toString() + ". Failmessage: " + e.getMessage());
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
         //camelHttpToEmailRoute
+        routeBuilder = this.camelHttpToEmailRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
 
         //add your routes right here
 
