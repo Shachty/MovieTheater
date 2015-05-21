@@ -55,8 +55,6 @@ public class Controller {
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
-    @Autowired
-    CamelHttpToEmailRoute camelHttpToEmailRoute;
 
     private int reservationCounter = 1;
 
@@ -157,8 +155,8 @@ public class Controller {
     @RequestMapping("/reserve")
     public HttpStatus reserve(@RequestParam String body){
 
-        this.writeFile(body);
-
+        this.fileWriterService.writeFile(this.PATH,body,this.reservationCounter,".json");
+        this.reservationCounter++;
         return HttpStatus.OK;
 
     }
@@ -178,24 +176,7 @@ public class Controller {
 
     }
 
-    private void writeFile(String content) {
-        try {
 
-            File file = new File("src/main/resources/tickets/reservation" + this.reservationCounter + ".json");
-
-                file.createNewFile();
-
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(content);
-            bw.close();
-
-            System.out.println("Wrote reservation " + this.reservationCounter);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 

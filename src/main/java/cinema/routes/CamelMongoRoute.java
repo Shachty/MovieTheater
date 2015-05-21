@@ -27,7 +27,6 @@ public class CamelMongoRoute extends RouteBuilder {
 
 
         from("file:src/main/resources/tickets?noop=true")
-                .unmarshal().json(JsonLibrary.Jackson, TicketDTO.class)
                 .log("${body}")
                 .wireTap("direct:mail")
                 .convertBodyTo(String.class)
