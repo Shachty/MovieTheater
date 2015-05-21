@@ -22,13 +22,13 @@ public class CamelMongoRoute extends RouteBuilder {
         final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
         xmlJsonFormat.setForceTopLevelObject(true);
 
-   /*     from("file:src/main/resources/in/mongo?noop=true")
+        from("file:src/main/resources/tickets?noop=true")
                 .marshal(xmlJsonFormat)
                 .log("xml to json")
                 .convertBodyTo(String.class)
                         .log("to String")
                 .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB");
-   */ }
+   }
 
 /*
 
