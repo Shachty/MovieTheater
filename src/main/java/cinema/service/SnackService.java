@@ -1,4 +1,4 @@
-package cinema.jpa.model.bean;
+package cinema.service;
 
 import cinema.jpa.model.Snack;
 import cinema.jpa.model.dao.impl.SnackDAO;
