@@ -1,23 +1,11 @@
 package cinema.service;
 
-import cinema.helper.LogProcessor;
-import facebook4j.FacebookResponse;
-import facebook4j.PostUpdate;
 import org.apache.camel.CamelContext;
-import org.apache.camel.Endpoint;
-import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.facebook.FacebookComponent;
-import org.apache.camel.component.facebook.FacebookEndpoint;
 import org.apache.camel.component.facebook.config.FacebookConfiguration;
-import org.apache.camel.component.facebook.config.FacebookEndpointConfiguration;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.springframework.boot.autoconfigure.social.FacebookProperties;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by Asus on 07.05.2015.
@@ -39,7 +27,7 @@ public class SocialMediaService {
                 //Endpoint end = new FacebookEndpoint("facebook://postFeed?inBody=postUpdate", new FacebookComponent(camelContext, conf), "", new FacebookEndpointConfiguration());
                 //from("file:tmp/in?noop=true").process(new LogProcessor()).to(end);
 
-                from("file:tmp/in?noop=true").process(new LogProcessor()).to("facebook://postStatusMessage?inBody=message&"+getOAuthKeys());
+             //   from("file:tmp/in?noop=true").process(new LogProcessor()).to("facebook://postStatusMessage?inBody=message&"+getOAuthKeys());
                 //from("file:tmp/in?noop=true").process(new LogProcessor()).to("facebook://postFeed?inBody=postUpdate&"+getOAuthKeys());
 
             }

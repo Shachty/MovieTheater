@@ -56,4 +56,7 @@
       <exported-key name="FK_GKGYIMAV8E02H3W4L7AAI2FTL" table="CINEMA_SCREENING" schema="PUBLIC" catalog="REPOSITORY" columns="THEATER_ID"/>
     </table>
   </data-source>
+  <data-source name="thePersistenceUnit/Hibernate" uuid="7e0fd2f9-8346-401c-b596-1ae022b54711">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>
