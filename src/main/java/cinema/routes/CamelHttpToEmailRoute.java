@@ -12,9 +12,9 @@ public class CamelHttpToEmailRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:")
+        from("direct:Http")
                 .log("http to email")
-                .to("direct:");
+                .to("direct:Email");
 
     }
 }
