@@ -19,13 +19,6 @@ public class CamelMongoRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
-        xmlJsonFormat.setForceTopLevelObject(true);
-
-        JacksonDataFormat format = new JacksonDataFormat();
-        format.setAllowJmsType(true);
-
-
         from("file:src/main/resources/tickets?noop=true")
                 .log("${body}")
                 .wireTap("direct:mail")
