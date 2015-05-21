@@ -91,7 +91,7 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-/*
+
 
         //XMLFileToHttpRoute
         routeBuilder = camelXmlFileToHttpRoute;
