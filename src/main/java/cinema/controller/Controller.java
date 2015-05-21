@@ -3,6 +3,7 @@ package cinema.controller;
 import cinema.HelloService;
 import cinema.jpa.model.dao.impl.MovieDAO;
 import cinema.routes.CamelMongoRoute;
+import cinema.routes.CamelMongoToFacebookRoute;
 import cinema.routes.CamelMongoToTwitterRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
@@ -32,8 +33,7 @@ public class Controller {
 
     @Autowired
     CamelContext camelContext;
-    @Autowired
-    SocialMediaService socialMediaService;
+
 
     //injected routes
     @Autowired
@@ -42,6 +42,8 @@ public class Controller {
     CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
+    @Autowired
+    CamelMongoToFacebookRoute camelMongoToFacebookRoute;
 
     @RequestMapping("/start-coffee")
     public String startCoffee() throws Exception {
@@ -81,6 +83,14 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilderTwitter.toString() + ". Failmessage: " + e.getMessage());
         }
+
+        //FcaebookRoute
+        RouteBuilder routeBuilderFacebook = camelMongoToFacebookRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilderFacebook);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilderFacebook.toString() + ". Failmessage: " + e.getMessage());
+        }
 /*
 
         //XMLFileToHttpRoute
@@ -114,13 +124,6 @@ public class Controller {
         logger.info("testIfAsync");
 
         return "yess";
-    }
-
-    @RequestMapping("/facebook")
-    public String startFacebookEndpoint() {
-
-        logger.info("started Facebook Endpoint");
-        return "facebook";
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.PUT)
