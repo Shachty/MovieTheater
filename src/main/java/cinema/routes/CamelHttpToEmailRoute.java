@@ -18,7 +18,7 @@ public class CamelHttpToEmailRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, TicketDTO.class)
                 .log("${body}")
                 .log("######willwritemail")
-                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=daniel.shatkinl@gmail.com&subject=Your reservation"));
+                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=daniel.shatkin@gmail.com&subject=Your reservation"));
 
     }
 }
