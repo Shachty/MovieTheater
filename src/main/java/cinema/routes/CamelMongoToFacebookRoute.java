@@ -1,7 +1,6 @@
 package cinema.routes;
 
 import cinema.helper.LogProcessor;
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.XmlJsonDataFormat;
 import org.springframework.stereotype.Component;
