@@ -1,6 +1,7 @@
 package cinema.jpa.model;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 /**
  */
@@ -15,6 +16,7 @@ public class Screening {
     private Movie movie;
     @OneToOne
     private Theater theater;
+    private Calendar screeningTime;
 
     public Long getId() {
         return this.id;
@@ -40,5 +42,12 @@ public class Screening {
         this.theater = param;
     }
 
+    public void setScreeningTime(Calendar time) {
+        this.screeningTime = time;
+    }
+
+    public Calendar getScreeningTime() {
+        return this.screeningTime;
+    }
 
 }

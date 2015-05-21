@@ -16,14 +16,16 @@ public class CamelMongoToFacebookRoute extends RouteBuilder{
         final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
         xmlJsonFormat.setForceTopLevelObject(true);
 
-        from("file:tmp/in?noop=true")
+        /*from("direct:findAll")
+                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=findAll")*/
+        from("file://tmp/in?noop=true")
                 .log("got file from mongoDB")
-                .to("facebook://postStatusMessage?inBody=message&" + getOAuthKeys())
-                .log("written to mongoDB");
+                .recipientList(simple("facebook://postStatusMessage?message=${body}&" + getOAuthKeys()))
+                .log("written to facebook");
     }
 
     private String getOAuthKeys(){
-        String oAuthAccessToken="CAAK8TT51AOQBAB33Az8Q6NNKJmIPsYr9sFNFYHWRL23CZBF7l8oAvaZBOrDpXFzNWZC5Y0PykARHLBTVWyXtW3ySU6t0ZCsXHh7D2BPNZBdwrmtVmcqweXEQslZAP9iO1LqbM240cM4ftZBQ7mj0C8vrAdttLRafy3ZBmLbDkJ8aNmAOWm8KF71HRMblnsiggL4ZD";
+        String oAuthAccessToken="CAAK8TT51AOQBAIXjsxPfU7SH6hD1yY6qmFlMMHzdGVQfDiEf8ZAKIjmsiOkKZAfr8y05IElNJvi1WXASyIAEdszJke4WbkzykvidB5UHVRlRaR8EkS6399X1t96hiNlZBSDKAsifMQF5eucYUcHUZAnHi1vaOLd9bec6veCH9B53ZAZAL3BMPohfRkDviZABtC8ZBh21IM7qUiMr2KHSmcAy";
         String oAuthAppId="769989899780324";
         String oAuthAppSecret="1b3f6821328040af2e017b685b72ea5d";
 

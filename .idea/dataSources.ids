@@ -1,60 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="H2 - repository" uuid="666ad84d-7aa2-4095-8d9e-d66976b8806f">
-    <database-info product="H2" version="1.3.175 (2014-01-18)" jdbc-version="4.0" driver-name="H2 JDBC Driver" driver-version="1.3.175 (2014-01-18)">
-      <identifier-quote-string>&quot;</identifier-quote-string>
-    </database-info>
-    <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
-    <schema name="PUBLIC" catalog="REPOSITORY"/>
-    <table name="CINEMA_MOVIE" schema="PUBLIC" catalog="REPOSITORY" type="TABLE">
-      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfREU1MTMwMEJfNTJGMF80NDk2Xzg1NjRfOTZGRjYwRTFDQzM0KQ==" autoIncrement="true"/>
-      <column name="NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="CONSTRAINT_3" columns="ID"/>
-      <exported-key name="FK_BAKXAFQQK7YYWAKY5LUU22EMK" table="CINEMA_SCREENING" schema="PUBLIC" catalog="REPOSITORY" columns="MOVIE_ID"/>
-    </table>
-    <table name="CINEMA_ORDER" schema="PUBLIC" catalog="REPOSITORY" type="TABLE">
-      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRkM2RDlGMDNfMDZFN180QkYwXzg0NDJfMTUwRjQ0MTRFQzMxKQ==" autoIncrement="true"/>
-      <column name="ORDERSNACKNUMBER" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="SUPPLIERPRODUCTID" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="SNACK_ID" sqlType="DOUBLE" precision="17" scale="0" nullable="true" jdbcType="8"/>
-      <primary-key name="CONSTRAINT_31" columns="ID"/>
-      <foreign-key name="FK_PTCPILDWXB8ILKPWFHJWEU78E" columns="SNACK_ID" ref-table="CINEMA_SNACK" ref-schema="PUBLIC" ref-catalog="REPOSITORY" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
-      <exported-key name="FK_KC0I359OGHTSKAN3JQDEQVVOP" table="CINEMA_SNACK_CINEMA_ORDER" schema="PUBLIC" catalog="REPOSITORY" columns="ORDERS_ID"/>
-      <index name="FK_PTCPILDWXB8ILKPWFHJWEU78E_INDEX_3" unique="false" columns="SNACK_ID"/>
-    </table>
-    <table name="CINEMA_SCREENING" schema="PUBLIC" catalog="REPOSITORY" type="TABLE">
-      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRDc2QURBMkZfNDk3Ql80MTI0Xzg2OUFfMjBCOTUzMzE1NzFBKQ==" autoIncrement="true"/>
-      <column name="MOVIE_ID" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="THEATER_ID" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <primary-key name="CONSTRAINT_36" columns="ID"/>
-      <foreign-key name="FK_BAKXAFQQK7YYWAKY5LUU22EMK" columns="MOVIE_ID" ref-table="CINEMA_MOVIE" ref-schema="PUBLIC" ref-catalog="REPOSITORY" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK_GKGYIMAV8E02H3W4L7AAI2FTL" columns="THEATER_ID" ref-table="CINEMA_THEATER" ref-schema="PUBLIC" ref-catalog="REPOSITORY" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
-      <index name="FK_BAKXAFQQK7YYWAKY5LUU22EMK_INDEX_3" unique="false" columns="MOVIE_ID"/>
-      <index name="FK_GKGYIMAV8E02H3W4L7AAI2FTL_INDEX_3" unique="false" columns="THEATER_ID"/>
-    </table>
-    <table name="CINEMA_SNACK" schema="PUBLIC" catalog="REPOSITORY" type="TABLE">
-      <column name="ID" sqlType="DOUBLE" precision="17" scale="0" nullable="false" jdbcType="8" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNDkxNUEyODdfQkVDNl80NEVEX0EyMUZfRTA2RTY2Mzk1QTkzKQ==" autoIncrement="true"/>
-      <column name="NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="NUMBER" sqlType="DOUBLE" precision="17" scale="0" nullable="true" jdbcType="8"/>
-      <primary-key name="CONSTRAINT_318" columns="ID"/>
-      <exported-key name="FK_PTCPILDWXB8ILKPWFHJWEU78E" table="CINEMA_ORDER" schema="PUBLIC" catalog="REPOSITORY" columns="SNACK_ID"/>
-      <exported-key name="FK_MNG5MCFXPNS40CJNXTAFPXDIN" table="CINEMA_SNACK_CINEMA_ORDER" schema="PUBLIC" catalog="REPOSITORY" columns="CINEMA_SNACK_ID"/>
-    </table>
-    <table name="CINEMA_SNACK_CINEMA_ORDER" schema="PUBLIC" catalog="REPOSITORY" type="TABLE">
-      <column name="CINEMA_SNACK_ID" sqlType="DOUBLE" precision="17" scale="0" nullable="false" jdbcType="8"/>
-      <column name="ORDERS_ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <foreign-key name="FK_KC0I359OGHTSKAN3JQDEQVVOP" columns="ORDERS_ID" ref-table="CINEMA_ORDER" ref-schema="PUBLIC" ref-catalog="REPOSITORY" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK_MNG5MCFXPNS40CJNXTAFPXDIN" columns="CINEMA_SNACK_ID" ref-table="CINEMA_SNACK" ref-schema="PUBLIC" ref-catalog="REPOSITORY" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
-      <index name="UK_KC0I359OGHTSKAN3JQDEQVVOP_INDEX_3" unique="true" columns="ORDERS_ID"/>
-      <index name="FK_MNG5MCFXPNS40CJNXTAFPXDIN_INDEX_3" unique="false" columns="CINEMA_SNACK_ID"/>
-    </table>
-    <table name="CINEMA_THEATER" schema="PUBLIC" catalog="REPOSITORY" type="TABLE">
-      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMzQzRTkxODRfNTg4NV80M0Q3X0EwRjFfNjdCMDVFRkU4QTE5KQ==" autoIncrement="true"/>
-      <column name="NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="SEATSTOTAL" sqlType="INTEGER" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="CONSTRAINT_2" columns="ID"/>
-      <exported-key name="FK_GKGYIMAV8E02H3W4L7AAI2FTL" table="CINEMA_SCREENING" schema="PUBLIC" catalog="REPOSITORY" columns="THEATER_ID"/>
-    </table>
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
   <data-source name="thePersistenceUnit/Hibernate" uuid="7e0fd2f9-8346-401c-b596-1ae022b54711">
     <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>

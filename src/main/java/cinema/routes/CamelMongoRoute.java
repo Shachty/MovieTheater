@@ -3,6 +3,7 @@ package cinema.routes;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.model.dataformat.XmlJsonDataFormat;
@@ -22,14 +23,20 @@ public class CamelMongoRoute extends RouteBuilder {
         final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
         xmlJsonFormat.setForceTopLevelObject(true);
 
-        from("file:src/main/resources/in/mongo?noop=true")
-                .marshal(xmlJsonFormat)
-                .log("xml to json")
+        JacksonDataFormat format = new JacksonDataFormat();
+        format.setAllowJmsType(true);
+
+        from("file:src/main/resources/tickets?noop=true")
+         //       .marshal(xmlJsonFormat)
+         //       .log("xml to json")
                 .convertBodyTo(String.class)
                         .log("to String")
-                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB")
-                .to("direct:findAll");
-    }
+                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB");
+                /*.unmarshal(format)
+        //from("file://src/main/resources/test?noop=true")
+                        .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=s.scheickl@gmx.net&subject=Your reservation"));
+        ;*/
+   }
 
 /*
 

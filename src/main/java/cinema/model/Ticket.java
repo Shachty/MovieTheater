@@ -11,16 +11,20 @@ public class Ticket {
     private BigDecimal pricePerTicket;
     private Screening screening;
     private long customerId;
+    private String mail;
 
     @JsonCreator
     public Ticket(@JsonProperty("isReservation") boolean isPurchased,
                   @JsonProperty("overallPrice")BigDecimal pricePerTicket,
                   @JsonProperty("screening")Screening screening,
-                  @JsonProperty("customerId")long customerId) {
+                  @JsonProperty("customerId")long customerId,
+                  @JsonProperty("mail") String mail) {
         this.isPurchased = isPurchased;
         this.pricePerTicket = pricePerTicket;
         this.screening = screening;
         this.customerId = customerId;
+        this.mail = mail;
+
     }
 
     public boolean isPurchased() {
@@ -53,5 +57,13 @@ public class Ticket {
 
     public void setCustomerId(long customerId) {
         this.customerId = customerId;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }
