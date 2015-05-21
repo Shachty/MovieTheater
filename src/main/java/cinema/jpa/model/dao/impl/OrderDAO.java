@@ -5,6 +5,7 @@ import cinema.jpa.model.dao.IOrderDAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.Query;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -27,6 +28,13 @@ public class OrderDAO implements IOrderDAO {
         return session.
         createQuery("from Order")
                 .list();
+    }
+
+    public List findUnprocessed() {
+        Session session = this.entityManager.unwrap(org.hibernate.Session.class);
+        Query query = session.getNamedQuery("@HQL_GET_UNPROCESSED_ORDERS");
+        List<Order> list = query.list();
+        return list;
     }
 
     @Override

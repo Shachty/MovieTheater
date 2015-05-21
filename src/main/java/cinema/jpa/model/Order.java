@@ -1,5 +1,7 @@
 package cinema.jpa.model;
 
+import org.apache.camel.component.jpa.Consumed;
+
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "CINEMA_Order")
+@NamedQueries({ @NamedQuery(name = "@HQL_GET_UNPROCESSED_ORDERS",
+        query = "from Order o where o.camelProcessed = false") })
 public class Order {
 
     @Id
@@ -55,6 +59,11 @@ public class Order {
         oi.setOrderSnackNumber(quantityToOrder);
         oi.setSupplierProductId(supplierId);
         this.addItemToOrder(oi);
+    }
+
+    @Consumed
+    public void markAsProcessed() {
+        this.camelProcessed = true;
     }
 
 }
