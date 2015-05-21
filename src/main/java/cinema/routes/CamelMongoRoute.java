@@ -28,14 +28,8 @@ public class CamelMongoRoute extends RouteBuilder {
 
         from("file:src/main/resources/tickets?noop=true")
                 .unmarshal().json(JsonLibrary.Jackson, TicketDTO.class)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        System.out.println();
-                    }
-                })
-                //       .marshal(xmlJsonFormat)
-                //       .log("xml to json")
+                .log("${body}")
+                .wireTap("direct:mail")
                 .convertBodyTo(String.class)
                 .log("to String")
                 .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB");

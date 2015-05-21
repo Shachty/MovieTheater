@@ -55,6 +55,8 @@ public class Controller {
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
+    @Autowired
+    CamelHttpToEmailRoute camelHttpToEmailRoute;
 
     private int reservationCounter = 1;
 
@@ -116,6 +118,8 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilderHttp.toString() + ". Failmessage: " + e.getMessage());
         }
+
+        //camelHttpToEmailRoute
 
         //add your routes right here
 

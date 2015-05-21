@@ -12,9 +12,9 @@ public class CamelHttpToEmailRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:Http")
-                .log("http to email")
-                .to("direct:Email");
+        from("direct:mail")
+                .log("${body}")
+                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=daniel.shatkinl@gmail.com&subject=Your reservation"));
 
     }
 }
