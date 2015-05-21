@@ -13,10 +13,9 @@ public class CamelCsvToHibernateRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        RouteDefinition response = from("file:src/main/resources/data/?fileName=stock.csv&noop=true")
+        from("file:src/main/resources/data/?fileName=stock.csv&noop=true")
                 .unmarshal().csv()
-                //.to("log:somethig")
-                .to("bean:snackBean?method=importCsvList");
+                .to("bean:snackService?method=importCsvList");
     }
 
 }

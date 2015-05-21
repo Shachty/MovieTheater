@@ -9,6 +9,8 @@ import cinema.jpa.model.*;
 import cinema.jpa.model.dao.impl.OrderDAO;
 import org.junit.Test;
 
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 public class Test_01 {
@@ -45,6 +47,7 @@ public class Test_01 {
         Screening screen = new Screening();
         screen.setMovie(movie);
         screen.setTheater(theat);
+        screen.setScreeningTime(Calendar.getInstance());
 
         theManager.persist(screen);
         Long screenId = theat.getId();

@@ -1,6 +1,5 @@
 package cinema.routes;
 
-import cinema.helper.LogProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.XmlJsonDataFormat;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ public class CamelMongoToFacebookRoute extends RouteBuilder{
 
         from("file:tmp/in?noop=true")
                 .log("got file from mongoDB")
-                .to("facebook://postStatusMessage?inBody=message&" + getOAuthKeys())
+                .to("facebook://postStatusMessage?" + getOAuthKeys())
                 .log("written to mongoDB");
     }
 

@@ -23,9 +23,6 @@ public class Controller {
     final static Logger logger = Logger.getLogger(Controller.class);
 
     @Autowired
-    private MovieDAO theDao;
-
-    @Autowired
     CoffeeService coffeeService;
     @Autowired
     HelloService helloService;
@@ -43,15 +40,6 @@ public class Controller {
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
 
-    @RequestMapping("/start-coffee")
-    public String startCoffee() throws Exception {
-
-        logger.info("started coffee example");
-
-        this.coffeeService.startCoffee();
-
-        return "coffee started";
-    }
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
