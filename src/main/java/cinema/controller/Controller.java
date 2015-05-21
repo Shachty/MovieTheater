@@ -2,9 +2,7 @@ package cinema.controller;
 
 import cinema.HelloService;
 import cinema.jpa.model.dao.impl.MovieDAO;
-import cinema.routes.CamelMongoRoute;
-import cinema.routes.CamelMongoToTwitterRoute;
-import cinema.routes.CamelXmlFileToHttpRoute;
+import cinema.routes.*;
 import cinema.service.CoffeeService;
 import cinema.service.SocialMediaService;
 import org.apache.camel.CamelContext;
@@ -13,7 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
@@ -30,6 +31,7 @@ public class Controller {
     @Autowired
     HelloService helloService;
 
+
     @Autowired
     CamelContext camelContext;
     @Autowired
@@ -42,6 +44,8 @@ public class Controller {
     CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
+    @Autowired
+    CamelMongoToFTPRoute camelMongoToFTPRoute;
 
     @RequestMapping("/start-coffee")
     public String startCoffee() throws Exception {
@@ -52,6 +56,7 @@ public class Controller {
 
         return "coffee started";
     }
+    
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
@@ -80,6 +85,14 @@ public class Controller {
             this.camelContext.addRoutes(routeBuilderTwitter);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilderTwitter.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //FTPRoute
+        RouteBuilder routeBuilderFtp = camelMongoToFTPRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilderFtp);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilderFtp.toString() + ". Failmessage: " + e.getMessage());
         }
 /*
 
