@@ -1,13 +1,13 @@
 package cinema.routes;
 
-import com.mongodb.Mongo;
-import org.apache.camel.CamelContext;
+import cinema.dto.TicketDTO;
+import cinema.model.Ticket;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.SimpleRegistry;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.dataformat.XmlJsonDataFormat;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CamelMongoRoute extends RouteBuilder {
-
 
     @Override
     public void configure() throws Exception {
@@ -26,7 +25,15 @@ public class CamelMongoRoute extends RouteBuilder {
         JacksonDataFormat format = new JacksonDataFormat();
         format.setAllowJmsType(true);
 
+
         from("file:src/main/resources/tickets?noop=true")
+                .unmarshal().json(JsonLibrary.Jackson, TicketDTO.class)
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println();
+                    }
+                })
                 //       .marshal(xmlJsonFormat)
                 //       .log("xml to json")
                 .convertBodyTo(String.class)

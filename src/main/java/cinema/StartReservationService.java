@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>1</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -44,6 +45,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+  //              "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -53,7 +55,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>2</theaterRoomId>\n" +
-                "\t\t<overAllSeats>100</overAllSeats>\n" +
+                "\t\t<overallSeats>100</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -61,7 +63,8 @@ public class StartReservationService {
                 "\t\t<movieId>2</movieId>\n" +
                 "\t</movie>\n" +
                 "</screening>\n" +
-                "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+                "<mail>Daniel.Shatkin@gmail.com</mail>\n"+
+ //               "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -71,7 +74,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>1</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>50</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -80,6 +83,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+ //               "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -89,7 +93,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>7</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>150</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -98,6 +102,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+ //               "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -107,7 +112,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>5</theaterRoomId>\n" +
-                "\t\t<overAllSeats>100</overAllSeats>\n" +
+                "\t\t<overallSeats>100</overallSeats>\n" +
                 "\t\t<availableSeats>90</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -116,6 +121,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+ //               "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -125,7 +131,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>4</theaterRoomId>\n" +
-                "\t\t<overAllSeats>400</overAllSeats>\n" +
+                "\t\t<overallSeats>400</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -134,6 +140,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+   //             "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -143,7 +150,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>1</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -152,6 +159,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+ //               "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -161,7 +169,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>1</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -170,6 +178,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+      //          "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -179,7 +188,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>1</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -188,6 +197,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+        //        "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
         tickets.add("<Ticket>\n" +
@@ -197,7 +207,7 @@ public class StartReservationService {
                 "<screening>\n" +
                 "\t<theaterRoom>\n" +
                 "\t\t<theaterRoomId>1</theaterRoomId>\n" +
-                "\t\t<overAllSeats>200</overAllSeats>\n" +
+                "\t\t<overallSeats>200</overallSeats>\n" +
                 "\t\t<availableSeats>100</availableSeats>\n" +
                 "\t</theaterRoom>\n" +
                 "\t<movie>\n" +
@@ -206,6 +216,7 @@ public class StartReservationService {
                 "\t</movie>\n" +
                 "</screening>\n" +
                 "<mail>Daniel.Shatkin@gmail.com</mail>\n" +
+           //     "<date>"+new Date().toString()+"</date>"+
                 "</Ticket>");
 
 

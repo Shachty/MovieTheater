@@ -4,43 +4,48 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Ticket {
 
-    private boolean isPurchased;
-    private BigDecimal pricePerTicket;
+    private boolean isReservation;
+    private BigDecimal overallPrice;
     private Screening screening;
     private long customerId;
     private String mail;
+    private Date date;
 
     @JsonCreator
-    public Ticket(@JsonProperty("isReservation") boolean isPurchased,
-                  @JsonProperty("overallPrice")BigDecimal pricePerTicket,
+    public Ticket(@JsonProperty("isReservation") boolean isReservation,
+                  @JsonProperty("overallPrice")BigDecimal overallPrice,
                   @JsonProperty("screening")Screening screening,
                   @JsonProperty("customerId")long customerId,
-                  @JsonProperty("mail") String mail) {
-        this.isPurchased = isPurchased;
-        this.pricePerTicket = pricePerTicket;
+                  @JsonProperty("mail") String mail
+                /*  @JsonProperty("date") Date date*/) {
+        this.isReservation = isReservation;
+        this.overallPrice = overallPrice;
         this.screening = screening;
         this.customerId = customerId;
         this.mail = mail;
+    //    this.date = date;
+
 
     }
 
-    public boolean isPurchased() {
-        return isPurchased;
+    public boolean isReservation() {
+        return isReservation;
     }
 
-    public void setIsPurchased(boolean isPurchased) {
-        this.isPurchased = isPurchased;
+    public void setIsReservation(boolean isReservation) {
+        this.isReservation = isReservation;
     }
 
-    public BigDecimal getPricePerTicket() {
-        return pricePerTicket;
+    public BigDecimal getOverallPrice() {
+        return overallPrice;
     }
 
-    public void setPricePerTicket(BigDecimal pricePerTicket) {
-        this.pricePerTicket = pricePerTicket;
+    public void setOverallPrice(BigDecimal overallPrice) {
+        this.overallPrice = overallPrice;
     }
 
     public Screening getScreening() {
@@ -49,6 +54,14 @@ public class Ticket {
 
     public void setScreening(Screening screening) {
         this.screening = screening;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public long getCustomerId() {
