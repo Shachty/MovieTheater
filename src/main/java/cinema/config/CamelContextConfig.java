@@ -23,7 +23,6 @@ public class CamelContextConfig {
     //beans for selfregistering
     @Autowired
     Mongo mongoBean;
-    @Autowired
 
     @Autowired
     SnackService snackBean;

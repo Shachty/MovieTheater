@@ -15,6 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 
 @RestController
@@ -39,6 +43,8 @@ public class Controller {
     CamelCsvToHibernateRoute camelCsvToHibernateRoute;
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
+
+    private int reservationCounter = 1;
 
 
     @RequestMapping("/start-routes")
@@ -75,8 +81,6 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-/*
-
         //XMLFileToHttpRoute
         routeBuilder = camelXmlFileToHttpRoute;
         try {
@@ -84,7 +88,6 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
-*/
 
         //add your routes right here
 
@@ -110,6 +113,15 @@ public class Controller {
         return "yess";
     }
 
+    @RequestMapping("/reserve")
+    public HttpStatus reserve(@RequestParam String body){
+
+        this.writeFile(body);
+
+        return HttpStatus.OK;
+
+    }
+
     @RequestMapping("/facebook")
     public String startFacebookEndpoint() {
 
@@ -123,6 +135,25 @@ public class Controller {
         System.out.println("###jooooowowow");
         return new ResponseEntity<String>(HttpStatus.OK);
 
+    }
+
+    private void writeFile(String content) {
+        try {
+
+            File file = new File("src/main/resources/tickets/reservation" + this.reservationCounter + ".json");
+
+                file.createNewFile();
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+
+            System.out.println("Wrote reservation " + this.reservationCounter);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
