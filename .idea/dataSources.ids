@@ -3,4 +3,7 @@
   <data-source name="H2 - repository" uuid="666ad84d-7aa2-4095-8d9e-d66976b8806f">
     <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
+  <data-source name="thePersistenceUnit/Hibernate" uuid="7e0fd2f9-8346-401c-b596-1ae022b54711">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>
