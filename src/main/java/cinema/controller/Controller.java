@@ -1,6 +1,8 @@
 package cinema.controller;
 
+import cinema.FileWriterService;
 import cinema.HelloService;
+import cinema.StartReservationService;
 import cinema.jpa.model.dao.impl.MovieDAO;
 import cinema.routes.*;
 import cinema.service.CoffeeService;
@@ -23,6 +25,13 @@ public class Controller {
 
     final static Logger logger = Logger.getLogger(Controller.class);
 
+    final static private String PATH = "src/main/resources/tickets/reservation";
+
+    @Autowired
+    FileWriterService fileWriterService;
+    @Autowired
+    StartReservationService startReservationService;
+
     @Autowired
     CoffeeService coffeeService;
     @Autowired
@@ -41,17 +50,16 @@ public class Controller {
     @Autowired
     CamelHibernateToSupplierRoute camelHibernateToSupplierRoute;
     @Autowired
+    CamelHttpToEmailRoute camelHttpToEmailRoute;
+    @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
-    @Autowired
-    CamelHttpToEmailRoute camelHttpToEmailRoute;
-
 
     private int reservationCounter = 1;
 
     @RequestMapping("/start-routes")
-    public String startRoutes() {
+    public String startRoutes(){
 
 /*
         SimpleRegistry simpleRegistry = new SimpleRegistry();
@@ -60,6 +68,7 @@ public class Controller {
         CamelContext camelContext = new DefaultCamelContext(simpleRegistry);
 */
 
+        this.startReservationService.startReservations();
         //Mongoroute
         RouteBuilder routeBuilder = camelMongoRoute;
         try {
@@ -85,20 +94,14 @@ public class Controller {
         }
 
         //camelCsvToHibernateRoute
-        RouteBuilder routeBuilderCsvHibernate = camelCsvToHibernateRoute;
+        routeBuilder = camelCsvToHibernateRoute;
         try {
-            this.camelContext.addRoutes(routeBuilderCsvHibernate);
+            this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-        //camelHibernateToSupplierRoute
-        RouteBuilder routeBuilderSupplierHibernate = camelHibernateToSupplierRoute;
-        try {
-            this.camelContext.addRoutes(routeBuilderSupplierHibernate);
-        } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
-        }
+
 
         //XMLFileToHttpRoute
         routeBuilder = camelXmlFileToHttpRoute;
@@ -108,12 +111,8 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-        RouteBuilder routeBuilderHttpEmail = camelHttpToEmailRoute;
-        try {
-            this.camelContext.addRoutes(routeBuilderHttpEmail);
-        } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
-        }
+        //add your routes right here
+
 
         //start of the action
         try {
@@ -137,7 +136,7 @@ public class Controller {
     }
 
     @RequestMapping("/reserve")
-    public HttpStatus reserve(@RequestParam String body) {
+    public HttpStatus reserve(@RequestParam String body){
 
         this.writeFile(body);
 
@@ -145,8 +144,15 @@ public class Controller {
 
     }
 
+    @RequestMapping("/facebook")
+    public String startFacebookEndpoint() {
+
+        logger.info("started Facebook Endpoint");
+        return "facebook";
+    }
+
     @RequestMapping(value = "/test", method = RequestMethod.PUT)
-    public ResponseEntity<String> testPost(@RequestBody ResponseEntity<String> response) {
+    public ResponseEntity<String> testPost(@RequestBody ResponseEntity<String> response){
 
         System.out.println("###jooooowowow");
         return new ResponseEntity<String>(HttpStatus.OK);
@@ -158,7 +164,7 @@ public class Controller {
 
             File file = new File("src/main/resources/tickets/reservation" + this.reservationCounter + ".json");
 
-            file.createNewFile();
+                file.createNewFile();
 
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -171,6 +177,8 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+
 
 
 }

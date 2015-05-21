@@ -27,16 +27,16 @@ public class CamelMongoRoute extends RouteBuilder {
         format.setAllowJmsType(true);
 
         from("file:src/main/resources/tickets?noop=true")
-         //       .marshal(xmlJsonFormat)
-         //       .log("xml to json")
+                //       .marshal(xmlJsonFormat)
+                //       .log("xml to json")
                 .convertBodyTo(String.class)
-                        .log("to String")
+                .log("to String")
                 .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB");
                 /*.unmarshal(format)
         //from("file://src/main/resources/test?noop=true")
                         .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=s.scheickl@gmx.net&subject=Your reservation"));
         ;*/
-   }
+    }
 
 /*
 
