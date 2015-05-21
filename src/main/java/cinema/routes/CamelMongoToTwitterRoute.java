@@ -3,6 +3,7 @@ package cinema.routes;
 import cinema.model.Ticket;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import org.apache.camel.Exchange;
@@ -21,6 +22,9 @@ public class CamelMongoToTwitterRoute extends RouteBuilder {
     public void configure() throws Exception {
         //from("file:tmp/in?noop=true")
         //        .to("direct:findAll");
+
+      //  DBObject fieldFilter = BasicDBObjectBuilder.start().add("_id", 0).add("fixedField", 0).get();
+       // Object result = template.requestBodyAndHeader("direct:findAll", (Object) null, MongoDbConstants.FIELDS_FILTER, fieldFilter);
 
         from("direct:findAll")
                 .log("body ${body}")

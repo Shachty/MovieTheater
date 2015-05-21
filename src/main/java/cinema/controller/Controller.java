@@ -2,11 +2,7 @@ package cinema.controller;
 
 import cinema.HelloService;
 import cinema.jpa.model.dao.impl.MovieDAO;
-import cinema.routes.CamelCsvToHibernateRoute;
-import cinema.routes.CamelMongoRoute;
-import cinema.routes.CamelMongoToFacebookRoute;
-import cinema.routes.CamelMongoToTwitterRoute;
-import cinema.routes.CamelXmlFileToHttpRoute;
+import cinema.routes.*;
 import cinema.service.CoffeeService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -43,14 +39,19 @@ public class Controller {
     @Autowired
     CamelCsvToHibernateRoute camelCsvToHibernateRoute;
     @Autowired
+    CamelHibernateToSupplierRoute camelHibernateToSupplierRoute;
+    @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
+    @Autowired
+    CamelHttpToEmailRoute camelHttpToEmailRoute;
+
 
     private int reservationCounter = 1;
 
     @RequestMapping("/start-routes")
-    public String startRoutes(){
+    public String startRoutes() {
 
 /*
         SimpleRegistry simpleRegistry = new SimpleRegistry();
@@ -84,14 +85,20 @@ public class Controller {
         }
 
         //camelCsvToHibernateRoute
-        routeBuilder = camelCsvToHibernateRoute;
+        RouteBuilder routeBuilderCsvHibernate = camelCsvToHibernateRoute;
         try {
-            this.camelContext.addRoutes(routeBuilder);
+            this.camelContext.addRoutes(routeBuilderCsvHibernate);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-
+        //camelHibernateToSupplierRoute
+        RouteBuilder routeBuilderSupplierHibernate = camelHibernateToSupplierRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilderSupplierHibernate);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
 
         //XMLFileToHttpRoute
         routeBuilder = camelXmlFileToHttpRoute;
@@ -101,8 +108,12 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-        //add your routes right here
-
+        RouteBuilder routeBuilderHttpEmail = camelHttpToEmailRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilderHttpEmail);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
 
         //start of the action
         try {
@@ -126,7 +137,7 @@ public class Controller {
     }
 
     @RequestMapping("/reserve")
-    public HttpStatus reserve(@RequestParam String body){
+    public HttpStatus reserve(@RequestParam String body) {
 
         this.writeFile(body);
 
@@ -134,15 +145,8 @@ public class Controller {
 
     }
 
-    @RequestMapping("/facebook")
-    public String startFacebookEndpoint() {
-
-        logger.info("started Facebook Endpoint");
-        return "facebook";
-    }
-
     @RequestMapping(value = "/test", method = RequestMethod.PUT)
-    public ResponseEntity<String> testPost(@RequestBody ResponseEntity<String> response){
+    public ResponseEntity<String> testPost(@RequestBody ResponseEntity<String> response) {
 
         System.out.println("###jooooowowow");
         return new ResponseEntity<String>(HttpStatus.OK);
@@ -154,7 +158,7 @@ public class Controller {
 
             File file = new File("src/main/resources/tickets/reservation" + this.reservationCounter + ".json");
 
-                file.createNewFile();
+            file.createNewFile();
 
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -167,8 +171,6 @@ public class Controller {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

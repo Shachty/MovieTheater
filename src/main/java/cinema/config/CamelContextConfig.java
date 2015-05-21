@@ -1,5 +1,6 @@
 package cinema.config;
 
+import cinema.service.OrderService;
 import cinema.service.SnackService;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
@@ -26,6 +27,8 @@ public class CamelContextConfig {
 
     @Autowired
     SnackService snackBean;
+    @Autowired
+    OrderService orderServiceBean;
 
     @Bean()
     public CamelContext camelContext(){
@@ -34,6 +37,7 @@ public class CamelContextConfig {
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
         simpleRegistry.put("snackService", snackBean);
+        simpleRegistry.put("orderService", orderServiceBean);
 
         return new DefaultCamelContext(simpleRegistry);
 
