@@ -16,7 +16,7 @@ public class TheaterRoom {
     @JsonCreator
     public TheaterRoom(@JsonProperty("theaterRoomId") long theaterRoomId,
                        @JsonProperty("overallSeats") int overallSeats,
-                       @JsonProperty("theaterRoomId") int availableSeats) {
+                       @JsonProperty("availableSeats") int availableSeats) {
         this.theaterRoomId = theaterRoomId;
         this.overallSeats = overallSeats;
         this.availableSeats = availableSeats;
