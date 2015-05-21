@@ -2,7 +2,6 @@ package cinema.routes;
 
 import cinema.jpa.model.Order;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.jpa.Consumed;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
