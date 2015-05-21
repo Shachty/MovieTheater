@@ -12,5 +12,7 @@
 		<movieName>film01</movieName>
 		<movieId>1</movieId>
 	</movie>
+	<date>16.6.2015</date>
+	<time>15:00</time>
 </screening>
 </Ticket>

@@ -27,7 +27,8 @@ public class CamelMongoRoute extends RouteBuilder {
          //       .log("xml to json")
                 .convertBodyTo(String.class)
                         .log("to String")
-                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB");
+                .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=insert").log("written to mongoDB")
+                .to("direct:findAll");
    }
 
 /*
