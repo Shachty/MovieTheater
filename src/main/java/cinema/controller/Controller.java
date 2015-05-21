@@ -2,12 +2,12 @@ package cinema.controller;
 
 import cinema.HelloService;
 import cinema.jpa.model.dao.impl.MovieDAO;
+import cinema.routes.CamelCsvToHibernateRoute;
 import cinema.routes.CamelMongoRoute;
 import cinema.routes.CamelMongoToFacebookRoute;
 import cinema.routes.CamelMongoToTwitterRoute;
 import cinema.routes.CamelXmlFileToHttpRoute;
 import cinema.service.CoffeeService;
-import cinema.service.SocialMediaService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -24,9 +24,6 @@ public class Controller {
     final static Logger logger = Logger.getLogger(Controller.class);
 
     @Autowired
-    private MovieDAO theDao;
-
-    @Autowired
     CoffeeService coffeeService;
     @Autowired
     HelloService helloService;
@@ -34,34 +31,23 @@ public class Controller {
     @Autowired
     CamelContext camelContext;
 
-
     //injected routes
     @Autowired
     CamelMongoRoute camelMongoRoute;
     @Autowired
     CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
     @Autowired
+    CamelCsvToHibernateRoute camelCsvToHibernateRoute;
+    @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
 
-    @RequestMapping("/start-coffee")
-    public String startCoffee() throws Exception {
-
-        logger.info("started coffee example");
-
-        this.coffeeService.startCoffee();
-
-        return "coffee started";
-    }
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
 
-        System.out.println(theDao.findAll());
-
 /*
-
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
 
@@ -91,6 +77,15 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilderFacebook.toString() + ". Failmessage: " + e.getMessage());
         }
+
+        //camelCsvToHibernateRoute
+        routeBuilder = camelCsvToHibernateRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
 /*
 
         //XMLFileToHttpRoute
