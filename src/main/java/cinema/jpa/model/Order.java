@@ -16,17 +16,30 @@ public class Order {
     private Long id;
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<OrderItem> items;
+    private boolean camelProcessed = false;
 
     public Long getId() {
         return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<OrderItem> getItems() {
         return this.items;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    public boolean getCamelProcessed() {
+        return this.camelProcessed;
+    }
+
+    public void setCamelProcessed(boolean bool) {
+        this.camelProcessed = bool;
     }
 
     public void addItemToOrder(OrderItem item) {
@@ -36,8 +49,7 @@ public class Order {
         this.items.add(item);
     }
 
-    public void addSnackToOrder(Snack snack, Long quantityToOrder, String supplierId)
-    {
+    public void addSnackToOrder(Snack snack, Long quantityToOrder, String supplierId) {
         OrderItem oi = new OrderItem();
         oi.setSnack(snack);
         oi.setOrderSnackNumber(quantityToOrder);

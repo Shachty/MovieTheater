@@ -39,6 +39,8 @@ public class Controller {
     @Autowired
     CamelCsvToHibernateRoute camelCsvToHibernateRoute;
     @Autowired
+    CamelHibernateToSupplierRoute camelHibernateToSupplierRoute;
+    @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
@@ -83,9 +85,17 @@ public class Controller {
         }
 
         //camelCsvToHibernateRoute
-        routeBuilder = camelCsvToHibernateRoute;
+        RouteBuilder routeBuilderCsvHibernate = camelCsvToHibernateRoute;
         try {
-            this.camelContext.addRoutes(routeBuilder);
+            this.camelContext.addRoutes(routeBuilderCsvHibernate);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //camelHibernateToSupplierRoute
+        RouteBuilder routeBuilderSupplierHibernate = camelHibernateToSupplierRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilderSupplierHibernate);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
