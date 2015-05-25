@@ -16,6 +16,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-ftp</artifactId>
+            <version>2.15.1</version>
+            <!-- use the same version as your Camel core version -->
+        </dependency>
         <!-- Hibernate dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -103,12 +109,7 @@
             <!-- use the same version as your Camel core version -->
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-ftp</artifactId>
-            <version>2.15.1</version>
-            <!-- use the same version as your Camel core version -->
-        </dependency>
+
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jpa</artifactId>

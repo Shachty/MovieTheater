@@ -3,7 +3,6 @@ package cinema.controller;
 import cinema.FileWriterService;
 import cinema.HelloService;
 import cinema.StartReservationService;
-import cinema.jpa.model.dao.impl.MovieDAO;
 import cinema.routes.*;
 import cinema.service.CoffeeService;
 import org.apache.camel.CamelContext;
@@ -14,10 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Date;
 
 @RestController
@@ -55,8 +50,34 @@ public class Controller {
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
+    @Autowired
+    CamelMongoToFTPRoute camelMongoToFTPRoute;
 
     private int reservationCounter = 1;
+
+    @RequestMapping("/start-test")
+    public String startTest(){
+
+        //FTP
+        RouteBuilder routeBuilder = this.camelMongoToFTPRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //start of the action
+        try {
+            camelContext.start();
+            Thread.sleep(60 * 1000);
+            camelContext.stop();
+        } catch (Exception e) {
+            logger.error("Fail. Message: " + e.getMessage());
+        }
+
+        return "Routes ended at: " + new Date().toString();
+
+    }
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
@@ -89,6 +110,14 @@ public class Controller {
 
         //FcaebookRoute
         routeBuilder = this.camelMongoToFacebookRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //FTP
+        routeBuilder = this.camelMongoToFTPRoute;
         try {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
