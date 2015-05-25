@@ -109,6 +109,7 @@
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.11" level="project" />
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-camel:5.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-jms:2.14.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jms:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-spring:5.11.1" level="project" />
