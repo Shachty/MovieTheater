@@ -2,7 +2,6 @@ package cinema.controller;
 
 import cinema.FileWriterService;
 import cinema.HelloService;
-import cinema.StartReservationService;
 import cinema.TicketReservationService;
 import cinema.routes.*;
 import cinema.service.CoffeeService;
@@ -25,8 +24,6 @@ public class Controller {
 
     @Autowired
     FileWriterService fileWriterService;
-    @Autowired
-    StartReservationService startReservationService;
     @Autowired
     TicketReservationService ticketReservationService;
 
