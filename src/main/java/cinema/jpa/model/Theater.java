@@ -2,7 +2,7 @@ package cinema.jpa.model;
 
 import javax.persistence.*;
 
-@ Entity
+@Entity
 @Table(name = "CINEMA_Theater")
 public class Theater {
 

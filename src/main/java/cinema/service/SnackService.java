@@ -23,14 +23,11 @@ public class SnackService {
 
     private final Log log = LogFactory.getLog(SnackService.class);
 
-    @PersistenceContext
-    EntityManager theManager;
-
     @Autowired
     SnackDAO snackDao;
 
     @Transactional
-    public void importCsvList(@Header("user") String user, @Body List body, Exchange exchange) {
+    public void importCsvList(@Body List body) {
         log.debug("importCsv...");
 
         for(int i = 0; i < body.size(); i++) {
