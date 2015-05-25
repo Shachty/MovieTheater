@@ -23,7 +23,7 @@ import java.util.Map;
  */
 
 @Component
-public class CamelXmlFileToHttpRoute extends RouteBuilder {
+public class CamelTicketToHttpRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
@@ -33,11 +33,10 @@ public class CamelXmlFileToHttpRoute extends RouteBuilder {
         xmlJsonFormat.setForceTopLevelObject(true);
 
 
-        from("file:src/main/resources/in/mongo?noop=true")
+        from("file:src/main/resources/reservations?noop=true")
                 .marshal(xmlJsonFormat)
                 .log("xml to json")
                 .convertBodyTo(String.class)
-                        //   .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
                 .setHeader(Exchange.HTTP_QUERY, simple("body=${body}"))
                 .to("http4://localhost:8080/reserve");
 

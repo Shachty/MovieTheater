@@ -75,13 +75,10 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.1.6.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-ftp:2.15.1" level="project" />
-    <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.51" level="project" />
-    <orderEntry type="library" name="Maven: commons-net:commons-net:3.3" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.11" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.5" level="project" />
@@ -110,8 +107,11 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-core:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.11" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.2.11" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.11" level="project" />
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-camel:5.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-jms:2.14.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jms:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-spring:5.11.1" level="project" />
@@ -167,6 +167,11 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-mail:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-jaxb:2.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-csv:2.15.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-mail:2.15.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.mail:mail:1.4.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-csv:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.1" level="project" />
     <orderEntry type="library" name="Maven: xom:xom:1.2.5" level="project" />
@@ -180,6 +185,10 @@
     <orderEntry type="library" name="Maven: org.apache.camel:camel-http:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-ftp:2.15.1" level="project" />
+    <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.51" level="project" />
+    <orderEntry type="library" name="Maven: commons-net:commons-net:3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.camel:camel-jpa:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-jpa:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.3.175" level="project" />
     <orderEntry type="library" name="Maven: com.atlassian.crowd:crowd-integration-client:2.6.4" level="project" />

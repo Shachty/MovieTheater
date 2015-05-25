@@ -20,8 +20,9 @@ public class CamelMongoToFacebookRoute extends RouteBuilder{
                 .to("mongodb:mongoBean?database=workflow&collection=workflow&operation=findAll")*/
         from("file://tmp/in?noop=true")
                 .log("got file from mongoDB")
-                .recipientList(simple("facebook://postStatusMessage?message=${body}&" + getOAuthKeys()))
+                .recipientList(simple("facebook://postStatusMessage?inBody=message&" + getOAuthKeys()))
                 .log("written to facebook");
+        //.recipientList(simple("facebook://postStatusMessage?message=${body}&" + getOAuthKeys()))
     }
 
     private String getOAuthKeys(){

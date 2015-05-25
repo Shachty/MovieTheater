@@ -8,60 +8,136 @@ import java.util.Date;
 
 public class Ticket {
 
-    private boolean isReservation;
-    private BigDecimal overallPrice;
-    private Screening screening;
+    private String firstName;
+    private String lastName;
+    private BigDecimal pricePerPerson;
+    private int numberOfPersons;
+    private int theaterRoom;
+    private String movieName;
+    private String time;
     private long customerId;
     private String mail;
-    private Date date;
+    private TicketStatus ticketStatus;
+
+
+    @JsonCreator
+    public Ticket(@JsonProperty("ticketStatus") TicketStatus ticketStatus,
+                  @JsonProperty("firstName")String firstName,
+                  @JsonProperty("lastName")String lastName,
+                  @JsonProperty("numberOfPersons")int numberOfPersons,
+                  @JsonProperty("theaterRoom") int theaterRoom,
+                  @JsonProperty("movieName")String movieName,
+                  @JsonProperty("time")String time,
+                  @JsonProperty("customerId")long customerId,
+                  @JsonProperty("mail")String mail) {
+        this.ticketStatus = ticketStatus;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.numberOfPersons = numberOfPersons;
+        this.theaterRoom = theaterRoom;
+        this.movieName = movieName;
+        this.time = time;
+        this.customerId = customerId;
+        this.mail = mail;
+    }
+/*
 
     @JsonCreator
     public Ticket(@JsonProperty("isReservation") boolean isReservation,
-                  @JsonProperty("overallPrice")BigDecimal overallPrice,
-                  @JsonProperty("screening")Screening screening,
+                  @JsonProperty("firstName")String firstName,
+                  @JsonProperty("lastName")String lastName,
+                  @JsonProperty("numberOfPersons")int numberOfPersons,
+                  @JsonProperty("theaterRoom") int theaterRoom,
+                  @JsonProperty("movieName")String movieName,
+                  @JsonProperty("time")String time,
                   @JsonProperty("customerId")long customerId,
-                  @JsonProperty("mail") String mail
-                /*  @JsonProperty("date") Date date*/) {
+                  @JsonProperty("mail")String mail,
+                  @JsonProperty("pricePerPerson")BigDecimal pricePerPerson) {
         this.isReservation = isReservation;
-        this.overallPrice = overallPrice;
-        this.screening = screening;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pricePerPerson = pricePerPerson;
+        this.numberOfPersons = numberOfPersons;
+        this.theaterRoom = theaterRoom;
+        this.movieName = movieName;
+        this.time = time;
         this.customerId = customerId;
         this.mail = mail;
-    //    this.date = date;
+    }
+*/
 
+    public static String toXmlString(Ticket ticket){
+        String ret = "<Ticket>" +
+                "<ticketStatus>"+ticket.getTicketStatus()+"</ticketStatus>"+
+                "<firstName>"+ticket.getFirstName()+"</firstName>"+
+                "<lastName>"+ticket.getLastName()+"</lastName>"+
+                "<numberOfPersons>"+ticket.getNumberOfPersons()+"</numberOfPersons>"+
+                "<theaterRoom>"+ticket.getTheaterRoom()+"</theaterRoom>"+
+                "<movieName>"+ticket.getMovieName()+"</movieName>"+
+                "<time>"+ticket.getTime()+"</time>"+
+                "<customerId>"+ticket.getCustomerId()+"</customerId>"+
+                "<mail>"+ticket.getMail()+"</mail>"+
+                "</Ticket>";
 
+        return ret;
     }
 
-    public boolean isReservation() {
-        return isReservation;
+
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setIsReservation(boolean isReservation) {
-        this.isReservation = isReservation;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public BigDecimal getOverallPrice() {
-        return overallPrice;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setOverallPrice(BigDecimal overallPrice) {
-        this.overallPrice = overallPrice;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public Screening getScreening() {
-        return screening;
+    public BigDecimal getPricePerPerson() {
+        return pricePerPerson;
     }
 
-    public void setScreening(Screening screening) {
-        this.screening = screening;
+    public void setPricePerPerson(BigDecimal pricePerPerson) {
+        this.pricePerPerson = pricePerPerson;
     }
 
-    public Date getDate() {
-        return date;
+    public int getNumberOfPersons() {
+        return numberOfPersons;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setNumberOfPersons(int numberOfPersons) {
+        this.numberOfPersons = numberOfPersons;
+    }
+
+    public int getTheaterRoom() {
+        return theaterRoom;
+    }
+
+    public void setTheaterRoom(int theaterRoom) {
+        this.theaterRoom = theaterRoom;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public long getCustomerId() {
@@ -78,5 +154,13 @@ public class Ticket {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public TicketStatus getTicketStatus() {
+        return ticketStatus;
+    }
+
+    public void setTicketStatus(TicketStatus ticketStatus) {
+        this.ticketStatus = ticketStatus;
     }
 }
