@@ -3,7 +3,7 @@ package cinema.controller;
 import cinema.FileWriterService;
 import cinema.HelloService;
 import cinema.StartReservationService;
-import cinema.jpa.model.dao.impl.MovieDAO;
+import cinema.TicketReservationService;
 import cinema.routes.*;
 import cinema.service.CoffeeService;
 import org.apache.camel.CamelContext;
@@ -14,10 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Date;
 
 @RestController
@@ -25,12 +21,14 @@ public class Controller {
 
     final static Logger logger = Logger.getLogger(Controller.class);
 
-    final static private String PATH = "src/main/resources/tickets/reservation";
+    final static private String PATH = "src/main/resources/tickets/ticket";
 
     @Autowired
     FileWriterService fileWriterService;
     @Autowired
     StartReservationService startReservationService;
+    @Autowired
+    TicketReservationService ticketReservationService;
 
     @Autowired
     CoffeeService coffeeService;
@@ -44,32 +42,27 @@ public class Controller {
     @Autowired
     CamelMongoRoute camelMongoRoute;
     @Autowired
-    CamelXmlFileToHttpRoute camelXmlFileToHttpRoute;
+    CamelTicketToHttpRoute camelTicketToHttpRoute;
     @Autowired
     CamelCsvToHibernateRoute camelCsvToHibernateRoute;
     @Autowired
     CamelHibernateToSupplierRoute camelHibernateToSupplierRoute;
     @Autowired
-    CamelHttpToEmailRoute camelHttpToEmailRoute;
+    CamelMailRoute camelMailRoute;
     @Autowired
     CamelMongoToTwitterRoute camelMongoToTwitterRoute;
     @Autowired
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
+    @Autowired
+    ScreeningToMongo screeningToMongo;
+    @Autowired
+    CamelCheckTicketRoute camelCheckTicketRoute;
 
     private int reservationCounter = 1;
 
     @RequestMapping("/start-routes")
     public String startRoutes(){
 
-/*
-        SimpleRegistry simpleRegistry = new SimpleRegistry();
-        simpleRegistry.put("mongoBean", mongoBean);
-
-        CamelContext camelContext = new DefaultCamelContext(simpleRegistry);
-*/
-
-        //starts the reservation async
-        this.startReservationService.startReservations();
 
         //Mongoroute
         RouteBuilder routeBuilder = this.camelMongoRoute;
@@ -95,7 +88,7 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-        //camelCsvToHibernateRoute
+      /*  //camelCsvToHibernateRoute
         routeBuilder = this.camelCsvToHibernateRoute;
         try {
             this.camelContext.addRoutes(routeBuilder);
@@ -109,10 +102,10 @@ public class Controller {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
-        }
+        }*/
 
         //XMLFileToHttpRoute
-        routeBuilder = this.camelXmlFileToHttpRoute;
+        routeBuilder = this.camelTicketToHttpRoute;
         try {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
@@ -120,13 +113,19 @@ public class Controller {
         }
 
         //camelHttpToEmailRoute
-        routeBuilder = this.camelHttpToEmailRoute;
+        routeBuilder = this.camelMailRoute;
         try {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
-
+        //checkTocketRoute
+        routeBuilder = this.camelCheckTicketRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
 
         //add your routes right here
 
@@ -141,6 +140,57 @@ public class Controller {
         }
 
         return "Routes ended at: " + new Date().toString();
+    }
+
+    @RequestMapping("/insert-screenings")
+    public void insertScreenings(){
+
+        RouteBuilder routeBuilder = this.screeningToMongo;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        try {
+            this.camelContext.removeRoute("ScreeningToMongo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //start of the action
+        try {
+            camelContext.start();
+            Thread.sleep(10 * 1 * 1000);
+            camelContext.stop();
+        } catch (Exception e) {
+            logger.error("Fail. Message: " + e.getMessage());
+        }
+
+
+    }
+
+    @RequestMapping("/do-reservation")
+    public String doReservation(@RequestParam("firstname") String firstName,
+                                @RequestParam("lastname") String lastName,
+                                @RequestParam("numberofpersons") int numberOfPersons,
+                                @RequestParam("theaterroom") int theaterRoom,
+                                @RequestParam("moviename") String movieName,
+                                @RequestParam("time") String time,
+                                @RequestParam("e-mail") String mail){
+
+
+        this.ticketReservationService.createReservation(
+                firstName,
+                lastName,
+                movieName,
+                mail,
+                theaterRoom,
+                numberOfPersons,
+                time);
+
+
+        return "We received your reservation. You will get a confirmation or declining message on your provided e-mail adress soon.";
     }
 
 
