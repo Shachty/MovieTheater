@@ -33,14 +33,15 @@ public class CamelSupplierJsonToXmlRoute extends RouteBuilder {
         DataFormat jaxb = new JaxbDataFormat(jaxbContext);
 
         from("file:src/main/resources/enquiries?noop=true")//from("ftp://user:root@localhost/a")
+                .loop(4).copy()
                 .log("got file from ftpServer - enquiries")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.xml"))
                 .marshal(jaxb)
                 //.delay(new Random().nextInt(1000 * 10))
-                .to("file:src/main/resources/offers_1")//.to("ftp://user:root@localhost/offers_1")
-                .log("written to ftpServer - offers_1");
+                .recipientList(simple("file:src/main/resources/offers/offers_1${property.CamelLoopIndex}"))//.to("ftp://user:root@localhost/offers_1")
+                .log("written to ftpServer - offers_1X");
 
     }
 
