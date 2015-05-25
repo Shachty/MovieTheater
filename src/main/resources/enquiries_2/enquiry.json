@@ -1,0 +1,1 @@
+{"Enquiry":{"id":"1","items":[{"id":"1", "supplierProductId":"1", "snack":{"id":"1", "name":"Snack1", "number":"3"}, "orderSnackNumber":"5"},{"id":"2", "supplierProductId":"2", "snack":{"id":"2", "name":"Snack2", "number":"2"}, "orderSnackNumber":"6"}]}}

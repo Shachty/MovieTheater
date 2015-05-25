@@ -57,6 +57,8 @@ public class Controller {
     CamelMongoToFacebookRoute camelMongoToFacebookRoute;
     @Autowired
     CamelSupplierJsonToXmlRoute camelSupplierJsonToXmlRoute;
+    @Autowired
+    CamelSupplierJsonToJsonRoute camelSupplierJsonToJsonRoute;
 
     private int reservationCounter = 1;
 
@@ -118,7 +120,15 @@ public class Controller {
         try {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+            logger.error("Could not add route(supplierJsonToXml): " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //CamelSupplierJsonToJsonRoute
+        routeBuilder = this.camelSupplierJsonToJsonRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route(supplierJsonToJson): " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
 
