@@ -84,6 +84,7 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
+        /*                      TODO einkommentieren
         //FcaebookRoute
         routeBuilder = this.camelMongoToFacebookRoute;
         try {
@@ -92,7 +93,7 @@ public class Controller {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
-      /*  //camelCsvToHibernateRoute
+        //camelCsvToHibernateRoute
         routeBuilder = this.camelCsvToHibernateRoute;
         try {
             this.camelContext.addRoutes(routeBuilder);
@@ -106,7 +107,7 @@ public class Controller {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
-        }
+        }*/
 
         //CamelSupplierJsonToXmlRoute
         routeBuilder = this.camelSupplierJsonToXmlRoute;
@@ -123,8 +124,6 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Could not add route(supplierJsonToJson): " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
-
-        }*/
 
         //XMLFileToHttpRoute
         routeBuilder = this.camelTicketToHttpRoute;
