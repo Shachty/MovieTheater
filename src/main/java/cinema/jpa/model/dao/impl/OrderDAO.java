@@ -19,7 +19,7 @@ public class OrderDAO implements IOrderDAO {
 
     private final Log log = LogFactory.getLog(OrderDAO.class);
 
-    @PersistenceContext
+    @PersistenceContext(name = "thePersistenceUnit")
     private EntityManager entityManager;
 
     @Override

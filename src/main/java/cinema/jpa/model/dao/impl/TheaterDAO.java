@@ -18,7 +18,7 @@ public class TheaterDAO implements ITheaterDAO {
 
     private final Log log = LogFactory.getLog(TheaterDAO.class);
 
-    @PersistenceContext
+    @PersistenceContext(name = "thePersistenceUnit")
     private EntityManager entityManager;
 
     @Override
