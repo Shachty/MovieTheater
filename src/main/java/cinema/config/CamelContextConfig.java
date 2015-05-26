@@ -30,7 +30,7 @@ public class CamelContextConfig {
     @Autowired
     OrderService orderServiceBean;
 
-    @Bean()
+    @Bean(name = "camelContext")
     public CamelContext camelContext(){
 
         //If camelContext messed with the Spring registrated beans, register it yourself using the simpleRegistry
