@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class OrderDAO implements IOrderDAO {
 
     private final Log log = LogFactory.getLog(OrderDAO.class);
 
-    @PersistenceContext(name = "thePersistenceUnit")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override

@@ -18,7 +18,7 @@ public class ScreeningDAO implements IScreeningDAO {
 
     private final Log log = LogFactory.getLog(ScreeningDAO.class);
 
-    @PersistenceContext(name = "thePersistenceUnit")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override

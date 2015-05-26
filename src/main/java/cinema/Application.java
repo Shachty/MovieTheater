@@ -58,6 +58,7 @@ public class Application {
             Object cBean = ctx.getBean(c);
             if(cBean instanceof org.apache.camel.builder.RouteBuilder == false) {
                 logger.error("Configured route for WFPM route: " + c.getClass() + " must extend RouteBuilder");
+                continue;
             }
 
             RouteBuilder routeBuilder = (RouteBuilder)cBean;

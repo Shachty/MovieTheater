@@ -18,7 +18,7 @@ public class MovieDAO implements IMovieDAO {
 
     private final Log log = LogFactory.getLog(MovieDAO.class);
 
-    @PersistenceContext(name = "thePersistenceUnit")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override

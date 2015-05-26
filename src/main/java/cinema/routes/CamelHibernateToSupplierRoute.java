@@ -12,7 +12,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("jpa:cinema.jpa.model.Order?persistenceUnit=thePersistenceUnit&consumer.namedQuery=@HQL_GET_UNPROCESSED_ORDERS&consumeDelete=false")
+        from("jpa:cinema.jpa.model.Order?persistenceUnit=default&consumer.namedQuery=@HQL_GET_UNPROCESSED_ORDERS&consumeDelete=false")
             //.beanRef("orderService", "orderToSupplier")
                 .to("log:hibernate")
                 .to("mock:supplierOutput");

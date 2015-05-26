@@ -18,7 +18,7 @@ public class SnackDAO implements ISnackDAO {
 
     private final Log log = LogFactory.getLog(SnackDAO.class);
 
-    @PersistenceContext(name = "thePersistenceUnit")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
