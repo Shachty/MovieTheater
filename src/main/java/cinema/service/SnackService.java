@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -37,5 +35,9 @@ public class SnackService {
             theSnack.setNumber(new Double((String) bodyLineItem.get(1)));
             snackDao.save(theSnack);
         }
+    }
+
+    public List<Snack> getSnacks() {
+        return snackDao.findAll();
     }
 }
