@@ -55,11 +55,12 @@ public class Application {
 
         for(Class c : Application.camelAutoloadRoutes)
         {
-            if(c.isInstance(org.apache.camel.builder.RouteBuilder.class) == false) {
+            Object cBean = ctx.getBean(c);
+            if(cBean instanceof org.apache.camel.builder.RouteBuilder == false) {
                 logger.error("Configured route for WFPM route: " + c.getClass() + " must extend RouteBuilder");
             }
 
-            RouteBuilder routeBuilder = (RouteBuilder)ctx.getBean(c);
+            RouteBuilder routeBuilder = (RouteBuilder)cBean;
             try {
                 camelContext.addRoutes(routeBuilder);
             } catch (Exception e) {
@@ -70,8 +71,8 @@ public class Application {
         //start of the action
         try {
             camelContext.start();
-            Thread.sleep(10 * 1 * 1000);
-            camelContext.stop();
+            //Thread.sleep(10 * 1 * 1000);
+            //camelContext.stop();
         } catch (Exception e) {
             logger.error("Fail. Message: " + e.getMessage());
         }

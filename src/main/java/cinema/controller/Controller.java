@@ -10,6 +10,8 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,9 @@ public class Controller {
     @Autowired
     CamelContext camelContext;
 
+    @Autowired
+    ApplicationContext appContext;
+
     //injected routes
     @Autowired
     ScreeningToMongo screeningToMongo;
@@ -49,6 +54,8 @@ public class Controller {
         for(Snack snk : theSnacks) {
             logger.info(snk);
         }
+
+        SpringApplication.exit(this.appContext);
 
     }
 
@@ -69,6 +76,7 @@ public class Controller {
         }
 
         //start of the action
+        /*
         try {
             camelContext.start();
             Thread.sleep(10 * 1 * 1000);
@@ -76,7 +84,7 @@ public class Controller {
         } catch (Exception e) {
             logger.error("Fail. Message: " + e.getMessage());
         }
-
+        */
 
     }
 
