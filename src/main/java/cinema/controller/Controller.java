@@ -111,6 +111,12 @@ public class Controller {
         return "We received your reservation. You will get a confirmation or declining message on your provided e-mail adress soon.";
     }
 
+    @RequestMapping("/consumeReservation")
+    public String consumeReservation(@RequestParam("reservationNumber") int reservationNumber){
+
+        return "ticket";
+    }
+
 
     @RequestMapping("/hello")
     public String testIfAsync() {

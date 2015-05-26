@@ -38,12 +38,6 @@ public class CamelCheckTicketRoute extends RouteBuilder {
                     }
                 })
                 .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=findOneByQuery").log("found Screening: ${body}")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        System.out.println();
-                    }
-                })
                 .choice()
                 .when(body().isEqualTo(null)).log("No screening found.")
                 .to("direct:checkScreening").endChoice()

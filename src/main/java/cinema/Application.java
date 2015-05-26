@@ -41,6 +41,7 @@ public class Application {
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
         camelAutoloadRoutes.add(CamelMailRoute.class);
+        camelAutoloadRoutes.add(CamelConsumeTicketRoute.class);
 //        camelAutoloadRoutes.add(CamelMongoToTwitterRoute.class);
 //        camelAutoloadRoutes.add(CamelMongoToFacebookRoute.class);
 //        camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
