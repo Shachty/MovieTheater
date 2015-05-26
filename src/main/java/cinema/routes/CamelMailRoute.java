@@ -31,11 +31,14 @@ public class CamelMailRoute extends RouteBuilder {
                         String message = "Dear " + ticket.getFirstName() + " " + ticket.getLastName() + ",\n" +
                                 "Thank you for your reservation at the movie Theater!\n\n" +
                                 "Details of your reservation: \n" +
+                                "Reservationnumber: " + ticket.getCustomerId() + "\n" +
                                 "Movie: " + ticket.getMovieName() + "\n" +
                                 "Theaterroom: " + ticket.getTheaterRoom() + "\n" +
                                 "Number of Tickets: " + ticket.getNumberOfPersons() + "\n" +
                                 "Overall price:" + ticket.getPricePerPerson().multiply(new BigDecimal(ticket.getNumberOfPersons())).toString() +
-                                " \n\nBest regards\nThe Movie Theater";
+                                " \n\nPlease show your reservationnumber at the cash desk.\n" +
+                                "Note that you have to come at least 30 minutes before the screening starts. Otherwise your reservation is going to be deleted.\n\n"+
+                                "Best regards\nThe Movie Theater";
                         exchange.getIn().setBody(message);
                     }
                 })
