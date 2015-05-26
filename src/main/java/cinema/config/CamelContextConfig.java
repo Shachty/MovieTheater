@@ -9,6 +9,7 @@ import org.apache.camel.impl.SimpleRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 /**
  * Created by Daniel on 17.05.2015.
@@ -31,6 +32,7 @@ public class CamelContextConfig {
     OrderService orderServiceBean;
 
     @Bean(name = "camelContext")
+    @Scope("singleton")
     public CamelContext camelContext(){
 
         //If camelContext messed with the Spring registrated beans, register it yourself using the simpleRegistry

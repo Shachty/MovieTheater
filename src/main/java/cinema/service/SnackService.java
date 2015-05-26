@@ -38,4 +38,8 @@ public class SnackService {
             snackDao.save(theSnack);
         }
     }
+
+    public List<Snack> getSnacks() {
+        return snackDao.findAll();
+    }
 }

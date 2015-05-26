@@ -1,6 +1,5 @@
 package cinema;
 
-import cinema.routes.CamelCsvToHibernateRoute;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -12,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
 
+import cinema.routes.*;
 
 @SpringBootApplication
 @EnableAsync
@@ -36,6 +36,18 @@ public class Application {
 
         camelAutoloadRoutes = new ArrayList<>();
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
+        camelAutoloadRoutes.add(CamelMongoRoute.class);
+        camelAutoloadRoutes.add(CamelTicketToHttpRoute.class);
+        camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
+        camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
+//        camelAutoloadRoutes.add(CamelMailRoute.class);
+//        camelAutoloadRoutes.add(CamelMongoToTwitterRoute.class);
+//        camelAutoloadRoutes.add(CamelMongoToFacebookRoute.class);
+//        camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
+//        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
+//        camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
+//        camelAutoloadRoutes.add(ScreeningToMongo.class);
+//        camelAutoloadRoutes.add(CamelCheckTicketRoute.class);
 
 //        for(String str : ctx.getBeanDefinitionNames()) {
 //            logger.info(str);
