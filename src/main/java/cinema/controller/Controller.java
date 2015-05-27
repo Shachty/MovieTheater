@@ -57,6 +57,8 @@ public class Controller {
     @Autowired
     CamelSupplierJsonToJsonRoute camelSupplierJsonToJsonRoute;
     @Autowired
+    CamelSupplierPublishSubscribeRoute camelSupplierPublishSubscribeRoute;
+    @Autowired
     ScreeningToMongo screeningToMongo;
     @Autowired
     CamelCheckTicketRoute camelCheckTicketRoute;
@@ -130,6 +132,14 @@ public class Controller {
             this.camelContext.addRoutes(routeBuilder);
         } catch (Exception e) {
             logger.error("Could not add route(supplierJsonToCsv): " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //CamelSupplierPublishSubscribeRoute
+        routeBuilder = this.camelSupplierPublishSubscribeRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route(supplierPublish): " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
         }
 
         //XMLFileToHttpRoute
