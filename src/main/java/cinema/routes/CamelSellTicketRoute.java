@@ -3,8 +3,10 @@ package cinema.routes;
 import cinema.dto.TicketDTO;
 import cinema.dto.mongo.ScreeningMongoDTO;
 import cinema.dto.mongo.TicketMongoDTO;
+import cinema.model.Screening;
 import cinema.model.Ticket;
 import cinema.model.TicketStatus;
+import cinema.processor.CheckScreeningProcessor;
 import cinema.processor.ScreeningUpdateProcessor;
 import cinema.processor.ResponseProcessor;
 import org.apache.camel.Exchange;
@@ -25,6 +27,8 @@ public class CamelSellTicketRoute extends RouteBuilder {
     ScreeningUpdateProcessor screeningUpdateProcessor;
     @Autowired
     ResponseProcessor responseProcessor;
+    @Autowired
+    CheckScreeningProcessor checkScreeningProcessor;
 
     @Override
     public void configure() throws Exception {
@@ -50,7 +54,7 @@ public class CamelSellTicketRoute extends RouteBuilder {
                                 ""
                         );
 
-                        exchange.getProperties().put("ticket",new TicketDTO(ticket));
+                        exchange.getProperties().put("ticket", new TicketDTO(ticket));
 
                         String query = "{'screening.time':'" + time + "','screening.theaterRoom.theaterRoomId':" + theaterRoomId + ",'screening.movie.movieName':'" + moviename + "'}";
                         exchange.getIn().setBody(query);
@@ -58,19 +62,22 @@ public class CamelSellTicketRoute extends RouteBuilder {
                     }
                 })
                 .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=findOneByQuery").log("found Screening: ${body}")
+                .process(checkScreeningProcessor)
                 .choice()
-                .when(body().isEqualTo(null)).log("No screening found.")
-                .to("direct:sellTicketInvalid").endChoice()
+                .when(header("ticketStatus").isEqualTo(TicketStatus.GOOD))
+                .wireTap("direct:sellTicket_GOOD")
+                .wireTap("direct:updateScreening")
+                .to("direct:persistTicket").endChoice()
+                .when(header("ticketStatus").isEqualTo(TicketStatus.FULL))
+                .to("direct:sellTicket_FULL").endChoice()
                 .otherwise()
-                .convertBodyTo(String.class)
-                .unmarshal().json(JsonLibrary.Jackson, ScreeningMongoDTO.class)
-                .to("direct:sellTicketValid");
+                .to("direct:sellTicket_INVALID");
 
-        from("direct:sellTicketValid")
+        from("direct:sellTicket_GOOD")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-                       ScreeningMongoDTO screeningMongoDTO = (ScreeningMongoDTO) exchange.getIn().getBody();
+                        ScreeningMongoDTO screeningMongoDTO = (ScreeningMongoDTO) exchange.getIn().getBody();
                         TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         ticketDTO.getTicket().setPricePerPerson(screeningMongoDTO.getScreening().getPricePerPerson());
                         exchange.getIn().setBody(ticketDTO);
@@ -82,19 +89,35 @@ public class CamelSellTicketRoute extends RouteBuilder {
                     public void process(Exchange exchange) throws Exception {
 
                         TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
-                        exchange.getIn().setBody(new TicketMongoDTO(null,ticketDTO.getTicket()));
+                        exchange.getIn().setBody(new TicketMongoDTO(null, ticketDTO.getTicket()));
                     }
                 })
                 .to("direct:toPdf");
 
-        from("direct:sellTicketInvalid")
+        from("direct:sellTicket_FULL")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
 
+                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
+                        Ticket ticket = ticketDTO.getTicket();
 
-                        String message = "There is no Screening for this.";
+                        String message = "The Screening you requested is sold out!";
+                        exchange.getIn().setBody(message);
+                    }
+                })
+                .process(responseProcessor);
 
+        from("direct:sellTicket_INVALID")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+
+                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
+                        Ticket ticket = ticketDTO.getTicket();
+
+                        String message = "There is no Screening for the movie: "+ticket.getMovieName() + "\n" +
+                                "in theaterroom: " + ticket.getTheaterRoom() + " at " + ticket.getTime() + "!";
                         exchange.getIn().setBody(message);
                     }
                 })
