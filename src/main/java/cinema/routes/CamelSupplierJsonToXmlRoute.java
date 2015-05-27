@@ -3,6 +3,7 @@ package cinema.routes;
 import cinema.dto.EnquiryDTO;
 import cinema.dto.OfferDTO;
 import cinema.dto.TicketDTO;
+import cinema.helper.RandomNumberProcessor;
 import cinema.helper.SupplierOfferProcessor;
 import cinema.model.*;
 import org.apache.camel.Exchange;
@@ -38,17 +39,13 @@ public class CamelSupplierJsonToXmlRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.xml"))
+                .process(new RandomNumberProcessor())
                 .marshal(jaxb)
                 .delay(simple("${in.header.waitingTime}"))
                 .log(simple("1 - ${in.header.waitingTime}").getText())
                 .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_1${property.CamelLoopIndex}?binary=true&password=OmaOpa_12"))//.recipientList(simple("file:src/main/resources/offers/offers_1${property.CamelLoopIndex}"))
                 .log(simple("written to ftpServer - offers_1${property.CamelLoopIndex}").getText());
 
-    }
-
-    private long getRandom(int time){
-        Random random = new Random();
-        return random.nextInt(time);
     }
 
 }
