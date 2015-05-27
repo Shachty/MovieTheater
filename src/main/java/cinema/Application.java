@@ -35,6 +35,7 @@ public class Application {
         CamelContext camelContext = ctx.getBean(org.apache.camel.impl.DefaultCamelContext.class);
 
         camelAutoloadRoutes = new ArrayList<>();
+        camelAutoloadRoutes.add(CamelHttpReservationRoute.class);
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelMongoRoute.class);
         camelAutoloadRoutes.add(CamelTicketToHttpRoute.class);
