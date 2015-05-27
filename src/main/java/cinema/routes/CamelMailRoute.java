@@ -5,8 +5,6 @@ import cinema.model.Ticket;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.model.dataformat.XmlJsonDataFormat;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

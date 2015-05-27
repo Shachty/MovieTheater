@@ -49,6 +49,7 @@ public class Application {
 //        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
 //        camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
         camelAutoloadRoutes.add(CamelCheckTicketRoute.class);
+        camelAutoloadRoutes.add(CamelSellTicketRoute.class);
 
 //        for(String str : ctx.getBeanDefinitionNames()) {
 //            logger.info(str);
