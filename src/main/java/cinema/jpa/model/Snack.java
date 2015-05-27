@@ -7,6 +7,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "CINEMA_Snack")
+@NamedQueries({ @NamedQuery(name = "@HQL_GET_ALL_SNACKS",
+        query = "from Snack s") })
 public class Snack {
 
     @Id
