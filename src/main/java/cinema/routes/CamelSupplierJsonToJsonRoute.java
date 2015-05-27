@@ -1,19 +1,10 @@
 package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
-import cinema.dto.OfferDTO;
-import cinema.helper.SupplierOfferProcessor;
-import cinema.model.Item;
-import cinema.model.Offer;
-import cinema.model.PricedItem;
-import cinema.model.Snack;
+import cinema.processor.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.spi.DataFormat;
 import org.springframework.stereotype.Component;
-
-import javax.xml.bind.JAXBContext;
 
 @Component
 public class CamelSupplierJsonToJsonRoute extends RouteBuilder {

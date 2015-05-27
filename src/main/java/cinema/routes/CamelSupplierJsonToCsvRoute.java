@@ -1,8 +1,8 @@
 package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
-import cinema.helper.SupplierCsvCreatorProcessor;
-import cinema.helper.SupplierOfferProcessor;
+import cinema.processor.SupplierCsvCreatorProcessor;
+import cinema.processor.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
