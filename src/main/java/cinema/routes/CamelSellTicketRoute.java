@@ -6,11 +6,12 @@ import cinema.dto.mongo.TicketMongoDTO;
 import cinema.model.Ticket;
 import cinema.model.TicketStatus;
 import cinema.processor.ScreeningUpdateProcessor;
-import cinema.processor.SetBodyToTicketProcessor;
+import cinema.processor.ResponseProcessor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.restlet.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class CamelSellTicketRoute extends RouteBuilder {
     @Autowired
     ScreeningUpdateProcessor screeningUpdateProcessor;
     @Autowired
-    SetBodyToTicketProcessor setBodyToTicketProcessor;
+    ResponseProcessor responseProcessor;
 
     @Override
     public void configure() throws Exception {
@@ -90,9 +91,13 @@ public class CamelSellTicketRoute extends RouteBuilder {
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-                        System.out.println();
-                    }
-                }).to("mock:toPdf");
 
+
+                        String message = "There is no Screening for this.";
+
+                        exchange.getIn().setBody(message);
+                    }
+                })
+                .process(responseProcessor);
     }
 }
