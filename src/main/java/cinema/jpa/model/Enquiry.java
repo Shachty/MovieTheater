@@ -10,16 +10,16 @@ import java.util.List;
 /**
  */
 @Entity
-@Table(name = "CINEMA_Order")
+@Table(name = "CINEMA_Entity")
 @NamedQueries({ @NamedQuery(name = "@HQL_GET_UNPROCESSED_ORDERS",
-        query = "from Order o where o.camelProcessed = false") })
-public class Order {
+        query = "from Enquiry o where o.camelProcessed = false") })
+public class Enquiry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToMany(cascade = CascadeType.PERSIST)
-    private List<OrderItem> items;
+    private List<Item> items;
     private boolean camelProcessed = false;
 
     public Long getId() {
@@ -30,11 +30,11 @@ public class Order {
         this.id = id;
     }
 
-    public List<OrderItem> getItems() {
+    public List<Item> getItems() {
         return this.items;
     }
 
-    public void setItems(List<OrderItem> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
@@ -46,7 +46,7 @@ public class Order {
         this.camelProcessed = bool;
     }
 
-    public void addItemToOrder(OrderItem item) {
+    public void addItemToOrder(Item item) {
         if(this.items == null) {
             this.items = new ArrayList<>();
         }
@@ -54,7 +54,7 @@ public class Order {
     }
 
     public void addSnackToOrder(Snack snack, Long quantityToOrder, String supplierId) {
-        OrderItem oi = new OrderItem();
+        Item oi = new Item();
         oi.setSnack(snack);
         oi.setOrderSnackNumber(quantityToOrder);
         oi.setSupplierProductId(supplierId);

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import java.util.Map;
 
 public class Item {
 
@@ -14,17 +13,20 @@ public class Item {
     private String supplierProductId;
     private Snack snack;
     private Long orderSnackNumber;
+    private Double price;
 
     @JsonCreator
     public Item(@JsonProperty("id") long id,
                 @JsonProperty("supplierProductId")String supplierProductId,
                 @JsonProperty("snack")Snack snack,
-                @JsonProperty("orderSnackNumber")Long orderSnackNumber
+                @JsonProperty("orderSnackNumber")Long orderSnackNumber,
+                @JsonProperty("price")Double price
     ) {
         this.id = id;
         this.supplierProductId = supplierProductId;
         this.snack = snack;
         this.orderSnackNumber = orderSnackNumber;
+        this.price = price;
     }
 
     @XmlAttribute
@@ -58,5 +60,13 @@ public class Item {
 
     public Long getOrderSnackNumber() {
         return this.orderSnackNumber;
+    }
+
+    @XmlElement
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    public Double getPrice() {
+        return price;
     }
 }

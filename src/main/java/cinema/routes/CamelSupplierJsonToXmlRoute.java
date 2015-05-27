@@ -2,6 +2,7 @@ package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
 import cinema.dto.OfferDTO;
+import cinema.processor.RandomNumberProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import cinema.model.*;
 import org.apache.camel.builder.RouteBuilder;
@@ -23,19 +24,21 @@ public class CamelSupplierJsonToXmlRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(new Class[]{OfferDTO.class, Offer.class, PricedItem.class, Item.class, Snack.class});
+        JAXBContext jaxbContext = JAXBContext.newInstance(new Class[]{OfferDTO.class, Offer.class, Item.class, Item.class, Snack.class});
         DataFormat jaxb = new JaxbDataFormat(jaxbContext);
 
-        from("file:src/main/resources/enquiries?noop=true")//from("ftp://user:root@localhost/a")
-                .loop(4).copy()
+        from("direct:supplierXml")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")//from("file:src/main/resources/enquiries?noop=true")
                 .log("got file from ftpServer - enquiries")
+                .loop(4).copy()
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.xml"))
+                .process(new RandomNumberProcessor())
                 .marshal(jaxb)
-                //.delay(new Random().nextInt(1000 * 10))
-                .recipientList(simple("file:src/main/resources/offers/offers_1${property.CamelLoopIndex}"))//.to("ftp://user:root@localhost/offers_1")
-                .log("written to ftpServer - offers_1X");
+                .delay(simple("${in.header.waitingTime}"))
+                .log(simple("1 - ${in.header.waitingTime}").getText())
+                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_1${property.CamelLoopIndex}?binary=true&password=OmaOpa_12"))//.recipientList(simple("file:src/main/resources/offers/offers_1${property.CamelLoopIndex}"))
+                .log(simple("written to ftpServer - offers_1${property.CamelLoopIndex}").getText());
 
     }
 
