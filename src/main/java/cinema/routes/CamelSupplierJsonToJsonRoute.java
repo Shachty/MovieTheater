@@ -21,13 +21,13 @@ public class CamelSupplierJsonToJsonRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("file:src/main/resources/enquiries_2?noop=true")//from("ftp://user:root@localhost/a")
-                .log("got file from ftpServer - enquiries")
+                .loop(4).copy()
+                .log("got file from ftpServer - enquiries_2")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.json"))
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
-                .to("file:src/main/resources/offers_2")//.to("ftp://user:root@localhost/offers_2")
-                .log("written to ftpServer - offers_2");
-
+                .recipientList(simple("file:src/main/resources/offers/offers_2${property.CamelLoopIndex}"))//.to("ftp://user:root@localhost/offers_2")
+                .log("written to ftpServer - offers_2X");
     }
 }

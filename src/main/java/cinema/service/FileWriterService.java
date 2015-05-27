@@ -1,4 +1,4 @@
-package cinema;
+package cinema.service;
 
 import org.springframework.stereotype.Service;
 

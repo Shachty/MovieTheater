@@ -1,6 +1,7 @@
 package cinema.config;
 
 import com.mongodb.*;
+import org.apache.camel.component.mongodb.MongoDbComponent;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +46,7 @@ public class MongoConfig {
     public MongoCredential mongoCredential(){
         return MongoCredential.createMongoCRCredential("shachty", "workflow", "workflow".toCharArray());
     }
-/*
+
     @Bean(name = "mongoBean")
     public Mongo mongoBean() throws Exception {
         try {
@@ -53,11 +54,14 @@ public class MongoConfig {
             mongo.getDB("workflow").authenticate("shachty","workflow".toCharArray());
             return mongo;
         } catch (UnknownHostException e) {
-            logger.error("Can not acces MongoClient. Message : " + e.getMessage());
+            logger.error("Can not access MongoClient. Message : " + e.getMessage());
         }
         throw new Exception();
-
-
     }
-*/
+
+    @Bean(name = "mongodb")
+    public MongoDbComponent mongodbBean() {
+        return new MongoDbComponent();
+    }
+
 }

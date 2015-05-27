@@ -49,6 +49,12 @@
             <version>5.11.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-fop</artifactId>
+            <version>2.15.1</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -112,6 +118,16 @@
             <artifactId>camel-http</artifactId>
             <version>2.15.1</version>
             <!-- use the same version as your Camel core version -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-restlet</artifactId>
+            <version>2.15.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-ftp</artifactId>
+            <version>2.15.1</version>
         </dependency>
 
 

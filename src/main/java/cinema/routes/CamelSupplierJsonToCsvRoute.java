@@ -14,14 +14,15 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("file:src/main/resources/enquiries_3?noop=true")//from("ftp://user:root@localhost/a")
-                .log("got file from ftpServer - enquiries")
+                .loop(4).copy()
+                .log("got file from ftpServer - enquiries_2")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .process(new SupplierCsvCreatorProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.csv"))
                 .marshal().csv()
-                .to("file:src/main/resources/offers_3")//.to("ftp://user:root@localhost/offers_2")
-                .log("written to ftpServer - offers_3");
+                .recipientList(simple("file:src/main/resources/offers/offers_3${property.CamelLoopIndex}"))//.to("ftp://user:root@localhost/offers_3")
+                .log("written to ftpServer - offers_3X");
 
     }
 }
