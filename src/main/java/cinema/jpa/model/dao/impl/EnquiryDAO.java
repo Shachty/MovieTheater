@@ -1,7 +1,7 @@
 package cinema.jpa.model.dao.impl;
 
-import cinema.jpa.model.Order;
-import cinema.jpa.model.dao.IOrderDAO;
+import cinema.jpa.model.Enquiry;
+import cinema.jpa.model.dao.IEnquiryDAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
@@ -10,15 +10,14 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 /**
  */
 @Component
-public class OrderDAO implements IOrderDAO {
+public class EnquiryDAO implements IEnquiryDAO {
 
-    private final Log log = LogFactory.getLog(OrderDAO.class);
+    private final Log log = LogFactory.getLog(EnquiryDAO.class);
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -27,30 +26,30 @@ public class OrderDAO implements IOrderDAO {
     public List findAll() {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         return session.
-        createQuery("from Order")
+        createQuery("from Enquiry")
                 .list();
     }
 
     public List findUnprocessed() {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         Query query = session.getNamedQuery("@HQL_GET_UNPROCESSED_ORDERS");
-        List<Order> list = query.list();
+        List<Enquiry> list = query.list();
         return list;
     }
 
     @Override
-    public Order save(Order order) {
+    public Enquiry save(Enquiry enquiry) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
-        session.saveOrUpdate(order);
-        log.info("saved order: "+order.getId());
-        return order;
+        session.saveOrUpdate(enquiry);
+        log.info("saved enquiry: "+ enquiry.getId());
+        return enquiry;
     }
 
     @Override
-    public void delete(Order order) {
+    public void delete(Enquiry enquiry) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
-        session.delete(order);
-        log.info("deleted order: "+order.getId());
+        session.delete(enquiry);
+        log.info("deleted enquiry: "+ enquiry.getId());
     }
 
 }

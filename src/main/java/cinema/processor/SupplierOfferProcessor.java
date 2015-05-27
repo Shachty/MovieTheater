@@ -5,7 +5,6 @@ import cinema.dto.OfferDTO;
 import cinema.model.Enquiry;
 import cinema.model.Item;
 import cinema.model.Offer;
-import cinema.model.PricedItem;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import static java.lang.Math.round;
 
 
 public class SupplierOfferProcessor implements Processor{
@@ -25,11 +22,13 @@ public class SupplierOfferProcessor implements Processor{
 
         Double price = getRandomPrice();
 
-        List<PricedItem> list = new ArrayList<PricedItem>();
+        List<Item> list = new ArrayList<Item>();
         Iterator i = enquiry.getItems().iterator();
 
         while (i.hasNext()) {
-            list.add(new PricedItem((Item) i.next(), getRandomPrice()));
+            Item item = (Item) i.next();
+            item.setPrice(getRandomPrice());
+            list.add(item);
         }
         Offer offer = new Offer(enquiry.getId(), list);
         exchange.getIn().setBody(new OfferDTO(offer), OfferDTO.class);

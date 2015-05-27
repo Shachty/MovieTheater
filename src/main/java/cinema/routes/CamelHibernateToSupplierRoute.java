@@ -2,12 +2,11 @@ package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
 import cinema.dto.ItemDTO;
-import cinema.helper.EnquiryAggregationStrategyProcessor;
+import cinema.processor.EnquiryAggregationStrategyProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.springframework.context.annotation.Bean;
-    import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -25,7 +24,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("jpa:cinema.jpa.model.Order?persistenceUnit=default&consumer.namedQuery=@HQL_GET_UNPROCESSED_ORDERS&consumeDelete=false")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_UNPROCESSED_ORDERS&consumeDelete=false")
             //.beanRef("orderService", "orderToSupplier")
                 .to("log:hibernate")
                 .to("mock:supplierOutput");

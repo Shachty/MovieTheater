@@ -5,10 +5,12 @@ import cinema.dto.TicketDTO;
 import cinema.model.Screening;
 import cinema.model.Ticket;
 import cinema.model.TicketStatus;
+import cinema.processor.CheckScreeningProcessor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +18,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CamelCheckTicketRoute extends RouteBuilder {
+
+    @Autowired
+    CheckScreeningProcessor checkScreeningProcessor;
+
     @Override
     public void configure() throws Exception {
 
@@ -47,34 +53,7 @@ public class CamelCheckTicketRoute extends RouteBuilder {
                 .to("direct:checkScreening");
 
         from("direct:checkScreening")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        Screening screening = null;
-                        try {
-                            ScreeningMongoDTO screeningMongoDTO = (ScreeningMongoDTO) exchange.getIn().getBody();
-                            screening = screeningMongoDTO.getScreening();
-                        } catch (Exception e) {
-                            System.out.println("No screening found");
-                        }
-
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperties().get("ticket");
-                        Ticket ticket = ticketDTO.getTicket();
-
-                        if (screening == null) {
-                            ticket.setTicketStatus(TicketStatus.INVALID);
-                        } else if (screening.getTheaterRoom().getAvailableSeats() < ticket.getNumberOfPersons()) {
-                            ticket.setTicketStatus(TicketStatus.FULL);
-                        } else {
-                            ticket.setTicketStatus(TicketStatus.GOOD);
-                            ticket.setPricePerPerson(screening.getPricePerPerson());
-
-                        }
-
-                        exchange.getIn().setBody(ticketDTO);
-                        exchange.getIn().setHeader("ticketStatus", ticket.getTicketStatus());
-                    }
-                })
+                .process(checkScreeningProcessor)
                 .choice()
                 .when(header("ticketStatus").isEqualTo(TicketStatus.GOOD))
                 .wireTap("direct:mail_GOOD")

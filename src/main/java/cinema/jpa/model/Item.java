@@ -7,8 +7,8 @@ import java.util.List;
 /**
  */
 @Entity
-@Table(name = "CINEMA_OrderItem")
-public class OrderItem {
+@Table(name = "CINEMA_Item")
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -29,7 +29,7 @@ public class Snack {
         return this.number;
     }
 
-//    public List<Order> getOrders() {
+//    public List<Enquiry> getOrders() {
 //        return this.orders;
 //    }
 
@@ -45,7 +45,7 @@ public class Snack {
         this.number = param;
     }
 
-//    public void setOrders(List<Order> param) {
+//    public void setOrders(List<Enquiry> param) {
 //        this.orders = param;
 //    }
 
