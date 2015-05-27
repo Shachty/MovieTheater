@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Date;
 import java.util.List;
@@ -28,8 +29,6 @@ public class Controller {
 
     @Autowired
     FileWriterService fileWriterService;
-    @Autowired
-    TicketReservationService ticketReservationService;
 
     @Autowired
     CoffeeService coffeeService;
@@ -88,42 +87,21 @@ public class Controller {
 
     }
 
-    @RequestMapping("/do-reservation")
-    public String doReservation(@RequestParam("firstname") String firstName,
-                                @RequestParam("lastname") String lastName,
-                                @RequestParam("numberofpersons") int numberOfPersons,
-                                @RequestParam("theaterroom") int theaterRoom,
-                                @RequestParam("moviename") String movieName,
-                                @RequestParam("time") String time,
-                                @RequestParam("e-mail") String mail){
-
-
-        this.ticketReservationService.createReservation(
-                firstName,
-                lastName,
-                movieName,
-                mail,
-                theaterRoom,
-                numberOfPersons,
-                time);
-
-
-        return "We received your reservation. You will get a confirmation or declining message on your provided e-mail adress soon.";
-    }
-
-    @RequestMapping("/consumeReservation")
-    public String consumeReservation(@RequestParam("reservationNumber") int reservationNumber){
-
-        return "ticket";
-    }
-
-
     @RequestMapping("/hello")
     public String testIfAsync() {
 
         logger.info("testIfAsync");
 
         return "yess";
+    }
+
+    @RequestMapping("/do-reservation")
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY/*this is 301*/)
+    public RedirectView reserve() {
+        RedirectView rv = new RedirectView();
+        rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+        rv.setUrl("http://localhost:8081/restlet/do-reservation");
+        return rv;
     }
 
     @RequestMapping("/reserve")
