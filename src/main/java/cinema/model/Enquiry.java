@@ -4,11 +4,8 @@ package cinema.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Enquiry {
@@ -35,7 +32,7 @@ public class Enquiry {
     public void setItems(List<Item> items) {this.items = items;}
 
 
-    public void addItemToOffer(Item item, double price) {
+    public void addItemToOffer(Item item) {
         if(this.items == null) {
             this.items = new ArrayList<>();
         }
