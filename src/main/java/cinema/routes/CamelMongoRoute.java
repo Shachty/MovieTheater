@@ -48,7 +48,8 @@ public class CamelMongoRoute extends RouteBuilder {
 
                     }
                 })
-                .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=update");
+                .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=update")
+                .to("direct:socialMedia");
     }
 
 
