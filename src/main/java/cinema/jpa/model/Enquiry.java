@@ -10,7 +10,7 @@ import java.util.List;
 /**
  */
 @Entity
-@Table(name = "CINEMA_Entity")
+@Table(name = "CINEMA_Enquiry")
 @NamedQueries({ @NamedQuery(name = "@HQL_GET_UNPROCESSED_ORDERS",
         query = "from Enquiry o where o.camelProcessed = false") })
 public class Enquiry {
