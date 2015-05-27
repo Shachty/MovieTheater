@@ -1,13 +1,7 @@
 package cinema.routes;
 
-import cinema.dto.EnquiryDTO;
-import cinema.helper.SupplierCsvCreatorProcessor;
-import cinema.helper.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
-
-import java.util.Random;
 
 @Component
 public class CamelSupplierPublishSubscribeRoute extends RouteBuilder {

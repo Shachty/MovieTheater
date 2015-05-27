@@ -1,8 +1,8 @@
 package cinema.service;
 
-import cinema.jpa.model.Order;
-import cinema.jpa.model.OrderItem;
-import cinema.jpa.model.dao.impl.OrderDAO;
+import cinema.jpa.model.Enquiry;
+import cinema.jpa.model.Item;
+import cinema.jpa.model.dao.impl.EnquiryDAO;
 import cinema.jpa.model.dao.impl.SnackDAO;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
@@ -27,11 +27,11 @@ public class OrderService {
     SnackDAO theSnackDao;
 
     @Autowired
-    OrderDAO theOrderDao;
+    EnquiryDAO theOrderDao;
 
-    public List<Order> getOrders() {
+    public List<Enquiry> getOrders() {
         this.log.info("Returning Orders");
-        List<Order> returnVal = theOrderDao.findAll();
+        List<Enquiry> returnVal = theOrderDao.findAll();
         this.log.debug(returnVal);
         return returnVal;
 
@@ -40,24 +40,24 @@ public class OrderService {
 
     @Transactional
     public void orderToSupplier(@Body List body, Exchange exchange) {
-        ArrayList<OrderItem> items = new ArrayList<>();
+        ArrayList<Item> items = new ArrayList<>();
 
-        OrderItem item1 = new OrderItem();
-        OrderItem item2 = new OrderItem();
-        OrderItem item3 = new OrderItem();
+        Item item1 = new Item();
+        Item item2 = new Item();
+        Item item3 = new Item();
 
-        Order theOrder = new Order();
+        Enquiry theEnquiry = new Enquiry();
 
         items.add(item1);
         items.add(item2);
         items.add(item3);
 
-        theOrder.setItems(items);
+        theEnquiry.setItems(items);
 
-        theOrderDao.save(theOrder);
+        theOrderDao.save(theEnquiry);
 
-        Long lastId = theOrder.getId();
-        theOrder.getItems().get(1).getId();
+        Long lastId = theEnquiry.getId();
+        theEnquiry.getItems().get(1).getId();
 
     }
 }

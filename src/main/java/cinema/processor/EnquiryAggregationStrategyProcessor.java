@@ -1,4 +1,4 @@
-package cinema.helper;
+package cinema.processor;
 
 /**
  * Created by Jakob on 25.05.2015.
