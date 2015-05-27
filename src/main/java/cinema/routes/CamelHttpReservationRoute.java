@@ -15,6 +15,6 @@ public class CamelHttpReservationRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("restlet:http://localhost:8081/restlet/do-reservation?restletMethods=POST,DELETE,PUT")
-                .process(theProcessor).to("mock:do-reservation");
+                .process(theProcessor);
     }
 }
