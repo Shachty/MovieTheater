@@ -11,26 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Created by theKernel on 19.05.2015.
+ * Created by Tyler on 19.05.2015.
  */
 @Component
 public class SnackService {
 
     private final Log log = LogFactory.getLog(SnackService.class);
 
-    @PersistenceContext
-    EntityManager theManager;
-
     @Autowired
     SnackDAO snackDao;
 
     @Transactional
-    public void importCsvList(@Header("user") String user, @Body List body, Exchange exchange) {
+    public void importCsvList(@Body List body) {
         log.debug("importCsv...");
 
         for(int i = 0; i < body.size(); i++) {
@@ -40,5 +35,9 @@ public class SnackService {
             theSnack.setNumber(new Double((String) bodyLineItem.get(1)));
             snackDao.save(theSnack);
         }
+    }
+
+    public List<Snack> getSnacks() {
+        return snackDao.findAll();
     }
 }
