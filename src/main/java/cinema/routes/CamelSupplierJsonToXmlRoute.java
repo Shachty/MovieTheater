@@ -5,6 +5,7 @@ import cinema.dto.OfferDTO;
 import cinema.dto.TicketDTO;
 import cinema.helper.RandomNumberProcessor;
 import cinema.helper.SupplierOfferProcessor;
+import cinema.processor.SupplierOfferProcessor;
 import cinema.model.*;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -12,13 +13,10 @@ import org.apache.camel.builder.RouteBuilder;
 
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.model.dataformat.XmlJsonDataFormat;
 import org.apache.camel.spi.DataFormat;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import java.util.*;
 
 /**
  * Created by Asus on 25.05.2015.

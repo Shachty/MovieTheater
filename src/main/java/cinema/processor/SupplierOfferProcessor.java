@@ -1,4 +1,4 @@
-package cinema.helper;
+package cinema.processor;
 
 import cinema.dto.EnquiryDTO;
 import cinema.dto.OfferDTO;

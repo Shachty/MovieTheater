@@ -4,13 +4,14 @@ import cinema.dto.EnquiryDTO;
 import cinema.helper.RandomNumberProcessor;
 import cinema.helper.SupplierCsvCreatorProcessor;
 import cinema.helper.SupplierOfferProcessor;
+import cinema.processor.SupplierCsvCreatorProcessor;
+import cinema.processor.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Random;
-
 
 @Component
 public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
@@ -32,5 +33,4 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
                 .log(simple("written to ftpServer - offers_3${property.CamelLoopIndex}").getText());
 
     }
-
 }
