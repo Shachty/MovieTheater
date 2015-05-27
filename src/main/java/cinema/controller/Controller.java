@@ -1,11 +1,9 @@
 package cinema.controller;
 
-import cinema.FileWriterService;
+import cinema.service.FileWriterService;
 import cinema.jpa.model.Snack;
 import cinema.service.SnackService;
-import cinema.TicketReservationService;
 import cinema.routes.*;
-import cinema.service.CoffeeService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -17,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,8 +27,6 @@ public class Controller {
     @Autowired
     FileWriterService fileWriterService;
 
-    @Autowired
-    CoffeeService coffeeService;
     @Autowired
     SnackService snackService;
 

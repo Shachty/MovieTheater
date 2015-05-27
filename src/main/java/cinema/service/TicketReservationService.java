@@ -1,12 +1,9 @@
-package cinema;
+package cinema.service;
 
 import cinema.model.Ticket;
 import cinema.model.TicketStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by Daniel on 24.05.2015.
