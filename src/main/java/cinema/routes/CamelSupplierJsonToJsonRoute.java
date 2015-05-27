@@ -1,21 +1,11 @@
 package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
-import cinema.dto.OfferDTO;
-import cinema.helper.RandomNumberProcessor;
-import cinema.helper.SupplierOfferProcessor;
-import cinema.model.Item;
-import cinema.model.Offer;
-import cinema.model.PricedItem;
-import cinema.model.Snack;
+import cinema.processor.RandomNumberProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
-
-import javax.xml.bind.JAXBContext;
-import java.util.Date;
-import java.util.Random;
 
 @Component
 public class CamelSupplierJsonToJsonRoute extends RouteBuilder {

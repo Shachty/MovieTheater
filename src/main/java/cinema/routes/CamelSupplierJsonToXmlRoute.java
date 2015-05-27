@@ -2,13 +2,9 @@ package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
 import cinema.dto.OfferDTO;
-import cinema.dto.TicketDTO;
-import cinema.helper.RandomNumberProcessor;
-import cinema.helper.SupplierOfferProcessor;
+import cinema.processor.RandomNumberProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import cinema.model.*;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
