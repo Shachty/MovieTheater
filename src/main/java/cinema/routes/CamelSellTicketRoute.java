@@ -9,6 +9,11 @@ import cinema.model.TicketStatus;
 import cinema.processor.CheckScreeningProcessor;
 import cinema.processor.ScreeningUpdateProcessor;
 import cinema.processor.ResponseProcessor;
+import cinema.service.CustomerIdNumberService;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.BasicDBObject;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -16,6 +21,8 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.restlet.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * Created by Daniel on 27.05.2015.
@@ -29,6 +36,8 @@ public class CamelSellTicketRoute extends RouteBuilder {
     ResponseProcessor responseProcessor;
     @Autowired
     CheckScreeningProcessor checkScreeningProcessor;
+    @Autowired
+    CustomerIdNumberService customerIdNumberService;
 
     @Override
     public void configure() throws Exception {
@@ -50,18 +59,24 @@ public class CamelSellTicketRoute extends RouteBuilder {
                                 theaterRoomId,
                                 moviename,
                                 time,
-                                Long.MAX_VALUE,
+                                customerIdNumberService.getNextCustomerNumber(),
                                 ""
                         );
 
                         exchange.getProperties().put("ticket", new TicketDTO(ticket));
 
-                        String query = "{'screening.time':'" + time + "','screening.theaterRoom.theaterRoomId':" + theaterRoomId + ",'screening.movie.movieName':'" + moviename + "'}";
+
+                        BasicDBObject query = new BasicDBObject().append("screening.time", time).append("screening.theaterRoom.theaterRoomId", theaterRoomId).append("screening.movie.movieName", moviename);
+
+                        //   exchange.getIn().setBody(query);
+
                         exchange.getIn().setBody(query);
+                        exchange.getIn().getHeaders().put("isReservation", false);
 
                     }
                 })
-                .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=findOneByQuery").log("found Screening: ${body}")
+           .to("direct:ticketChecker");
+            /*    .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=findOneByQuery").log("found Screening: ${body}")
                 .process(checkScreeningProcessor)
                 .choice()
                 .when(header("ticketStatus").isEqualTo(TicketStatus.GOOD))
@@ -72,55 +87,7 @@ public class CamelSellTicketRoute extends RouteBuilder {
                 .to("direct:sellTicket_FULL").endChoice()
                 .otherwise()
                 .to("direct:sellTicket_INVALID");
+*/
 
-        from("direct:sellTicket_GOOD")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        ScreeningMongoDTO screeningMongoDTO = (ScreeningMongoDTO) exchange.getIn().getBody();
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
-                        ticketDTO.getTicket().setPricePerPerson(screeningMongoDTO.getScreening().getPricePerPerson());
-                        exchange.getIn().setBody(ticketDTO);
-                    }
-                })
-                .process(screeningUpdateProcessor)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
-                        exchange.getIn().setBody(new TicketMongoDTO(null, ticketDTO.getTicket()));
-                    }
-                })
-                .to("direct:toPdf");
-
-        from("direct:sellTicket_FULL")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
-                        Ticket ticket = ticketDTO.getTicket();
-
-                        String message = "The Screening you requested is sold out!";
-                        exchange.getIn().setBody(message);
-                    }
-                })
-                .process(responseProcessor);
-
-        from("direct:sellTicket_INVALID")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
-                        Ticket ticket = ticketDTO.getTicket();
-
-                        String message = "There is no Screening for the movie: "+ticket.getMovieName() + "\n" +
-                                "in theaterroom: " + ticket.getTheaterRoom() + " at " + ticket.getTime() + "!";
-                        exchange.getIn().setBody(message);
-                    }
-                })
-                .process(responseProcessor);
     }
 }

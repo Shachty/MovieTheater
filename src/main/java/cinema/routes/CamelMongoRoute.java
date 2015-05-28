@@ -1,6 +1,9 @@
 package cinema.routes;
 
 import cinema.dto.TicketDTO;
+import cinema.dto.mongo.ScreeningMongoDTO;
+import cinema.dto.mongo.TicketMongoDTO;
+import cinema.jpa.model.Screening;
 import cinema.model.Ticket;
 import cinema.processor.ScreeningUpdateProcessor;
 import com.mongodb.BasicDBObject;
@@ -27,27 +30,19 @@ public class CamelMongoRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("direct:persistTicket")
-                .to("mongodb:mongoBean?database=workflow&collection=tickets&operation=insert").log("written to mongoDB");
-
-        from("direct:updateScreening")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getIn().getBody();
-                        Ticket ticket = ticketDTO.getTicket();
+                        TicketDTO ticketDto = (TicketDTO) exchange.getProperty("ticket");
+                        Ticket ticket = ticketDto.getTicket();
 
-                        BasicDBObject increment =
-                                new BasicDBObject().append("$inc",
-                                        new BasicDBObject().append("screening.theaterRoom.availableSeats", ticket.getNumberOfPersons()*-1));
-
-                       BasicDBObject element = new BasicDBObject().append("screening.time",ticket.getTime())
-                               .append("screening.movie.movieName",ticket.getMovieName())
-                               .append("screening.theaterRoom.theaterRoomId", ticket.getTheaterRoom());
-
-                        exchange.getIn().setBody(new Object[]{element,increment});
-
+                        exchange.getIn().setBody(ticket);
                     }
                 })
+                .to("mongodb:mongoBean?database=workflow&collection=tickets&operation=insert").log("written to mongoDB");
+
+        from("direct:updateScreening")
+                .process(screeningUpdateProcessor)
                 .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=update")
                 .to("direct:socialMedia");
     }

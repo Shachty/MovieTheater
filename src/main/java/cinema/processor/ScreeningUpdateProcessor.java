@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ScreeningUpdateProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
-        TicketDTO ticketDTO = (TicketDTO) exchange.getIn().getBody();
+        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
         Ticket ticket = ticketDTO.getTicket();
 
         BasicDBObject increment =

@@ -40,7 +40,7 @@ public class CheckScreeningProcessor implements Processor {
 
         }
 
-        exchange.getIn().setBody(ticketDTO);
+//        exchange.getIn().setBody(ticketDTO);
         exchange.getIn().setHeader("ticketStatus", ticket.getTicketStatus());
     }
 }

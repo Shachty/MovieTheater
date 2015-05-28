@@ -19,9 +19,6 @@ public class ReservationProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        // the Restlet request should be available if neeeded
-        //Request request = exchange.getIn().getHeader(RestletConstants.RESTLET_REQUEST, Request.class);
-        Response response = exchange.getIn().getHeader(RestletConstants.RESTLET_RESPONSE, Response.class);
 
         try {
             String firstName = exchange.getIn().getHeader("firstname").toString();
@@ -42,14 +39,14 @@ public class ReservationProcessor implements Processor {
                     time);
 
             // use Restlet API to create the response
-            response.setStatus(Status.SUCCESS_OK);
+  /*          response.setStatus(Status.SUCCESS_OK);
             response.setEntity("<response><message>We received your reservation. You will get a confirmation or declining message on your provided e-mail address soon.</message></response>", MediaType.TEXT_XML);
-
+*/
         } catch (Exception e) {
-            // use Restlet API to create the response
+      /*      // use Restlet API to create the response
             response.setStatus(Status.CLIENT_ERROR_NOT_ACCEPTABLE);
             response.setEntity("<response><message>missing fields</message></response>", MediaType.TEXT_XML);
-        }
-        exchange.getOut().setBody(response);
+      */  }
+    //    exchange.getOut().setBody(response);
     }
 }

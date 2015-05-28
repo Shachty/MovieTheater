@@ -21,7 +21,7 @@ public class CamelMailRoute extends RouteBuilder {
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getIn().getBody();
+                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         Ticket ticket = ticketDTO.getTicket();
 
                         exchange.getProperties().put("mail", ticket.getMail());
@@ -81,7 +81,13 @@ public class CamelMailRoute extends RouteBuilder {
                 .to("direct:mail");
 
         from("direct:mail")
-                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Your reservation."));
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println();
+                    }
+                })
+                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Your reservation&contentType=text/html."));
 
     }
 
