@@ -35,7 +35,6 @@ public class CamelMailRoute extends RouteBuilder {
                                 "Number of Tickets: " + ticket.getNumberOfPersons() + "\n" +
                                 "Overall price:" + ticket.getPricePerPerson().multiply(new BigDecimal(ticket.getNumberOfPersons())).toString() +
                                 " \n\nPlease show your reservationnumber at the cash desk.\n" +
-                                "Note that you have to come at least 30 minutes before the screening starts. Otherwise your reservation is going to be deleted.\n\n"+
                                 "Best regards\nThe Movie Theater";
                         exchange.getIn().setBody(message);
                     }

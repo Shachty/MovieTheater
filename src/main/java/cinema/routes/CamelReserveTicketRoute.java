@@ -40,8 +40,8 @@ public class CamelReserveTicketRoute extends RouteBuilder {
 
                         Ticket ticket = new Ticket(
                                 TicketStatus.RESERVATION_IN_PROGRESS,
-                                exchange.getIn().getHeader("firstname").toString(),
-                                exchange.getIn().getHeader("lastname").toString(),
+                                exchange.getIn().getHeader("first name").toString(),
+                                exchange.getIn().getHeader("last name").toString(),
                                 Integer.parseInt(exchange.getIn().getHeader("numberofpersons").toString()),
                                 theaterRoomId,
                                 moviename,
