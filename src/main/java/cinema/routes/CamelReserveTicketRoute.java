@@ -7,6 +7,7 @@ import cinema.model.Ticket;
 import cinema.model.TicketStatus;
 import cinema.processor.CheckScreeningProcessor;
 import cinema.processor.ReservationProcessor;
+import cinema.processor.ResponseProcessor;
 import cinema.service.CustomerIdNumberService;
 import com.mongodb.BasicDBObject;
 import org.apache.camel.Exchange;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class CamelReserveTicketRoute extends RouteBuilder {
 
     @Autowired
-    ReservationProcessor theProcessor;
+    ResponseProcessor responseProcessor;
     @Autowired
     CustomerIdNumberService customerIdNumberService;
     @Override
@@ -34,58 +35,65 @@ public class CamelReserveTicketRoute extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
 
-                        String time = exchange.getIn().getHeader("time").toString();
-                        int theaterRoomId = Integer.parseInt(exchange.getIn().getHeader("theaterroom").toString());
-                        String moviename = exchange.getIn().getHeader("moviename").toString();
+                        String errorMessage = "";
 
-                        Ticket ticket = new Ticket(
-                                TicketStatus.RESERVATION_IN_PROGRESS,
-                                exchange.getIn().getHeader("first name").toString(),
-                                exchange.getIn().getHeader("last name").toString(),
-                                Integer.parseInt(exchange.getIn().getHeader("numberofpersons").toString()),
-                                theaterRoomId,
-                                moviename,
-                                time,
-                                customerIdNumberService.getNextCustomerNumber(),
-                                exchange.getIn().getHeader("e-mail").toString()
-                        );
+                        if (exchange.getIn().getHeader("time").equals("")) {
+                            errorMessage += "The time is missing. + \n";
+                        }
+                        if (exchange.getIn().getHeader("theaterroom").equals("")) {
+                            errorMessage += "The Theaterroom id is missing. \n";
+                        }
+                        if (exchange.getIn().getHeader("moviename").equals("")) {
+                            errorMessage += "The name of the movie is missing. \n";
+                        }
+                        if (exchange.getIn().getHeader("first name").equals("")) {
+                            errorMessage += "Please enter your first name. \n";
+                        }
+                        if (exchange.getIn().getHeader("last name").equals("")) {
+                            errorMessage += "Please enter your last name.  \n";
+                        }
+                        if (exchange.getIn().getHeader("numberofpersons").equals("")) {
+                            errorMessage += "Please enter the number of persons that want to reserve a ticket for this screening. \n";
+                        }
+                        if (exchange.getIn().getHeader("e-mail").equals("")) {
+                            errorMessage += "Please enter your e-mail adress.";
+                        }
 
-                        exchange.getProperties().put("ticket", new TicketDTO(ticket));
+                        if (!errorMessage.equals("")) {
+                            exchange.getIn().setHeader("errorMessage", errorMessage);
+                            exchange.getIn().setBody(errorMessage);
+                        } else {
+                            String time = exchange.getIn().getHeader("time").toString();
+                            int theaterRoomId = Integer.parseInt(exchange.getIn().getHeader("theaterroom").toString());
+                            String moviename = exchange.getIn().getHeader("moviename").toString();
 
-                        BasicDBObject query = new BasicDBObject().append("screening.time",time).append("screening.theaterRoom.theaterRoomId",theaterRoomId).append("screening.movie.movieName",moviename);
 
-                        exchange.getIn().setBody(query);
-                        exchange.getIn().getHeaders().put("isReservation",true);
+                            Ticket ticket = new Ticket(
+                                    TicketStatus.RESERVATION_IN_PROGRESS,
+                                    exchange.getIn().getHeader("first name").toString(),
+                                    exchange.getIn().getHeader("last name").toString(),
+                                    Integer.parseInt(exchange.getIn().getHeader("numberofpersons").toString()),
+                                    theaterRoomId,
+                                    moviename,
+                                    time,
+                                    customerIdNumberService.getNextCustomerNumber(),
+                                    exchange.getIn().getHeader("e-mail").toString()
+                            );
 
+                            exchange.getProperties().put("ticket", new TicketDTO(ticket));
+
+                            BasicDBObject query = new BasicDBObject().append("screening.time", time).append("screening.theaterRoom.theaterRoomId", theaterRoomId).append("screening.movie.movieName", moviename);
+
+                            exchange.getIn().setBody(query);
+                            exchange.getIn().getHeaders().put("isReservation", true);
+
+                        }
                     }
                 })
-                .to("direct:ticketChecker");
-        /*
-        from("file:src/main/resources/tickets?noop=true")
-                .unmarshal().json(JsonLibrary.Jackson, TicketDTO.class)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        System.out.println();
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getIn().getBody();
-                        Ticket ticket = ticketDTO.getTicket();
-                        String moviename = ticket.getMovieName();
-                        int theaterRoomId = ticket.getTheaterRoom();
-                        String time = ticket.getTime();
-
-                        exchange.getProperties().put("ticket", ticketDTO);
-
-                        BasicDBObject query = new BasicDBObject().append("screening.time", time).append("screening.theaterRoom.theaterRoomId", theaterRoomId).append("screening.movie.movieName", moviename);
+                .choice().when(header("errorMessage").isNull()).to("direct:ticketChecker").endChoice()
+                .otherwise().process(responseProcessor);
 
 
-                        exchange.getIn().setBody(query);
-
-                        exchange.getIn().getHeaders().put("isReservation", true);
-                    }
-                })
-                .to("direct:ticketChecker");
-
-*/
 
 
 

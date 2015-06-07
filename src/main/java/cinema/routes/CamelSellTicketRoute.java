@@ -47,47 +47,74 @@ public class CamelSellTicketRoute extends RouteBuilder {
                     @Override
                     public void process(Exchange exchange) throws Exception {
 
-                        String time = exchange.getIn().getHeader("time").toString();
-                        int theaterRoomId = Integer.parseInt(exchange.getIn().getHeader("theaterroom").toString());
-                        String moviename = exchange.getIn().getHeader("moviename").toString();
+                        String errorMessage = "";
 
-                        Ticket ticket = new Ticket(
-                                TicketStatus.BUYING_IN_PROGRESS,
-                                exchange.getIn().getHeader("first name").toString(),
-                                exchange.getIn().getHeader("last name").toString(),
-                                Integer.parseInt(exchange.getIn().getHeader("numberofpersons").toString()),
-                                theaterRoomId,
-                                moviename,
-                                time,
-                                customerIdNumberService.getNextCustomerNumber(),
-                                ""
-                        );
+                        if (exchange.getIn().getHeader("time").equals("")) {
+                            errorMessage += "The time is missing. \n";
+                        }
+                        if (exchange.getIn().getHeader("theaterroom").equals("")) {
+                            errorMessage += "The Theaterroom id is missing. \n";
+                        }
+                        if (exchange.getIn().getHeader("moviename").equals("")) {
+                            errorMessage += "The name of the movie is missing. \n";
+                        }
+                        if (exchange.getIn().getHeader("first name").equals("")) {
+                            errorMessage += "Please enter the first name of the person that wants to buy the ticket. \n";
+                        }
+                        if (exchange.getIn().getHeader("last name").equals("")) {
+                            errorMessage += "Please enter the last name of the person that wants to buy the ticket.\n";
+                        }
+                        if (exchange.getIn().getHeader("numberofpersons").equals("")) {
+                            errorMessage += "Please enter the number of persons that want to reserve a ticket for this screening..+ \n";
+                        }
+                        if (!errorMessage.equals("")) {
+                            exchange.getIn().setHeader("errorMessage", errorMessage);
+                            exchange.getIn().setBody(errorMessage);
+                        } else {
 
-                        exchange.getProperties().put("ticket", new TicketDTO(ticket));
+
+                            String time = exchange.getIn().getHeader("time").toString();
+                            int theaterRoomId = Integer.parseInt(exchange.getIn().getHeader("theaterroom").toString());
+                            String moviename = exchange.getIn().getHeader("moviename").toString();
+
+                            Ticket ticket = new Ticket(
+                                    TicketStatus.BUYING_IN_PROGRESS,
+                                    exchange.getIn().getHeader("first name").toString(),
+                                    exchange.getIn().getHeader("last name").toString(),
+                                    Integer.parseInt(exchange.getIn().getHeader("numberofpersons").toString()),
+                                    theaterRoomId,
+                                    moviename,
+                                    time,
+                                    customerIdNumberService.getNextCustomerNumber(),
+                                    ""
+                            );
+
+                            exchange.getProperties().put("ticket", new TicketDTO(ticket));
 
 
-                        BasicDBObject query = new BasicDBObject().append("screening.time", time).append("screening.theaterRoom.theaterRoomId", theaterRoomId).append("screening.movie.movieName", moviename);
+                            BasicDBObject query = new BasicDBObject().append("screening.time", time).append("screening.theaterRoom.theaterRoomId", theaterRoomId).append("screening.movie.movieName", moviename);
 
-                        //   exchange.getIn().setBody(query);
+                            //   exchange.getIn().setBody(query);
 
-                        exchange.getIn().setBody(query);
-                        exchange.getIn().getHeaders().put("isReservation", false);
+                            exchange.getIn().setBody(query);
+                            exchange.getIn().getHeaders().put("isReservation", false);
 
+                        }
                     }
                 })
-           .to("direct:ticketChecker");
-            /*    .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=findOneByQuery").log("found Screening: ${body}")
-                .process(checkScreeningProcessor)
-                .choice()
-                .when(header("ticketStatus").isEqualTo(TicketStatus.GOOD))
-                .wireTap("direct:sellTicket_GOOD")
-                .wireTap("direct:updateScreening")
-                .to("direct:persistTicket").endChoice()
-                .when(header("ticketStatus").isEqualTo(TicketStatus.FULL))
-                .to("direct:sellTicket_FULL").endChoice()
+                .choice().when(header("errorMessage").isNull()).process(new Processor() {
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                System.out.println();
+            }
+        }).to("direct:ticketChecker").endChoice()
                 .otherwise()
-                .to("direct:sellTicket_INVALID");
-*/
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println();
+                    }
+                }).process(responseProcessor);
 
     }
 }
