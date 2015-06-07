@@ -3,6 +3,7 @@ package cinema.routes;
 import cinema.config.FOPConfig;
 import cinema.dto.mongo.TicketMongoDTO;
 import cinema.model.Ticket;
+import com.mongodb.BasicDBObject;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -27,7 +28,7 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
 
 
                         int reservationNumber = Integer.parseInt(exchange.getIn().getHeader("CamelHttpQuery").toString());
-                        String query = "{'ticket.customerId':" + reservationNumber + "}";
+                        BasicDBObject query = new BasicDBObject().append("ticket.customerId",reservationNumber);
                         exchange.getIn().setBody(query);
                         exchange.getProperties().put("query", query);
                     }
