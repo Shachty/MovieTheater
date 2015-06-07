@@ -4,13 +4,25 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset1" name="XML Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/spring-config.xml</file>
-          <file>file://$MODULE_DIR$/src/main/java/cinema/Application.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/cinema/config/MongoConfig.java</file>
           <file>jar://$MAVEN_REPOSITORY$/com/atlassian/crowd/crowd-integration-client/2.6.4/crowd-integration-client-2.6.4.jar!/applicationContext-CrowdClient.xml</file>
           <file>file://$MAVEN_REPOSITORY$/com/atlassian/crowd/crowd-integration-client/2.6.4/crowd-integration-client-2.6.4.jar</file>
-          <file>file://$MODULE_DIR$/src/main/resources/beans.xml</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-databinding-jaxb/3.0.4/cxf-rt-databinding-jaxb-3.0.4.jar!/META-INF/cxf/java2wsbeans.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-databinding-jaxb/3.0.4/cxf-rt-databinding-jaxb-3.0.4.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-transports-http/3.0.4/cxf-rt-transports-http-3.0.4.jar!/META-INF/cxf/cxf-servlet.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-transports-http/3.0.4/cxf-rt-transports-http-3.0.4.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxrs/3.0.4/cxf-rt-frontend-jaxrs-3.0.4.jar!/org/apache/cxf/jaxrs/spring/JaxRsConfig.class</file>
+          <file>file://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxrs/3.0.4/cxf-rt-frontend-jaxrs-3.0.4.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxws/3.0.4/cxf-rt-frontend-jaxws-3.0.4.jar!/META-INF/cxf/cxf-extension-jaxws.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-rt-frontend-jaxws/3.0.4/cxf-rt-frontend-jaxws-3.0.4.jar</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/camel/camel-cxf-transport/2.15.1/camel-cxf-transport-2.15.1.jar!/META-INF/cxf/cxf-extension-camel.xml</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/camel/camel-cxf-transport/2.15.1/camel-cxf-transport-2.15.1.jar!/META-INF/cxf/camel/cxf-extension-camel.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/apache/camel/camel-cxf-transport/2.15.1/camel-cxf-transport-2.15.1.jar</file>
+          <file>file://$MODULE_DIR$/src/main/java/cinema/Application.java</file>
           <file>file://$MODULE_DIR$/src/main/java/cinema/config/CamelContextConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cinema/config/JPAConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/cinema/config/MongoConfig.java</file>
+          <file>jar://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-core/3.0.4/cxf-core-3.0.4.jar!/META-INF/cxf/cxf.xml</file>
+          <file>file://$MAVEN_REPOSITORY$/org/apache/cxf/cxf-core/3.0.4/cxf-core-3.0.4.jar</file>
         </fileset>
       </configuration>
     </facet>
