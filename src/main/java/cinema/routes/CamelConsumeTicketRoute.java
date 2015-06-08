@@ -1,11 +1,9 @@
 package cinema.routes;
 
 import cinema.config.FOPConfig;
-import cinema.dto.TicketDTO;
-import cinema.dto.mongo.ScreeningMongoDTO;
 import cinema.dto.mongo.TicketMongoDTO;
-import cinema.model.Screening;
 import cinema.model.Ticket;
+import com.mongodb.BasicDBObject;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -23,13 +21,14 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:number")
+        from("restlet:http://localhost:8081/restlet/consume-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
 
-                        int reservationNumber = Integer.parseInt(exchange.getIn().getBody().toString());
-                        String query = "{'ticket.customerId:'" + reservationNumber + "}";
+
+                        int reservationNumber = Integer.parseInt(exchange.getIn().getHeader("CamelHttpQuery").toString());
+                        BasicDBObject query = new BasicDBObject().append("ticket.customerId",reservationNumber);
                         exchange.getIn().setBody(query);
                         exchange.getProperties().put("query", query);
                     }
@@ -46,13 +45,13 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
         from("direct:marshalConsumedTicket")
                 .choice()
                 .when(body().isEqualTo(null))
-                .to("direct:noPdf").endChoice()
+                .to("mock:noPdf").endChoice()
                 .otherwise()
                 .convertBodyTo(String.class)
                 .unmarshal().json(JsonLibrary.Jackson, TicketMongoDTO.class)
                 .to("direct:toPdf");
 
-        from("direct:pdf")
+        from("direct:toPdf")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -69,13 +68,13 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                                 "Enjoy the movie!";
 
                         exchange.getIn().setBody(pdf);
+                        exchange.getProperties().put("name",ticket.getFirstName() + " "+ticket.getLastName() + "_" + ticket.getCustomerId());
                     }
                 })
+                .setHeader("CamelFileName",simple("Ticket_${property[name]}.txt"))
                 .to("file:src/main/resources/pdf");
 
-
-        //read from directory, filter for text files
-        from("file:src/main/resources/pdf?noop=true&include=([a-zA-Z]|[0-9])*.(txt)")
+        from("file:src/main/resources/pdf?noop=true"/*&include=([a-zA-Z]|[0-9])*.(txt)"*/)
                 .routeId("textToPdf")
                 .process(new Processor() {
                     @Override
@@ -85,12 +84,11 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                         final String convertToXSLFOBody = FOPConfig.getFilledXSLFO(body);
                         exchange.getIn().setBody(convertToXSLFOBody);
                         exchange.getIn().setHeader(Exchange.FILE_NAME, fileNameWithoutExtension + ".pdf");
-                        exchange.getIn().setHeader(FopConstants.CAMEL_FOP_RENDER + "author", "Shreyas Purohit");
+                        exchange.getIn().setHeader(FopConstants.CAMEL_FOP_RENDER + "author", "Daniel Shatkin");
                     }
                 })
                 .to("fop:application/pdf")
                 .to("file:src/main/resources/pdfout");
-
 
     }
 }

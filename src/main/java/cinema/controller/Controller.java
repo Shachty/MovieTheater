@@ -90,14 +90,7 @@ public class Controller {
         return "yess";
     }
 
-    @RequestMapping("/do-reservation")
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY/*this is 301*/)
-    public RedirectView reserve() {
-        RedirectView rv = new RedirectView();
-        rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-        rv.setUrl("http://localhost:8081/restlet/do-reservation");
-        return rv;
-    }
+
 
     @RequestMapping("/reserve")
     public HttpStatus reserve(@RequestParam String body){

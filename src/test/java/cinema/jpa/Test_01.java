@@ -3,10 +3,8 @@ package cinema.jpa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.validation.constraints.AssertTrue;
 
 import cinema.jpa.model.*;
-import cinema.jpa.model.dao.impl.OrderDAO;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -85,25 +83,25 @@ public class Test_01 {
             theManager.persist(snacks[i]);
         }
 
-        Order order1 = new Order();
-        Order order2 = new Order();
+        Enquiry enquiry1 = new Enquiry();
+        Enquiry enquiry2 = new Enquiry();
 
-        order1.addSnackToOrder(snacks[1], new Long(10), "supid1");
-        order1.addSnackToOrder(snacks[2], new Long(11), "supid2");
-        order1.addSnackToOrder(snacks[3], new Long(12), "supid3");
-        order1.addSnackToOrder(snacks[4], new Long(13), "supid4");
-        order1.addSnackToOrder(snacks[5], new Long(14), "supid5");
+        enquiry1.addSnackToOrder(snacks[1], new Long(10), "supid1");
+        enquiry1.addSnackToOrder(snacks[2], new Long(11), "supid2");
+        enquiry1.addSnackToOrder(snacks[3], new Long(12), "supid3");
+        enquiry1.addSnackToOrder(snacks[4], new Long(13), "supid4");
+        enquiry1.addSnackToOrder(snacks[5], new Long(14), "supid5");
 
-        order2.addSnackToOrder(snacks[3], new Long(1), "supid6");
-        order2.addSnackToOrder(snacks[4], new Long(2), "supid7");
-        order2.addSnackToOrder(snacks[5], new Long(3), "supid8");
-        order2.addSnackToOrder(snacks[6], new Long(4), "supid9");
-        order2.addSnackToOrder(snacks[7], new Long(5), "supid10");
-        order2.addSnackToOrder(snacks[8], new Long(6), "supid11");
-        order2.addSnackToOrder(snacks[9], new Long(7), "supid12");
+        enquiry2.addSnackToOrder(snacks[3], new Long(1), "supid6");
+        enquiry2.addSnackToOrder(snacks[4], new Long(2), "supid7");
+        enquiry2.addSnackToOrder(snacks[5], new Long(3), "supid8");
+        enquiry2.addSnackToOrder(snacks[6], new Long(4), "supid9");
+        enquiry2.addSnackToOrder(snacks[7], new Long(5), "supid10");
+        enquiry2.addSnackToOrder(snacks[8], new Long(6), "supid11");
+        enquiry2.addSnackToOrder(snacks[9], new Long(7), "supid12");
 
-        theManager.persist(order1);
-        theManager.persist(order2);
+        theManager.persist(enquiry1);
+        theManager.persist(enquiry2);
 
         theManager.getTransaction().commit();
 
@@ -111,15 +109,15 @@ public class Test_01 {
             assertNotNull(snacks[i].getId());
         }
 
-//        OrderDAO theOrderDao = new OrderDAO();
-        Order fetchOrder1 = (Order)theManager.find(Order.class, order1.getId());
-        Order fetchOrder2 = (Order)theManager.find(Order.class, order2.getId());
+//        EnquiryDAO theOrderDao = new EnquiryDAO();
+        Enquiry fetchEnquiry1 = (Enquiry)theManager.find(Enquiry.class, enquiry1.getId());
+        Enquiry fetchEnquiry2 = (Enquiry)theManager.find(Enquiry.class, enquiry2.getId());
 
-        assertEquals(5, fetchOrder1.getItems().size());
-        assertEquals(7, fetchOrder2.getItems().size());
+        assertEquals(5, fetchEnquiry1.getItems().size());
+        assertEquals(7, fetchEnquiry2.getItems().size());
 
         boolean found = false;
-        for(OrderItem oi : order1.getItems()) {
+        for(Item oi : enquiry1.getItems()) {
             if(oi.getSnack().equals(snacks[1])) {
                 found = true;
                 break;
@@ -128,7 +126,7 @@ public class Test_01 {
         assertTrue(found);
 
         found = false;
-        for(OrderItem oi : order2.getItems()) {
+        for(Item oi : enquiry2.getItems()) {
             if(oi.getSnack().equals(snacks[9])) {
                 found = true;
                 break;
@@ -137,7 +135,7 @@ public class Test_01 {
         assertTrue(found);
 
         found = false;
-        for(OrderItem oi : order2.getItems()) {
+        for(Item oi : enquiry2.getItems()) {
             if(oi.getSnack().equals(snacks[1])) {
                 found = true;
                 break;

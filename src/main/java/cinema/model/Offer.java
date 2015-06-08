@@ -5,21 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Offer {
 
     private Long id;
-    private List<PricedItem> items;
+    private List<Item> items;
 
     @JsonCreator
     public Offer(@JsonProperty("id") long id,
-                   @JsonProperty("items")List<PricedItem> items
+                   @JsonProperty("items")List<Item> items
     ) {
         this.id = id;
         this.items = items;
@@ -33,7 +29,7 @@ public class Offer {
     }
 
     @XmlElement
-    public void setItems(List<PricedItem> items) {this.items = items;}
-    public List<PricedItem> getItems() {return this.items; }
+    public void setItems(List<Item> items) {this.items = items;}
+    public List<Item> getItems() {return this.items; }
 
 }

@@ -2,5 +2,6 @@
 .idea/tasks.xml
 .idea/dataSources.*
 .idea/libraries/*
+.orig
 tmp
 target

@@ -1,6 +1,6 @@
 package cinema.routes;
 
-import cinema.helper.EnquiryAggregationStrategyProcessor;
+import cinema.processor.EnquiryAggregationStrategyProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.springframework.context.annotation.Bean;

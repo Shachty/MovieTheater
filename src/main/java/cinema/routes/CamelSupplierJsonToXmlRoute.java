@@ -24,7 +24,7 @@ public class CamelSupplierJsonToXmlRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(new Class[]{OfferDTO.class, Offer.class, PricedItem.class, Item.class, Snack.class});
+        JAXBContext jaxbContext = JAXBContext.newInstance(new Class[]{OfferDTO.class, Offer.class, Item.class, Item.class, Snack.class});
         DataFormat jaxb = new JaxbDataFormat(jaxbContext);
 
         from("direct:supplierXml")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")//from("file:src/main/resources/enquiries?noop=true")

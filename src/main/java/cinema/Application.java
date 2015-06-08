@@ -35,15 +35,15 @@ public class Application {
         CamelContext camelContext = ctx.getBean(org.apache.camel.impl.DefaultCamelContext.class);
 
         camelAutoloadRoutes = new ArrayList<>();
+        camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelHttpReservationRoute.class);
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelMongoRoute.class);
-        camelAutoloadRoutes.add(CamelTicketToHttpRoute.class);
-        camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
-        camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
+     //   camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
         camelAutoloadRoutes.add(CamelMailRoute.class);
         camelAutoloadRoutes.add(CamelConsumeTicketRoute.class);
-        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
+       camelAutoloadRoutes.add(CamelMongoToSocialMediaRoute.class);
+   /*     camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
         camelAutoloadRoutes.add(CamelSupplierPublishSubscribeRoute.class);
@@ -51,10 +51,13 @@ public class Application {
 
 //        camelAutoloadRoutes.add(CamelMongoToTwitterRoute.class);
 //        camelAutoloadRoutes.add(CamelMongoToFacebookRoute.class);
+*/
 //        camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
 //        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
 //        camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
-        camelAutoloadRoutes.add(CamelCheckTicketRoute.class);
+        camelAutoloadRoutes.add(CamelReserveTicketRoute.class);
+        camelAutoloadRoutes.add(CamelSellTicketRoute.class);
+        camelAutoloadRoutes.add(CamelTicketCheckerRoute.class);
 
 //        for(String str : ctx.getBeanDefinitionNames()) {
 //            logger.info(str);

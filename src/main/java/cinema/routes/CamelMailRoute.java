@@ -5,8 +5,6 @@ import cinema.model.Ticket;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.model.dataformat.XmlJsonDataFormat;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -23,7 +21,7 @@ public class CamelMailRoute extends RouteBuilder {
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getIn().getBody();
+                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         Ticket ticket = ticketDTO.getTicket();
 
                         exchange.getProperties().put("mail", ticket.getMail());
@@ -37,7 +35,6 @@ public class CamelMailRoute extends RouteBuilder {
                                 "Number of Tickets: " + ticket.getNumberOfPersons() + "\n" +
                                 "Overall price:" + ticket.getPricePerPerson().multiply(new BigDecimal(ticket.getNumberOfPersons())).toString() +
                                 " \n\nPlease show your reservationnumber at the cash desk.\n" +
-                                "Note that you have to come at least 30 minutes before the screening starts. Otherwise your reservation is going to be deleted.\n\n"+
                                 "Best regards\nThe Movie Theater";
                         exchange.getIn().setBody(message);
                     }
@@ -83,7 +80,13 @@ public class CamelMailRoute extends RouteBuilder {
                 .to("direct:mail");
 
         from("direct:mail")
-                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Your reservation."));
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println();
+                    }
+                })
+                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Your reservation&contentType=text/html."));
 
     }
 
