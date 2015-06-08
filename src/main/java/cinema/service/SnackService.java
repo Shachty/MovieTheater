@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tyler on 19.05.2015.
@@ -35,6 +36,26 @@ public class SnackService {
             theSnack.setNumber(new Double((String) bodyLineItem.get(1)));
             snackDao.save(theSnack);
         }
+    }
+
+    @Transactional
+    public boolean orderSnacks(Map<String, Integer> order) {
+        log.debug("order Snack");
+        List<Snack> snackList = snackDao.findAll();
+        System.out.println(snackList);
+        boolean onStock = true;
+        for(Snack snack: snackList) {
+            if(snack.getNumber()<order.get(snack.getName())){
+                 return false;
+            }
+        }
+        for(Snack snack: snackList) {
+            snack.setNumber(snack.getNumber()-order.get(snack.getName()));
+            snackDao.save(snack);
+        }
+        snackList = snackDao.findAll();
+        System.out.println(snackList);
+        return true;
     }
 
     public List<Snack> getSnacks() {
