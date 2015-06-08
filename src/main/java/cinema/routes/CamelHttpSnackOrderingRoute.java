@@ -16,6 +16,7 @@ public class CamelHttpSnackOrderingRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("restlet:http://localhost:8081/restlet/buy-snack?restletMethods=POST,DELETE,PUT")
+                .log("Got new Order from customer!")
                 .process(orderSnackProcessor);
     }
 }

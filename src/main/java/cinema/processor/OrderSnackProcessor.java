@@ -45,7 +45,7 @@ public class OrderSnackProcessor implements Processor {
             response.setStatus(Status.SUCCESS_OK);
             response.setEntity("<response><message>Your order has been processed.</message></response>", MediaType.TEXT_XML);
         } else {
-            response.setStatus(Status.INFO_MISC_WARNING);
+            response.setStatus(Status.SUCCESS_OK);
             response.setEntity("<response><message>Your order could not be processed correctly. Order not on stock!</message></response>", MediaType.TEXT_XML);
         }
         exchange.getOut().setBody(response);

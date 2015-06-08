@@ -53,8 +53,6 @@ public class SnackService {
             snack.setNumber(snack.getNumber()-order.get(snack.getName()));
             snackDao.save(snack);
         }
-        snackList = snackDao.findAll();
-        System.out.println(snackList);
         return true;
     }
 

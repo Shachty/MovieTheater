@@ -47,11 +47,12 @@ public class Application {
         camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
         camelAutoloadRoutes.add(CamelSupplierPublishSubscribeRoute.class);
+    */
         camelAutoloadRoutes.add(CamelHttpSnackOrderingRoute.class);
 
 //        camelAutoloadRoutes.add(CamelMongoToTwitterRoute.class);
 //        camelAutoloadRoutes.add(CamelMongoToFacebookRoute.class);
-*/
+
 //        camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
 //        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
 //        camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
