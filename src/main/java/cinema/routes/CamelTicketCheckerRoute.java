@@ -51,20 +51,21 @@ public class CamelTicketCheckerRoute extends RouteBuilder {
                 .process(checkScreeningProcessor)
                 .choice()
                 .when(header("ticketStatus").isEqualTo(TicketStatus.GOOD))
-                .wireTap("direct:updateScreening")
+                .wireTap("seda:updateScreening")
                   .choice()
                     .when(header("isReservation").isEqualTo(true))
-                     .wireTap("direct:mail_GOOD")
-                     .to("direct:persistTicket").endChoice()
+                     .wireTap("seda:mail_GOOD")
+                     .to("seda:persistTicket").endChoice()
                      .when(header("isReservation").isEqualTo(false))
-                .to("direct:sellTicket_GOOD").endChoice().endChoice()
+                .to("seda:sellTicket_GOOD").endChoice().endChoice()
                 .when(header("ticketStatus").isEqualTo(TicketStatus.FULL))
-                .to("direct:screening_FULL").endChoice()
+                .to("seda:screening_FULL").endChoice()
                 .otherwise()
-                .to("direct:screening_INVALID")
+                .to("seda:screening_INVALID")
         ;
 
-        from("direct:sellTicket_GOOD")
+        from("seda:sellTicket_GOOD")
+                .removeHeaders("*")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -72,20 +73,12 @@ public class CamelTicketCheckerRoute extends RouteBuilder {
                         TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         ticketDTO.getTicket().setPricePerPerson(screeningMongoDTO.getScreening().getPricePerPerson());
                         exchange.getIn().setBody(ticketDTO);
-                        exchange.getIn().setHeaders(new HashMap<String, Object>());
-                    }
-                })
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-
-                        TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         exchange.getIn().setBody(new TicketMongoDTO(null, ticketDTO.getTicket()));
-                    }
-                })
-                .to("direct:toPdf");
 
-        from("direct:screening_FULL")
+                }})
+                .to("seda:toPdf");
+
+        from("seda:screening_FULL")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -99,7 +92,7 @@ public class CamelTicketCheckerRoute extends RouteBuilder {
                 })
                 .process(responseProcessor);
 
-        from("direct:screening_INVALID")
+        from("seda:screening_INVALID")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {

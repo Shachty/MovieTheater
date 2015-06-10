@@ -51,7 +51,7 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, TicketMongoDTO.class)
                 .to("direct:toPdf");
 
-        from("direct:toPdf")
+        from("seda:toPdf")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -74,7 +74,7 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                 .setHeader("CamelFileName",simple("Ticket_${property[name]}.txt"))
                 .to("file:src/main/resources/pdf");
 
-        from("file:src/main/resources/pdf?noop=true"/*&include=([a-zA-Z]|[0-9])*.(txt)"*/)
+        from("file:src/main/resources/pdf?noop=true")
                 .routeId("textToPdf")
                 .process(new Processor() {
                     @Override
