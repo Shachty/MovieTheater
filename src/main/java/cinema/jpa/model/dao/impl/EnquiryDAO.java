@@ -41,7 +41,7 @@ public class EnquiryDAO implements IEnquiryDAO {
     public Enquiry save(Enquiry enquiry) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.saveOrUpdate(enquiry);
-        log.info("saved enquiry: "+ enquiry.getId());
+        log.debug("saved enquiry: "+ enquiry.getId());
         return enquiry;
     }
 
@@ -49,7 +49,7 @@ public class EnquiryDAO implements IEnquiryDAO {
     public void delete(Enquiry enquiry) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.delete(enquiry);
-        log.info("deleted enquiry: "+ enquiry.getId());
+        log.debug("deleted enquiry: "+ enquiry.getId());
     }
 
 }
