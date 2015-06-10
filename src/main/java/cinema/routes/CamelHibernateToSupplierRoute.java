@@ -27,7 +27,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     public void configure() throws Exception {
         this.logger.info("CamelHibernateToSupplierRoute");
 
-        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=20000&consumer.initialDelay=5")
             //.beanRef("orderService", "orderToSupplier")
                 .log("load Snacks from hibernate")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)
@@ -36,18 +36,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12");
 
-/*
-        //upload Enquiry
-        from("file:src/main/resources/Item?noop=true")//from("ftp://user:root@localhost/a")
-                .log("got file from Hibernate - Items")
-                .unmarshal().json(JsonLibrary.Jackson, ItemDTO.class) // TODO: wird nicht mehr gebrauch, wenn von hibernate
-                .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)
-                .log("aggregate Items to enquiry - Enquiry")
-                .setHeader("CamelFileName", simple("enquiry_${in.header.CamelFileName}.json"))// TODO: wird nicht mehr gebrauch, wenn von hibernate
-                .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)// TODO: wird nicht mehr gebrauch, wenn von hibernate
-                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")//.to("ftp://user:root@localhost/offers_2")
-                .log("written to ftpServer - Enquiry");
-                */
+
     }
     @Bean
     private AggregationStrategy enquiryAggregationStrategyProcessor() {
