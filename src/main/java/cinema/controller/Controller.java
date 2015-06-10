@@ -1,9 +1,10 @@
 package cinema.controller;
 
-import cinema.service.FileWriterService;
 import cinema.jpa.model.Snack;
+import cinema.routes.CamelHibernateToSupplierRoute;
+import cinema.routes.ScreeningToMongo;
+import cinema.service.FileWriterService;
 import cinema.service.SnackService;
-import cinema.routes.*;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -13,7 +14,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -36,6 +36,9 @@ public class Controller {
     @Autowired
     ApplicationContext appContext;
 
+    @Autowired
+    CamelHibernateToSupplierRoute camelHibernateToSupplierRoute;
+
     //injected routes
     @Autowired
     ScreeningToMongo screeningToMongo;
@@ -50,6 +53,30 @@ public class Controller {
         }
 
         SpringApplication.exit(this.appContext);
+
+    }
+
+    @RequestMapping("/start-test")
+    public String startTest(){
+
+        //FTP
+        RouteBuilder routeBuilder = this.camelHibernateToSupplierRoute;
+        try {
+            this.camelContext.addRoutes(routeBuilder);
+        } catch (Exception e) {
+            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
+        }
+
+        //start of the action
+        try {
+            camelContext.start();
+            Thread.sleep(60 * 1000);
+            camelContext.stop();
+        } catch (Exception e) {
+            logger.error("Fail. Message: " + e.getMessage());
+        }
+
+        return "Routes ended at: " ;
 
     }
 

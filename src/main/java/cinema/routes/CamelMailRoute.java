@@ -1,6 +1,9 @@
 package cinema.routes;
 
+import cinema.dto.OfferDTO;
 import cinema.dto.TicketDTO;
+import cinema.model.Item;
+import cinema.model.Offer;
 import cinema.model.Ticket;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -8,6 +11,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 
 
 @Component
@@ -36,6 +40,33 @@ public class CamelMailRoute extends RouteBuilder {
                                 "Overall price:" + ticket.getPricePerPerson().multiply(new BigDecimal(ticket.getNumberOfPersons())).toString() +
                                 " \n\nPlease show your reservationnumber at the cash desk.\n" +
                                 "Best regards\nThe Movie Theater";
+                        exchange.getIn().setBody(message);
+                    }
+                })
+                .to("direct:mail");
+
+
+        from("direct:mail_ChooseSupplier")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        OfferDTO offerDTO = (OfferDTO)exchange.getIn().getBody();
+                        Offer offer = offerDTO.getOffer();
+                        // ticketDTO = (TicketDTO) exchange.getProperty("ticket");
+                        //Ticket ticket = ticketDTO.getTicket();
+
+                        exchange.getProperties().put("mail", offer.getCompanyMail());
+
+                        String message = "Dear " + offer.getCompanyName() + ",\n" +
+                                "We accept your offer of:";
+
+                        Iterator<Item> iterator = offer.getItems().iterator();
+                        while (iterator.hasNext()){
+                            Item i = iterator.next();
+                            message += "\n" + i.getOrderSnackNumber() + "x " + i.getSnack().getName();
+                        }
+                        message += " \nFor the price of:" + offer.getSumPrice()+  "€" +
+                                "\n\nBest regards\nThe Movie Theater";
                         exchange.getIn().setBody(message);
                     }
                 })
