@@ -27,7 +27,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     public void configure() throws Exception {
         this.logger.info("CamelHibernateToSupplierRoute");
 
-        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=20000&consumer.initialDelay=5")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=45000")
             //.beanRef("orderService", "orderToSupplier")
                 .log("load Snacks from hibernate")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)

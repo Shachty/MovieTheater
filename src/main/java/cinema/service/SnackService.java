@@ -3,8 +3,6 @@ package cinema.service;
 import cinema.jpa.model.Snack;
 import cinema.jpa.model.dao.impl.SnackDAO;
 import org.apache.camel.Body;
-import org.apache.camel.Exchange;
-import org.apache.camel.Header;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,7 @@ public class SnackService {
         }
         for(Snack snack: snackList) {
             snack.setNumber(snack.getNumber()-order.get(snack.getName()));
+            snack.setCamelProcessed(false);
             snackDao.save(snack);
         }
         return true;
