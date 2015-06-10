@@ -21,7 +21,7 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("restlet:http://localhost:8081/restlet/consume-reservation?restletMethods=POST,DELETE,PUT,GET")
+        from("restlet:{{restlet.url}}/consume-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {

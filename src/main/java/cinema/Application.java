@@ -2,6 +2,7 @@ package cinema;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -16,6 +17,7 @@ import cinema.routes.*;
 @SpringBootApplication
 @EnableAsync
 public class Application {
+
 
     final static Logger logger = Logger.getLogger(Application.class);
 
@@ -33,6 +35,11 @@ public class Application {
 
         logger.debug("startCamelContext");
         CamelContext camelContext = ctx.getBean(org.apache.camel.impl.DefaultCamelContext.class);
+
+        // Camel properties
+        PropertiesComponent pc = new PropertiesComponent();
+        pc.setLocation("cinema.properties");
+        camelContext.addComponent("properties", pc);
 
         camelAutoloadRoutes = new ArrayList<>();
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);

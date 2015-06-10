@@ -42,7 +42,7 @@ public class CamelSellTicketRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("restlet:http://localhost:8081/restlet/sell-ticket?restletMethods=POST,DELETE,PUT").
+        from("restlet:{{restlet.url}}/sell-ticket?restletMethods=POST,DELETE,PUT").
                 process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
