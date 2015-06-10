@@ -34,7 +34,7 @@ public class Controller {
 
     @Autowired
     ApplicationContext appContext;
-    
+
 
     //injected routes
     @Autowired
