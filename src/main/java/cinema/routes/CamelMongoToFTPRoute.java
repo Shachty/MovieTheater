@@ -26,9 +26,9 @@ public class CamelMongoToFTPRoute extends RouteBuilder {
 
 */
         //upload
-        from("file:tmp/in?noop=true")
-                .log("got file from mongoDB")
-                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
+        from("file:tmp/in?noop=true&consumer.delay=5000")
+                .log("-----------------------------------------------------")
+                .to("ftp://{{ftp.username}}@{{ftp.host}}:21/htdocs/out?binary=true&password={{ftp.password}}")
                 //.to("ftp://user:root@localhost/a")
                 .log("written to ftp");
 

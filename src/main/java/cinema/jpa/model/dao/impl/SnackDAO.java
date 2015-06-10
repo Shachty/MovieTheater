@@ -24,16 +24,14 @@ public class SnackDAO implements ISnackDAO {
     @Override
     public List findAll() {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
-        return session.
-        createQuery("from Snack")
-                .list();
+        return session.createQuery("from Snack").list();
     }
 
     @Override
     public Snack save(Snack snack) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.saveOrUpdate(snack);
-        log.info("saved snack: "+snack.getId());
+        log.debug("saved snack: "+snack.getId());
         return snack;
     }
 
@@ -41,7 +39,7 @@ public class SnackDAO implements ISnackDAO {
     public void delete(Snack snack) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.delete(snack);
-        log.info("deleted snack: "+snack.getId());
+        log.debug("deleted snack: "+snack.getId());
     }
 
 }
