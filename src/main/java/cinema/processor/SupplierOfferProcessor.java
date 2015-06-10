@@ -20,8 +20,6 @@ public class SupplierOfferProcessor implements Processor{
         EnquiryDTO EnquiryDTO = (EnquiryDTO) exchange.getIn().getBody();
         Enquiry enquiry = EnquiryDTO.getEnquiry();
 
-        Double price = getRandomPrice();
-
         List<Item> list = new ArrayList<Item>();
         Iterator i = enquiry.getItems().iterator();
 
