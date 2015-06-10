@@ -56,6 +56,7 @@ public class SnackService {
         return true;
     }
 
+    @Transactional
     public List<Snack> getSnacks() {
         return snackDao.findAll();
     }
