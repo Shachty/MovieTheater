@@ -6,6 +6,7 @@ package cinema.config;
 import org.apache.camel.Exchange;
 
 public class FOPConfig {
+
     public static final String EXT_DELIM = ".";
     private static final String fopMainTemplate = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "\n" +

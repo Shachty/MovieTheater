@@ -14,6 +14,8 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+
 /**
  * Created by Daniel on 28.05.2015.
  */
@@ -70,6 +72,7 @@ public class CamelTicketCheckerRoute extends RouteBuilder {
                         TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         ticketDTO.getTicket().setPricePerPerson(screeningMongoDTO.getScreening().getPricePerPerson());
                         exchange.getIn().setBody(ticketDTO);
+                        exchange.getIn().setHeaders(new HashMap<String, Object>());
                     }
                 })
                 .process(new Processor() {

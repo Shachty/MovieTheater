@@ -105,7 +105,6 @@ public class CamelSellTicketRoute extends RouteBuilder {
                 .choice().when(header("errorMessage").isNull()).process(new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {
-                System.out.println();
             }
         }).to("direct:ticketChecker").endChoice()
                 .otherwise()

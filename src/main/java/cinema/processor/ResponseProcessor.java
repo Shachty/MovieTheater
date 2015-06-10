@@ -21,7 +21,7 @@ public class ResponseProcessor implements Processor {
 
         Response response = exchange.getIn().getHeader(RestletConstants.RESTLET_RESPONSE, Response.class);
      //   response.setStatus(exchange.getIn().getHeader("status"));
-        response.setEntity("<response><message>"+(String) exchange.getIn().getBody()+"</message></response>", MediaType.TEXT_XML);
+        response.setEntity("<response><message>"+(String) exchange.getIn().getBody()+"</message></response>", MediaType.TEXT_HTML);
         exchange.getOut().setBody(response);
 
     }

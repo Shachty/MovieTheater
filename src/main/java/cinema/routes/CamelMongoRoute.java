@@ -45,7 +45,13 @@ public class CamelMongoRoute extends RouteBuilder {
                .process(screeningUpdateProcessor)
                .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=update")
                .to("direct:socialMedia");
+
+        from("direct:showScreenings")
+                .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=findAll")
+                .to("direct:responseAllScreenings");
+
     }
+
 
 
 }
