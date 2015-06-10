@@ -1,5 +1,7 @@
 package cinema.jpa.model;
 
+import org.apache.camel.component.jpa.Consumed;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "CINEMA_Snack")
 @NamedQueries({ @NamedQuery(name = "@HQL_GET_ALL_SNACKS",
-        query = "from Snack s") })
+        query = "from Snack s where s.camelProcessed = false") })
 public class Snack {
 
     @Id
@@ -16,6 +18,7 @@ public class Snack {
     private Long id;
     private String name;
     private Double number;
+    private boolean camelProcessed = false;
 
     public Long getId() {
         return this.id;
@@ -29,9 +32,9 @@ public class Snack {
         return this.number;
     }
 
-//    public List<Enquiry> getOrders() {
-//        return this.orders;
-//    }
+    public boolean getCamelProcessed() {
+        return this.camelProcessed;
+    }
 
     public void setId(Long param) {
         this.id = param;
@@ -45,8 +48,13 @@ public class Snack {
         this.number = param;
     }
 
-//    public void setOrders(List<Enquiry> param) {
-//        this.orders = param;
-//    }
+    public void setCamelProcessed(boolean bool) {
+        this.camelProcessed = bool;
+    }
+
+    @Consumed
+    public void markAsProcessed() {
+        this.camelProcessed = true;
+    }
 
 }

@@ -32,6 +32,7 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="default" />
+          <factory-entry name="emf" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
@@ -62,30 +63,6 @@
     <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-fop:2.15.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:fop:1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:xmlgraphics-commons:1.5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-svg-dom:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-anim:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-css:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-dom:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-parser:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-util:1.7" level="project" />
-    <orderEntry type="library" name="Maven: xml-apis:xml-apis-ext:1.3.04" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-bridge:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-script:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-js:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-xml:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-awt-util:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-gvt:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-transcoder:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-svggen:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-extension:1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-ext:1.7" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.avalon.framework:avalon-framework-api:4.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.avalon.framework:avalon-framework-impl:4.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-jaxb:2.15.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.2.3.RELEASE" level="project" />
@@ -147,8 +124,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-core:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.11" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.11" level="project" />
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-camel:5.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-jms:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jms:4.1.6.RELEASE" level="project" />
@@ -249,9 +224,6 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
     <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.james:apache-mime4j-core:0.7.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-ftp:2.15.1" level="project" />
-    <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.51" level="project" />
-    <orderEntry type="library" name="Maven: commons-net:commons-net:3.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-jpa:2.15.1" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.3.175" level="project" />
     <orderEntry type="library" name="Maven: com.atlassian.crowd:crowd-integration-client:2.6.4" level="project" />
