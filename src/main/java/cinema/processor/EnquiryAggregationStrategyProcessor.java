@@ -23,15 +23,15 @@ public class EnquiryAggregationStrategyProcessor implements AggregationStrategy 
     public EnquiryAggregationStrategyProcessor() {
         super();
         minimalStockList = new ArrayList<Double>();
-        minimalStockList.add(0,13.0);
-        minimalStockList.add(1,10.0);
-        minimalStockList.add(2,12.0);
-        minimalStockList.add(3,15.0);
-        minimalStockList.add(4,15.0);
-        minimalStockList.add(5,15.0);
+        minimalStockList.add(0,0.0);
+        minimalStockList.add(1,12.0);
+        minimalStockList.add(2,15.0);
+        minimalStockList.add(3,8.0);
+        minimalStockList.add(4,18.0);
+        minimalStockList.add(5,12.0);
         minimalStockList.add(6,15.0);
         minimalStockList.add(7,15.0);
-        minimalStockList.add(8,20.0);
+        minimalStockList.add(8,15.0);
         minimalStockList.add(9,12.0);
         minimalStockList.add(10,25.0);
     }
@@ -40,7 +40,7 @@ public class EnquiryAggregationStrategyProcessor implements AggregationStrategy 
 
             Message newIn = newExchange.getIn();
             Snack snack = (Snack) newIn.getBody();
-        if(minimalStockList.size()+1 >= snack.getId().intValue() && minimalStockList.get(snack.getId().intValue()) < snack.getNumber()) {
+        if( minimalStockList.get(snack.getId().intValue()) > snack.getNumber()) {
 
             cinema.model.Snack snack1 = new cinema.model.Snack(snack.getId(), snack.getName(), snack.getNumber());
             long orderSnackNumber = (long) (2* minimalStockList.get(snack.getId().intValue()) - snack.getNumber());
