@@ -27,7 +27,7 @@ public class CamelShowScreeningsRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("restlet:http://localhost:8081/restlet/show-screenings?restletMethods=POST,DELETE,PUT,GET")
+        from("restlet:{{restlet.url}}/show-screenings?restletMethods=POST,DELETE,PUT,GET")
                 .to("direct:showScreenings");
 
         from("direct:responseAllScreenings")

@@ -33,7 +33,7 @@ public class TheaterDAO implements ITheaterDAO {
     public Theater save(Theater theater) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.saveOrUpdate(theater);
-        log.info("saved theater: "+theater.getId());
+        log.debug("saved theater: "+theater.getId());
         return theater;
     }
 
@@ -41,7 +41,7 @@ public class TheaterDAO implements ITheaterDAO {
     public void delete(Theater theater) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.delete(theater);
-        log.info("deleted theater: "+theater.getId());
+        log.debug("deleted theater: "+theater.getId());
     }
 
 }

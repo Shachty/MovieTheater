@@ -33,7 +33,7 @@ public class MovieDAO implements IMovieDAO {
     public Movie save(Movie movie) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.saveOrUpdate(movie);
-        log.info("saved movie: "+movie.getId());
+        log.debug("saved movie: "+movie.getId());
         return movie;
     }
 
@@ -41,7 +41,7 @@ public class MovieDAO implements IMovieDAO {
     public void delete(Movie movie) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.delete(movie);
-        log.info("deleted movie: "+movie.getId());
+        log.debug("deleted movie: "+movie.getId());
     }
 
 }
