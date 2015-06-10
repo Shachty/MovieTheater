@@ -23,30 +23,47 @@ public class OrderSnackProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+        boolean validEntries = true;
         int numberOfSnacks = 10;
         HashMap<String, Integer> order = new HashMap<>();
         for(int i =0;i<numberOfSnacks;i++){
-            String snack="snack"+String.valueOf(i+1);
-            Object header = exchange.getIn().getHeader(snack);
+            if(validEntries) {
+                String snack = "snack" + String.valueOf(i + 1);
+                Object header = exchange.getIn().getHeader(snack);
+                try {
+                    if (header != null) {
+                        if (Integer.valueOf(header.toString()).intValue() >= 0) {
+                            order.put(snack, Integer.valueOf(header.toString()));
+                        } else {
+                            validEntries = false;
+                        }
 
-            if(header!=null){
-                order.put(snack, Integer.valueOf(header.toString()));
-            } else {
-                order.put(snack,0);
+                    } else {
+                        order.put(snack, 0);
+                    }
+                } catch (Exception e) {
+                    validEntries = false;
+                }
             }
-
         }
-
-        boolean answer = this.snackService.orderSnacks(order);
+        boolean answer = true;
+        if(validEntries) {
+            answer = this.snackService.orderSnacks(order);
+        }
 
         // use Restlet API to create the response
         Response response = exchange.getIn().getHeader(RestletConstants.RESTLET_RESPONSE, Response.class);
-        if(answer) {
+        if(validEntries) {
+            if (answer) {
+                response.setStatus(Status.SUCCESS_OK);
+                response.setEntity("<response><message>Your order has been processed.</message></response>", MediaType.TEXT_XML);
+            } else {
+                response.setStatus(Status.SUCCESS_OK);
+                response.setEntity("<response><message>Your order could not be processed correctly. Order not on stock!</message></response>", MediaType.TEXT_XML);
+            }
+        } else{
             response.setStatus(Status.SUCCESS_OK);
-            response.setEntity("<response><message>Your order has been processed.</message></response>", MediaType.TEXT_XML);
-        } else {
-            response.setStatus(Status.SUCCESS_OK);
-            response.setEntity("<response><message>Your order could not be processed correctly. Order not on stock!</message></response>", MediaType.TEXT_XML);
+            response.setEntity("<response><message>Entry for at least one snack is not a valid number</message></response>", MediaType.TEXT_XML);
         }
         exchange.getOut().setBody(response);
     }

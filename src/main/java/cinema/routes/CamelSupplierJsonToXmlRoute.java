@@ -2,7 +2,7 @@ package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
 import cinema.dto.OfferDTO;
-import cinema.processor.RandomNumberProcessor;
+import cinema.processor.RandomWaitingTimeProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import cinema.model.*;
 import org.apache.camel.builder.RouteBuilder;
@@ -33,7 +33,7 @@ public class CamelSupplierJsonToXmlRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.xml"))
-                .process(new RandomNumberProcessor())
+                .process(new RandomWaitingTimeProcessor())
                 .marshal(jaxb)
                 .delay(simple("${in.header.waitingTime}"))
                 .log(simple("1 - ${in.header.waitingTime}").getText())

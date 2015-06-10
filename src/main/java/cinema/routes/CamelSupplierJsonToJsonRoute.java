@@ -1,7 +1,7 @@
 package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
-import cinema.processor.RandomNumberProcessor;
+import cinema.processor.RandomWaitingTimeProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -18,7 +18,7 @@ public class CamelSupplierJsonToJsonRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.json"))
-                .process(new RandomNumberProcessor())
+                .process(new RandomWaitingTimeProcessor())
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .delay(simple("${in.header.waitingTime}"))
                 .log(simple("2 - ${in.header.waitingTime}").getText())

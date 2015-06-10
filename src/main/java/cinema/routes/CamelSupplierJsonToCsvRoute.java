@@ -1,7 +1,7 @@
 package cinema.routes;
 
 import cinema.dto.EnquiryDTO;
-import cinema.processor.RandomNumberProcessor;
+import cinema.processor.RandomWaitingTimeProcessor;
 import cinema.processor.SupplierCsvCreatorProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import org.apache.camel.builder.RouteBuilder;
@@ -20,7 +20,7 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
                 .process(new SupplierOfferProcessor())
                 .process(new SupplierCsvCreatorProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.csv"))
-                .process(new RandomNumberProcessor())
+                .process(new RandomWaitingTimeProcessor())
                 .marshal().csv()
                 .delay(simple("${in.header.waitingTime}"))
                 .log(simple("3 - ${in.header.waitingTime}").getText())
