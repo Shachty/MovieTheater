@@ -42,9 +42,9 @@ public class CamelMongoRoute extends RouteBuilder {
                 .to("mongodb:mongoBean?database=workflow&collection=tickets&operation=insert").log("written to mongoDB");
 
         from("direct:updateScreening")
-                .process(screeningUpdateProcessor)
-                .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=update")
-                .to("direct:socialMedia");
+               .process(screeningUpdateProcessor)
+               .to("mongodb:mongoBean?database=workflow&collection=screenings&operation=update")
+               .to("direct:socialMedia");
     }
 
 
