@@ -67,5 +67,3 @@ public class Enquiry {
     }
 
 }
-
-//order.snack.setNumber = order.snack.getNumber + order.orderSnackNumber;
