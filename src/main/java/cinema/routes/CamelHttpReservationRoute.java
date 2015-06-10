@@ -15,7 +15,7 @@ public class CamelHttpReservationRoute extends RouteBuilder {
     public void configure() throws Exception {
 /*
 
-        from("restlet:http://localhost:8081/restlet/do-reservation?restletMethods=POST,DELETE,PUT,GET")
+        from("restlet:{{restlet.url}}/do-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(theProcessor);
     }
 */
