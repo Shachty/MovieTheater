@@ -3,23 +3,29 @@ package cinema.routes;
 import cinema.config.FOPConfig;
 import cinema.dto.mongo.TicketMongoDTO;
 import cinema.model.Ticket;
+import cinema.processor.ResponseProcessor;
 import com.mongodb.BasicDBObject;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.fop.FopConstants;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * Created by Daniel on 26.05.2015.
  */
 @Component
 public class CamelConsumeTicketRoute extends RouteBuilder {
+
+
     @Override
     public void configure() throws Exception {
+
 
         from("restlet:http://localhost:8081/restlet/consume-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(new Processor() {
@@ -28,7 +34,7 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
 
 
                         int reservationNumber = Integer.parseInt(exchange.getIn().getHeader("CamelHttpQuery").toString());
-                        BasicDBObject query = new BasicDBObject().append("ticket.customerId",reservationNumber);
+                        BasicDBObject query = new BasicDBObject().append("ticket.customerId", reservationNumber);
                         exchange.getIn().setBody(query);
                         exchange.getProperties().put("query", query);
                     }
@@ -68,12 +74,11 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                                 "Enjoy the movie!";
 
                         exchange.getIn().setBody(pdf);
-                        exchange.getProperties().put("name",ticket.getFirstName() + " "+ticket.getLastName() + "_" + ticket.getCustomerId());
+                        exchange.getProperties().put("name", ticket.getFirstName() + " " + ticket.getLastName() + "_" + ticket.getCustomerId());
                     }
                 })
-                .setHeader("CamelFileName",simple("Ticket_${property[name]}.txt"))
+                .setHeader("CamelFileName", simple("Ticket_${property[name]}.txt"))
                 .to("file:src/main/resources/pdf");
-
         from("file:src/main/resources/pdf?noop=true"/*&include=([a-zA-Z]|[0-9])*.(txt)"*/)
                 .routeId("textToPdf")
                 .process(new Processor() {

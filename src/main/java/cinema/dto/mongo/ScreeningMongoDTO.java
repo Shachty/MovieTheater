@@ -14,7 +14,7 @@ public class ScreeningMongoDTO {
 
     @JsonCreator
     public ScreeningMongoDTO(@JsonProperty("_id") MongoId _id,
-                             @JsonProperty("Screening") Screening screening) {
+                             @JsonProperty("screening") Screening screening) {
         this.screening = screening;
         this._id=_id;
     }
