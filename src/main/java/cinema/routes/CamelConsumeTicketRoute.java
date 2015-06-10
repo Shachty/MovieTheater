@@ -2,13 +2,14 @@ package cinema.routes;
 
 import cinema.config.FOPConfig;
 import cinema.dto.mongo.TicketMongoDTO;
-import cinema.model.Ticket;
+import cinema.processor.ResponseProcessor;
 import com.mongodb.BasicDBObject;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.fop.FopConstants;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,8 +19,13 @@ import java.math.BigDecimal;
  */
 @Component
 public class CamelConsumeTicketRoute extends RouteBuilder {
+
+    @Autowired
+    ResponseProcessor responseProcessor;
+
     @Override
     public void configure() throws Exception {
+
 
         from("restlet:{{restlet.url}}/consume-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(new Processor() {
@@ -28,13 +34,13 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
 
 
                         int reservationNumber = Integer.parseInt(exchange.getIn().getHeader("CamelHttpQuery").toString());
-                        BasicDBObject query = new BasicDBObject().append("ticket.customerId",reservationNumber);
+                        BasicDBObject query = new BasicDBObject().append("customerId", reservationNumber);
                         exchange.getIn().setBody(query);
                         exchange.getProperties().put("query", query);
                     }
                 })
                 .to("mongodb:mongoBean?database=workflow&collection=tickets&operation=findOneByQuery")
-                .wireTap("direct:marshalConsumedTicket")
+                .wireTap("seda:marshalConsumedTicket")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -42,22 +48,33 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                     }
                 }).to("mongodb:mongoBean?database=workflow&collection=tickets&operation=remove");
 
-        from("direct:marshalConsumedTicket")
+        from("seda:marshalConsumedTicket")
+                .removeHeaders("*")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println();
+                    }
+                })
                 .choice()
                 .when(body().isEqualTo(null))
-                .to("mock:noPdf").endChoice()
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        exchange.getIn().setBody("There is no reservation for this reservationnumber.");
+                    }
+                }).endChoice()
                 .otherwise()
                 .convertBodyTo(String.class)
                 .unmarshal().json(JsonLibrary.Jackson, TicketMongoDTO.class)
-                .to("direct:toPdf");
+                .to("seda:toPdf");
 
         from("seda:toPdf")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
 
-                        TicketMongoDTO ticketgMongoDTO = (TicketMongoDTO) exchange.getIn().getBody();
-                        Ticket ticket = ticketgMongoDTO.getTicket();
+                        TicketMongoDTO ticket = (TicketMongoDTO) exchange.getIn().getBody();
 
                         String pdf = "...~~==Movie Theater Ticket==~~..\n\n\n" +
                                 "Movie: " + ticket.getMovieName() + "\n" +

@@ -14,8 +14,6 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-
 /**
  * Created by Daniel on 28.05.2015.
  */
@@ -73,9 +71,22 @@ public class CamelTicketCheckerRoute extends RouteBuilder {
                         TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         ticketDTO.getTicket().setPricePerPerson(screeningMongoDTO.getScreening().getPricePerPerson());
                         exchange.getIn().setBody(ticketDTO);
-                        exchange.getIn().setBody(new TicketMongoDTO(null, ticketDTO.getTicket()));
 
-                }})
+                        TicketMongoDTO ticketMongoDTO = new TicketMongoDTO(null,
+                                ticketDTO.getTicket().getTicketStatus(),
+                                ticketDTO.getTicket().getFirstName(),
+                                ticketDTO.getTicket().getLastName(),
+                                ticketDTO.getTicket().getNumberOfPersons(),
+                                ticketDTO.getTicket().getTheaterRoom(),
+                                ticketDTO.getTicket().getMovieName(),
+                                ticketDTO.getTicket().getTime(),
+                                ticketDTO.getTicket().getCustomerId(),
+                                ticketDTO.getTicket().getMail());
+                        ticketMongoDTO.setPricePerPerson(ticketDTO.getTicket().getPricePerPerson());
+
+                        exchange.getIn().setBody(ticketMongoDTO);
+                    }
+                })
                 .to("seda:toPdf");
 
         from("seda:screening_FULL")
