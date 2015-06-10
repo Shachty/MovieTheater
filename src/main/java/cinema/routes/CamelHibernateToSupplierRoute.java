@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.logging.Logger;
 
 /**
  * route to import the current stock on hand from an xml datei into a route.
@@ -17,13 +18,16 @@ import javax.persistence.PersistenceContext;
 @Component
 public class CamelHibernateToSupplierRoute extends RouteBuilder {
 
+    private final Logger logger = Logger.getLogger(this.getClass().toString());
+
     @PersistenceContext
     EntityManager theManager;
 
     @Override
     public void configure() throws Exception {
+        this.logger.info("CamelHibernateToSupplierRoute");
 
-        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_UNPROCESSED_ORDERS&consumeDelete=false")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true")
             //.beanRef("orderService", "orderToSupplier")
                 .log("load Snacks from hibernate")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)

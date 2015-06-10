@@ -95,18 +95,6 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //start of the action
-        /*
-        try {
-            camelContext.start();
-            Thread.sleep(10 * 1 * 1000);
-            camelContext.stop();
-        } catch (Exception e) {
-            logger.error("Fail. Message: " + e.getMessage());
-        }
-        */
-
     }
 
     @RequestMapping("/hello")
