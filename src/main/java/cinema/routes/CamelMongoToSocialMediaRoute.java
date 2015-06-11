@@ -4,14 +4,11 @@ import cinema.dto.mongo.ScreeningMongoDTO;
 import cinema.dto.mongo.ScreeningsMongoDTO;
 import cinema.model.Screening;
 import facebook4j.FacebookException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
+import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
 import twitter4j.TwitterException;
-
-import java.util.Date;
 
 @Component
 public class CamelMongoToSocialMediaRoute extends RouteBuilder {
@@ -33,13 +30,15 @@ public class CamelMongoToSocialMediaRoute extends RouteBuilder {
                         if (caused.getMessage().contains("Status is a duplicate")) {
                             logMessage = "Not posted to twitter because it was a duplicate";
                         } else if (caused.getMessage().contains("Duplicate status message")) {
-                            logMessage= "Not posted to facebook because it was a duplicate";
+                            logMessage = "Not posted to facebook because it was a duplicate";
+                        } else {
+                            logMessage = caused.getMessage();
                         }
 
                         exchange.getIn().setBody(logMessage);
                     }
                 })
-                .log("Exception: ${body}")
+                .log("Handled exception: ${body}")
                 .handled(true);
 
         from("direct:socialMedia")
@@ -60,14 +59,14 @@ public class CamelMongoToSocialMediaRoute extends RouteBuilder {
 
                             if (screening.getTheaterRoom().getAvailableSeats() == 0) {
                                 if (socialMediaMessageFull.equals("")) {
-                                    socialMediaMessageFull += "Fully booked: " + screening.getMovie().getMovieName() + " at " + screening.getTime() /*+ " on " + screening*/;
+                                    socialMediaMessageFull += "Fully booked: " + screening.getMovie().getMovieName() + " at " + screening.getTime();
                                 } else {
                                     socialMediaMessageFull += ", " + screening.getMovie().getMovieName() + " at " + screening.getTime();
                                 }
                             } else {
                                 if (screening.getTheaterRoom().getAvailableSeats() < (screening.getTheaterRoom().getOverallSeats() * 0.25)) {
                                     if (socialMediaMessage.equals("")) {
-                                        socialMediaMessage += "Movies almost fully booked: " + screening.getMovie().getMovieName() + " at " + screening.getTime();
+                                        socialMediaMessage += "Book NOW! Movies almost fully booked: " + screening.getMovie().getMovieName() + " at " + screening.getTime();
                                     } else {
                                         socialMediaMessage += ", " + screening.getMovie().getMovieName() + " at " + screening.getTime();
                                     }
@@ -78,37 +77,21 @@ public class CamelMongoToSocialMediaRoute extends RouteBuilder {
                         String output = "";
 
                         if (!socialMediaMessage.equals("")) {
-                            if (new Date().getMinutes() < 10) {
-                                output += Integer.toString(new Date().getHours()) + ":0" + Integer.toString(new Date().getMinutes());
-                            } else {
-                                output += Integer.toString(new Date().getHours()) + ":" + Integer.toString(new Date().getMinutes());
-                            }
-
-                            output += " " + socialMediaMessage;
+                            output += socialMediaMessage;
                             if (!socialMediaMessageFull.equals("")) {
                                 output += " - " + socialMediaMessageFull;
                             }
                         } else {
                             /*activate if you want to show also a message about full rooms*/
                             if (!socialMediaMessageFull.equals("")) {
-                                if (new Date().getMinutes() < 10) {
-                                    output += Integer.toString(new Date().getHours()) + ":0" + Integer.toString(new Date().getMinutes());
-                                } else {
-                                    output += Integer.toString(new Date().getHours()) + ":" + Integer.toString(new Date().getMinutes());
-                                }
-
-                                output += " " + socialMediaMessageFull;
+                                output += socialMediaMessageFull;
                             } else {
                                 output = "";
                             }
-
                         }
 
                         if (output.equals("")) {
                             output = "empty";
-                        }
-                        if (output.length() > 140) {
-                            output = output.substring(0, 130) + "...";
                         }
 
                         exchange.getIn().setBody(output);
@@ -120,6 +103,7 @@ public class CamelMongoToSocialMediaRoute extends RouteBuilder {
                 .to("direct:twitter", "direct:facebook");
 
         from("direct:twitter")
+                .split().method("splitterBean", "splitBody")
                 .to("twitter://timeline/user?consumerKey=j5gTr0r72YSgle7b1CSzFtrg6&consumerSecret=crZI8W4R11i1bSjvKt49hd3DdYV2zTgx0Fy0YKGqz5JfzIuofF&accessToken=3240346329-PdlJTNwUHre4YW5ySic7x1505NaCZCTfC4JCheM&accessTokenSecret=FnLGjfjm9raE5Pyrs35XK5C5xb3recJ6Rg5TtZyLYEI4f")
                 .log("written to twitter message: ${body}");
 
