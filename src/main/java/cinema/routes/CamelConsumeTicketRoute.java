@@ -49,7 +49,7 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                 }).to("mongodb:mongoBean?database=workflow&collection=tickets&operation=remove");
 
         from("seda:marshalConsumedTicket")
-                .removeHeaders("*")
+            //    .removeHeaders("*")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -63,13 +63,15 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                     public void process(Exchange exchange) throws Exception {
                         exchange.getIn().setBody("There is no reservation for this reservationnumber.");
                     }
-                }).endChoice()
+                }).process(responseProcessor)
+                .endChoice()
                 .otherwise()
                 .convertBodyTo(String.class)
                 .unmarshal().json(JsonLibrary.Jackson, TicketMongoDTO.class)
                 .to("seda:toPdf");
 
         from("seda:toPdf")
+            //    .removeHeaders("*")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -85,11 +87,13 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                                 "Enjoy the movie!";
 
                         exchange.getIn().setBody(pdf);
-                        exchange.getProperties().put("name",ticket.getFirstName() + " "+ticket.getLastName() + "_" + ticket.getCustomerId());
+                        exchange.getProperties().put("name", ticket.getFirstName() + " " + ticket.getLastName() + "_" + ticket.getCustomerId());
                     }
                 })
-                .setHeader("CamelFileName",simple("Ticket_${property[name]}.txt"))
+                .setHeader("CamelFileName", simple("Ticket_${property[name]}.txt"))
                 .to("file:src/main/resources/pdf");
+
+
 
         from("file:src/main/resources/pdf?noop=true")
                 .routeId("textToPdf")

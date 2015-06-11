@@ -65,7 +65,7 @@ public class Application {
         camelAutoloadRoutes.add(CamelSellTicketRoute.class);
         camelAutoloadRoutes.add(CamelTicketCheckerRoute.class);
         camelAutoloadRoutes.add(CamelShowScreeningsRoute.class);
-        camelAutoloadRoutes.add(ScreeningToMongo.class);
+ //       camelAutoloadRoutes.add(ScreeningToMongo.class);
 
 //        for(String str : ctx.getBeanDefinitionNames()) {
 //            logger.info(str);
