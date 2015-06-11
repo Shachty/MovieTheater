@@ -15,10 +15,12 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class EnquiryAggregationStrategyProcessor implements AggregationStrategy {
 
     private ArrayList<Double> minimalStockList;
+    private final Logger logger = Logger.getLogger(this.getClass().toString());
 
     public EnquiryAggregationStrategyProcessor() {
         super();
@@ -40,6 +42,7 @@ public class EnquiryAggregationStrategyProcessor implements AggregationStrategy 
 
             Message newIn = newExchange.getIn();
             Snack snack = (Snack) newIn.getBody();
+        logger.info("load snack -> id:" + snack.getId() +" name: " + snack.getName() +" value: " + snack.getNumber() +" min-value: " + minimalStockList.get(snack.getId().intValue()));
         if( minimalStockList.get(snack.getId().intValue()) > snack.getNumber()) {
 
             cinema.model.Snack snack1 = new cinema.model.Snack(snack.getId(), snack.getName(), snack.getNumber());

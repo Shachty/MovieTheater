@@ -6,11 +6,14 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
+import java.util.logging.Logger;
+
 /**
  * Created by Jakob on 08.06.2015.
  */
 public class OfferAggregationStrategyProcessor implements AggregationStrategy {
 
+    private final Logger logger = Logger.getLogger(this.getClass().toString());
 
     public OfferAggregationStrategyProcessor() {
         super();
@@ -21,7 +24,7 @@ public class OfferAggregationStrategyProcessor implements AggregationStrategy {
         Message newIn = newExchange.getIn();
         OfferDTO newOfferDTO = (OfferDTO) newIn.getBody();
         Offer newOffer = newOfferDTO.getOffer();
-
+        logger.info("load offer -> id:" + newOffer.getId() +" name: " + newOffer.getCompanyName() +" mail: " + newOffer.getCompanyMail() +" price: " + newOffer.getSumPrice());
 
         if (oldExchange != null) {
             Message oldIn = oldExchange.getIn();
