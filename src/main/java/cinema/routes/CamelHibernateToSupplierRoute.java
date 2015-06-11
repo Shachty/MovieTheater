@@ -28,13 +28,13 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
         this.logger.info("CamelHibernateToSupplierRoute");
 
         from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=45000")
-            //.beanRef("orderService", "orderToSupplier")
                 .log("load Snacks from hibernate")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)
                 .log("aggregate Snacks to enquiry - Enquiry")
                 .setHeader("CamelFileName", simple("enquiry_${in.header.CamelFileName}.json"))
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
-                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12");
+                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
+                .log("upload enquiry to ftp server");
 
 
     }

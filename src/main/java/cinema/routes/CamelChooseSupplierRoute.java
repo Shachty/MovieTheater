@@ -15,9 +15,12 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
     public void configure() throws Exception {
         OfferAggregationStrategyProcessor offerAggregationStrategyProcessor = new OfferAggregationStrategyProcessor();
         from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_2$binary=true&password=OmaOpa_12&consumer.delay=45000")
+                .log("download offer from ftp server")
                 .unmarshal().json(JsonLibrary.Jackson, OfferDTO.class)
                 .aggregate(constant(true), offerAggregationStrategyProcessor).completionTimeout(3000)
-                .to("direct:mail_ChooseSupplier");
+                .log("choose best offer")
+                .to("direct:mail_ChooseSupplier")
+                .log("send confirm-notification to supplier");
 
     }
 
