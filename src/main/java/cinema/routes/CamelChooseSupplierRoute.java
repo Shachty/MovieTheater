@@ -35,10 +35,10 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
                         OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
                         Offer offer = offerDTO.getOffer();
                         List<Item> itemList = offer.getItems();
-                        String message = "enquiry -> id: " + offer.getId() + " price:" + offer.getSumPrice()  + ", ITEMS[";
+                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice()  + ", ITEMS[";
 
                         for (Item i : itemList) {
-                            message += " " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
+                            message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
                         }
                         logger.info(message + " ]");
                     }
