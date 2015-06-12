@@ -50,68 +50,68 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
                         .unmarshal().csv()
                         .process(new SupplierCsvUnmarshalProcessor())
                         .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
-                        Offer offer = offerDTO.getOffer();
-                        List<Item> itemList = offer.getItems();
-                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
+                        .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
+                                Offer offer = offerDTO.getOffer();
+                                List<Item> itemList = offer.getItems();
+                                String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
 
-                        for (Item i : itemList) {
-                            message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
-                        }
-                        logger.info(message + " ]");
-                    }
-                })
-                .log("choose best offer")
-                .to("direct:mail_ChooseSupplier")
-                .log("send confirm-notification to supplier")
-                .endChoice()
-                .when(header("CamelFileName").endsWith(".json"))
-                .log("Offer aggregator got .json-file")
-                .unmarshal().json(JsonLibrary.Jackson, OfferDTO.class)
-                .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
-                        Offer offer = offerDTO.getOffer();
-                        List<Item> itemList = offer.getItems();
-                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
+                                for (Item i : itemList) {
+                                    message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
+                                }
+                                logger.info(message + " ]");
+                            }
+                        })
+                        .log("choose best offer")
+                        .to("direct:mail_ChooseSupplier")
+                        .log("send confirm-notification to supplier")
+                    .endChoice()
+                    .when(header("CamelFileName").endsWith(".json"))
+                        .log("Offer aggregator got .json-file")
+                        .unmarshal().json(JsonLibrary.Jackson, OfferDTO.class)
+                        .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
+                        .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
+                                Offer offer = offerDTO.getOffer();
+                                List<Item> itemList = offer.getItems();
+                                String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
 
-                        for (Item i : itemList) {
-                            message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
-                        }
-                        logger.info(message + " ]");
-                    }
-                })
-                .log("choose best offer")
-                .to("direct:mail_ChooseSupplier")
-                .log("send confirm-notification to supplier")
-                .endChoice()
-                .when(header("CamelFileName").endsWith(".xml"))
-                .log("Offer aggregator got .xml-file")
-                .unmarshal(jaxb)
-                .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
-                        Offer offer = offerDTO.getOffer();
-                        List<Item> itemList = offer.getItems();
-                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
+                                for (Item i : itemList) {
+                                    message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
+                                }
+                                logger.info(message + " ]");
+                            }
+                        })
+                        .log("choose best offer")
+                        .to("direct:mail_ChooseSupplier")
+                        .log("send confirm-notification to supplier")
+                    .endChoice()
+                    .when(header("CamelFileName").endsWith(".xml"))
+                        .log("Offer aggregator got .xml-file")
+                        .unmarshal(jaxb)
+                        .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
+                        .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
+                                Offer offer = offerDTO.getOffer();
+                                List<Item> itemList = offer.getItems();
+                                String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
 
-                        for (Item i : itemList) {
-                            message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
-                        }
-                        logger.info(message + " ]");
-                    }
-                })
-                .log("choose best offer")
-                .to("direct:mail_ChooseSupplier")
-                .log("send confirm-notification to supplier")
-                .end();
+                                for (Item i : itemList) {
+                                    message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
+                                }
+                                logger.info(message + " ]");
+                            }
+                        })
+                        .log("choose best offer")
+                        .to("direct:mail_ChooseSupplier")
+                        .log("send confirm-notification to supplier")
+                    .end();
 
 
     }

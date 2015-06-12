@@ -9,10 +9,9 @@ public class CamelSupplierPublishSubscribeRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out/enquiry/?binary=true&password=OmaOpa_12")
-                .log("supplier: incoming enquiry")
-                //.delay(5*1000)
+        from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out/enquiry?binary=true&password=OmaOpa_12")
+                .delay(5*1000)
                .multicast().parallelProcessing()
-                .to("file://tmp/test", "direct:supplierCsv", "direct:supplierXml", "direct:supplierJson");
+                .to("direct:supplierXml", "direct:supplierCsv", "direct:supplierJson");
     }
 }

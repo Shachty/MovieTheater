@@ -13,7 +13,7 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:supplierCsv")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
+        from("direct:supplierCsv")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")//from("file:src/main/resources/enquiries_3?noop=true")
                 .log("got file from ftpServer - enquiries_3")
                 .loop(4).copy()
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
