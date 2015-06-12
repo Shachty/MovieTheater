@@ -30,7 +30,7 @@ public class CamelReserveTicketRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("restlet:http://localhost:8081/restlet/do-reservation?restletMethods=POST,DELETE,PUT,GET")
+        from("restlet:{{restlet.url}}/do-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -38,22 +38,22 @@ public class CamelReserveTicketRoute extends RouteBuilder {
                         String errorMessage = "";
 
                         if (exchange.getIn().getHeader("time").equals("")) {
-                            errorMessage += "The time is missing. + \n";
+                            errorMessage += "The time is missing. <br>";
                         }
                         if (exchange.getIn().getHeader("theaterroom").equals("")) {
-                            errorMessage += "The Theaterroom id is missing. \n";
+                            errorMessage += "The Theaterroom id is missing.<br>";
                         }
                         if (exchange.getIn().getHeader("moviename").equals("")) {
-                            errorMessage += "The name of the movie is missing. \n";
+                            errorMessage += "The name of the movie is missing.<br>";
                         }
                         if (exchange.getIn().getHeader("first name").equals("")) {
-                            errorMessage += "Please enter your first name. \n";
+                            errorMessage += "Please enter your first name.<br>";
                         }
                         if (exchange.getIn().getHeader("last name").equals("")) {
-                            errorMessage += "Please enter your last name.  \n";
+                            errorMessage += "Please enter your last name.<br>";
                         }
                         if (exchange.getIn().getHeader("numberofpersons").equals("")) {
-                            errorMessage += "Please enter the number of persons that want to reserve a ticket for this screening. \n";
+                            errorMessage += "Please enter the number of persons that want to reserve a ticket for this screening.<br>";
                         }
                         if (exchange.getIn().getHeader("e-mail").equals("")) {
                             errorMessage += "Please enter your e-mail adress.";

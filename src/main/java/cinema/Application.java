@@ -1,17 +1,19 @@
 package cinema;
 
+import cinema.routes.*;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
-
-import cinema.routes.*;
 
 @SpringBootApplication
 @EnableAsync
@@ -34,12 +36,17 @@ public class Application {
         logger.debug("startCamelContext");
         CamelContext camelContext = ctx.getBean(org.apache.camel.impl.DefaultCamelContext.class);
 
+        // Camel properties
+        PropertiesComponent pc = new PropertiesComponent();
+        pc.setLocation("cinema.properties");
+        camelContext.addComponent("properties", pc);
+
         camelAutoloadRoutes = new ArrayList<>();
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelHttpReservationRoute.class);
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelMongoRoute.class);
-     //   camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
+        camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
         camelAutoloadRoutes.add(CamelMailRoute.class);
         camelAutoloadRoutes.add(CamelConsumeTicketRoute.class);
        camelAutoloadRoutes.add(CamelMongoToSocialMediaRoute.class);
@@ -57,6 +64,8 @@ public class Application {
         camelAutoloadRoutes.add(CamelSellTicketRoute.class);
         camelAutoloadRoutes.add(CamelTicketCheckerRoute.class);
         camelAutoloadRoutes.add(CamelChooseSupplierRoute.class);
+        camelAutoloadRoutes.add(CamelShowScreeningsRoute.class);
+ //       camelAutoloadRoutes.add(ScreeningToMongo.class);
 
 //        for(String str : ctx.getBeanDefinitionNames()) {
 //            logger.info(str);

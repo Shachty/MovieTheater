@@ -2,6 +2,7 @@ package cinema.config;
 
 import cinema.service.OrderService;
 import cinema.service.SnackService;
+import cinema.service.SocialMediaService;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -30,6 +31,8 @@ public class CamelContextConfig {
     SnackService snackBean;
     @Autowired
     OrderService orderServiceBean;
+    @Autowired
+    SocialMediaService splitterBean;
 
     @Bean(name = "camelContext")
     @Scope("singleton")
@@ -40,6 +43,7 @@ public class CamelContextConfig {
         simpleRegistry.put("mongoBean", mongoBean);
         simpleRegistry.put("snackService", snackBean);
         simpleRegistry.put("orderService", orderServiceBean);
+        simpleRegistry.put("splitterBean", splitterBean);
 
         return new DefaultCamelContext(simpleRegistry);
 

@@ -26,7 +26,7 @@ public class CamelMailRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:mail_GOOD")
+        from("seda:mail_GOOD")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -48,7 +48,7 @@ public class CamelMailRoute extends RouteBuilder {
                         exchange.getIn().setBody(message);
                     }
                 })
-                .to("direct:mail");
+                .to("seda:mail");
 
 
         from("direct:mail_ChooseSupplier")
@@ -75,10 +75,10 @@ public class CamelMailRoute extends RouteBuilder {
                         exchange.getIn().setBody(message);
                     }
                 })
-                .to("direct:mail");
+                .to("seda:mail");
 
 
-        from("direct:mail")
+        from("seda:mail")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {

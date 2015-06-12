@@ -20,8 +20,8 @@ public class Screening {
 
 
     @JsonCreator
-    public Screening(@JsonProperty("TheaterRoom")TheaterRoom theaterRoom,
-                     @JsonProperty("Movie")Movie movie,
+    public Screening(@JsonProperty("theaterRoom")TheaterRoom theaterRoom,
+                     @JsonProperty("movie")Movie movie,
                      @JsonProperty("price")BigDecimal pricePerPerson,
                      @JsonProperty("time") String time) {
         this.theaterRoom = theaterRoom;

@@ -1,7 +1,6 @@
 package cinema.controller;
 
 import cinema.jpa.model.Snack;
-import cinema.routes.CamelHibernateToSupplierRoute;
 import cinema.routes.ScreeningToMongo;
 import cinema.service.FileWriterService;
 import cinema.service.SnackService;
@@ -36,8 +35,6 @@ public class Controller {
     @Autowired
     ApplicationContext appContext;
 
-    @Autowired
-    CamelHibernateToSupplierRoute camelHibernateToSupplierRoute;
 
     //injected routes
     @Autowired
@@ -56,29 +53,6 @@ public class Controller {
 
     }
 
-    @RequestMapping("/start-test")
-    public String startTest(){
-
-        //FTP
-        RouteBuilder routeBuilder = this.camelHibernateToSupplierRoute;
-        try {
-            this.camelContext.addRoutes(routeBuilder);
-        } catch (Exception e) {
-            logger.error("Could not add route: " + routeBuilder.toString() + ". Failmessage: " + e.getMessage());
-        }
-
-        //start of the action
-        try {
-            camelContext.start();
-            Thread.sleep(60 * 1000);
-            camelContext.stop();
-        } catch (Exception e) {
-            logger.error("Fail. Message: " + e.getMessage());
-        }
-
-        return "Routes ended at: " ;
-
-    }
 
     @RequestMapping("/insert-screenings")
     public void insertScreenings(){

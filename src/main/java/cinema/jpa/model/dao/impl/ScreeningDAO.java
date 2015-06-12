@@ -33,7 +33,7 @@ public class ScreeningDAO implements IScreeningDAO {
     public Screening save(Screening screening) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.saveOrUpdate(screening);
-        log.info("saved screening: "+screening.getId());
+        log.debug("saved screening: "+screening.getId());
         return screening;
     }
 
@@ -41,7 +41,7 @@ public class ScreeningDAO implements IScreeningDAO {
     public void delete(Screening screening) {
         Session session = this.entityManager.unwrap(org.hibernate.Session.class);
         session.delete(screening);
-        log.info("deleted screening: "+screening.getId());
+        log.debug("deleted screening: "+screening.getId());
     }
 
 }
