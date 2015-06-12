@@ -32,7 +32,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     public void configure() throws Exception {
         this.logger.info("CamelHibernateToSupplierRoute");
 
-        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=5000")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=15000")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)
                 .log("aggregate Snacks to enquiry")
                 .process(new Processor() {
@@ -50,7 +50,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
                     }})
                 .setHeader("CamelFileName", simple("enquiry_${in.header.CamelFileName}.json"))
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
-                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
+                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out/enquiry?binary=true&password=OmaOpa_12")
                 .log("upload enquiry to ftp server");
 
 
