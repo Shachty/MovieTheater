@@ -64,7 +64,7 @@ public class SupplierOfferProcessor implements Processor{
 
         while (i.hasNext()) {
             Item item = (Item) i.next();
-            double price = getRandomPrice();
+            price = getRandomPrice();
             item.setPrice(price);
             list.add(item);
             sumPrice += price;

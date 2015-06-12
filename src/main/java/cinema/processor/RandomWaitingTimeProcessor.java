@@ -12,7 +12,7 @@ public class RandomWaitingTimeProcessor implements Processor{
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        exchange.getIn().setHeader("waitingTime", getRandom(1000*10));
+        exchange.getIn().setHeader("waitingTime", getRandom((int)(1000*2.5)));
     }
 
     private long getRandom(int time){

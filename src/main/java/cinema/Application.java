@@ -43,22 +43,20 @@ public class Application {
         camelAutoloadRoutes.add(CamelMailRoute.class);
         camelAutoloadRoutes.add(CamelConsumeTicketRoute.class);
        camelAutoloadRoutes.add(CamelMongoToSocialMediaRoute.class);
-   /*     camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
+        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
         camelAutoloadRoutes.add(CamelSupplierPublishSubscribeRoute.class);
-    */
+
         camelAutoloadRoutes.add(CamelHttpSnackOrderingRoute.class);
 
 //        camelAutoloadRoutes.add(CamelMongoToTwitterRoute.class);
 //        camelAutoloadRoutes.add(CamelMongoToFacebookRoute.class);
 
-//        camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
-//        camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
-//        camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
         camelAutoloadRoutes.add(CamelReserveTicketRoute.class);
         camelAutoloadRoutes.add(CamelSellTicketRoute.class);
         camelAutoloadRoutes.add(CamelTicketCheckerRoute.class);
+        camelAutoloadRoutes.add(CamelChooseSupplierRoute.class);
 
 //        for(String str : ctx.getBeanDefinitionNames()) {
 //            logger.info(str);
