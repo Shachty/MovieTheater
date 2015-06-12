@@ -32,8 +32,8 @@ public class SupplierCsvCreatorProcessor implements Processor{
         map.put("name", "name");
         map.put("number", "number");
         map.put("sumprice", "sumprice");
-        map.put("companyname", "companyname");
-        map.put("companyemail", "companyemail");
+        map.put("companyName", "companyname");
+        map.put("companyMail", "companyemail");
         list.add(map);
         while (i.hasNext()) {
             Item item = i.next();
@@ -47,8 +47,8 @@ public class SupplierCsvCreatorProcessor implements Processor{
             map.put("name", item.getSnack().getName().toString());
             map.put("number", item.getSnack().getNumber().toString());
             map.put("sumprice", offer.getSumPrice().toString());
-            map.put("companyname", offer.getCompanyName());
-            map.put("companyemail", offer.getCompanyMail());
+            map.put("companyName", offer.getCompanyName());
+            map.put("companyMail", offer.getCompanyMail());
             list.add(map);
         }
         exchange.getIn().setBody(list);
