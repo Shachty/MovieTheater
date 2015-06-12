@@ -19,6 +19,8 @@ public class Movie {
         this.movieId = movieId;
     }
 
+    public Movie(){}
+
     public String getMovieName() {
         return movieName;
     }

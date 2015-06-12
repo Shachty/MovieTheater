@@ -21,6 +21,8 @@ public class Enquiry {
         this.items = items;
     }
 
+    public Enquiry(){}
+
     public Long getId() {
         return this.id;
     }

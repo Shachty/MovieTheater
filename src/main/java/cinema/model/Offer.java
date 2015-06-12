@@ -30,6 +30,7 @@ public class Offer {
         this.companyName = companyName;
     }
 
+    public Offer(){}
 
     @XmlAttribute
     public void setId(Long id) {this.id = id;}

@@ -47,7 +47,7 @@ public class SupplierOfferProcessor implements Processor{
         companyMailList.add(6,"daniel.shatkin@gmail.com");
         companyMailList.add(7,"e1127230@tuwien.ac.at");
         companyMailList.add(8,"e0827919@student.tuwien.ac.at");
-        companyMailList.add(9,"tdashton+tuwien@gmail.com");
+        companyMailList.add(9,"s.scheickl@gmx.net");
 
     }
 

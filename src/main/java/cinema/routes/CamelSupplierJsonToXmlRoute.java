@@ -27,17 +27,16 @@ public class CamelSupplierJsonToXmlRoute extends RouteBuilder {
         JAXBContext jaxbContext = JAXBContext.newInstance(new Class[]{OfferDTO.class, Offer.class, Item.class, Item.class, Snack.class});
         DataFormat jaxb = new JaxbDataFormat(jaxbContext);
 
-        from("direct:supplierXml")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")//from("file:src/main/resources/enquiries?noop=true")
-                .log("got file from ftpServer - enquiries")
+        from("direct:supplierXml")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
                 .loop(4).copy()
+                .log("got file from ftpServer")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}.xml"))
                 .process(new RandomWaitingTimeProcessor())
                 .marshal(jaxb)
                 .delay(simple("${in.header.waitingTime}"))
-                .log(simple("1 - ${in.header.waitingTime}").getText())
-                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_1${property.CamelLoopIndex}?binary=true&password=OmaOpa_12"))//.recipientList(simple("file:src/main/resources/offers/offers_1${property.CamelLoopIndex}"))
+                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_1${property.CamelLoopIndex}?binary=true&password=OmaOpa_12"))//.recipientList(simple("file://tmp/test/out/offers_1${property.CamelLoopIndex}"))//
                 .log(simple("written to ftpServer - offers_1${property.CamelLoopIndex}").getText());
 
     }

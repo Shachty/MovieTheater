@@ -32,8 +32,8 @@ public class SupplierCsvCreatorProcessor implements Processor{
         map.put("name", "name");
         map.put("number", "number");
         map.put("sumprice", "sumprice");
-        map.put("companyName", "companyname");
-        map.put("companyMail", "companyemail");
+        map.put("companyName", "companyName");
+        map.put("companyMail", "companyMail");
         list.add(map);
         while (i.hasNext()) {
             Item item = i.next();

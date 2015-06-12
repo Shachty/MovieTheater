@@ -23,7 +23,7 @@ public class Snack {
         this.number = number;
     }
 
-
+    public Snack(){}
     @XmlAttribute
     public void setId(Long param) {
         this.id = param;

@@ -29,6 +29,8 @@ public class Item {
         this.price = price;
     }
 
+    public Item(){}
+
     @XmlAttribute
     public void setId(Long id) {
         this.id = id;

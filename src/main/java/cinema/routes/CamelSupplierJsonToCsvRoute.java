@@ -13,9 +13,9 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:supplierCsv")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")//from("file:src/main/resources/enquiries_3?noop=true")
-                .log("got file from ftpServer - enquiries_3")
+        from("direct:supplierCsv")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
                 .loop(4).copy()
+                .log("got file from ftpServer - enquiries_3")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .process(new SupplierCsvCreatorProcessor())
@@ -23,8 +23,7 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
                 .process(new RandomWaitingTimeProcessor())
                 .marshal().csv()
                 .delay(simple("${in.header.waitingTime}"))
-                .log(simple("3 - ${in.header.waitingTime}").getText())
-                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_3${property.CamelLoopIndex}?binary=true&password=OmaOpa_12"))//.recipientList(simple("file:src/main/resources/offers/offers_3${property.CamelLoopIndex}"))//.to("ftp://user:root@localhost/offers_3")
+                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in/offers_3${property.CamelLoopIndex}?binary=true&password=OmaOpa_12"))//.recipientList(simple("file://tmp/test/out/offers_3${property.CamelLoopIndex}"))//
                 .log(simple("written to ftpServer - offers_3${property.CamelLoopIndex}").getText());
 
     }
