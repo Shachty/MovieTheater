@@ -55,7 +55,7 @@ public class CamelMailRoute extends RouteBuilder {
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-                        OfferDTO offerDTO = (OfferDTO)exchange.getIn().getBody();
+                        OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
                         Offer offer = offerDTO.getOffer();
                         // ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         //Ticket ticket = ticketDTO.getTicket();
@@ -66,16 +66,22 @@ public class CamelMailRoute extends RouteBuilder {
                                 "We accept your offer of:";
 
                         Iterator<Item> iterator = offer.getItems().iterator();
-                        while (iterator.hasNext()){
+                        while (iterator.hasNext()) {
                             Item i = iterator.next();
                             message += "\n" + i.getOrderSnackNumber() + "x " + i.getSnack().getName();
                         }
-                        message += " \nFor the price of:" + offer.getSumPrice()+  "€" +
+                        message += " \nFor the price of:" + offer.getSumPrice() + "€" +
                                 "\n\nBest regards\nThe Movie Theater";
                         exchange.getIn().setBody(message);
                     }
                 })
-                .to("seda:mail");
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        exchange.getIn().setHeaders(new HashMap<String, Object>());
+                    }
+                })
+                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Snack Offer"));
 
 
         from("seda:mail")
