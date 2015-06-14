@@ -1,30 +1,8 @@
 package cinema.service;
 
-import cinema.dto.mongo.ScreeningMongoDTO;
-import cinema.dto.mongo.ScreeningsMongoDTO;
-import cinema.model.Screening;
-import org.apache.camel.Body;
-import org.apache.camel.Exchange;
-import org.apache.camel.Header;
-import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultMessage;
-import org.apache.camel.language.Bean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.processing.Completion;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
-import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.SourceVersion;
-import javax.lang.model.element.AnnotationMirror;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.TypeElement;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class SocialMediaService{

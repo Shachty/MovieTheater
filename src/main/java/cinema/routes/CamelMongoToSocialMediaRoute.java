@@ -47,7 +47,6 @@ public class CamelMongoToSocialMediaRoute extends RouteBuilder {
                 .enrich("mongodb:mongoBean?database=workflow&collection=screenings&operation=findAll&dynamicity=true")
                 .convertBodyTo(String.class)
                 .unmarshal().json(JsonLibrary.Jackson, ScreeningsMongoDTO.class)
-                .bean(SocialMediaService.class,"buildMessage")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -106,20 +105,11 @@ public class CamelMongoToSocialMediaRoute extends RouteBuilder {
 
         from("direct:twitter")
                 .split().method("splitterBean", "splitBody")
-                .to("twitter://timeline/user?consumerKey=j5gTr0r72YSgle7b1CSzFtrg6&consumerSecret=crZI8W4R11i1bSjvKt49hd3DdYV2zTgx0Fy0YKGqz5JfzIuofF&accessToken=3240346329-PdlJTNwUHre4YW5ySic7x1505NaCZCTfC4JCheM&accessTokenSecret=FnLGjfjm9raE5Pyrs35XK5C5xb3recJ6Rg5TtZyLYEI4f")
+                .to("twitter://timeline/user?consumerKey={{twitter.consumerKey}}&consumerSecret={{twitter.consumerSecret}}&accessToken={{twitter.accessToken}}&accessTokenSecret={{twitter.accessTokenSecret}}")
                 .log("written to twitter");
 
         from("direct:facebook")
-                .recipientList(simple("facebook://postStatusMessage?inBody=message&" + getOAuthKeys()))
+                .recipientList(simple("facebook://postStatusMessage?inBody=message&oAuthAppId={{facebook.oAuthAppId}}&oAuthAppSecret={{facebook.oAuthAppSecret}}&oAuthAccessToken={{facebook.oAuthAccessToken}}"))
                 .log("written to facebook");
-    }
-
-    private String getOAuthKeys() {
-        String oAuthAccessToken = "CAAK8TT51AOQBAIXjsxPfU7SH6hD1yY6qmFlMMHzdGVQfDiEf8ZAKIjmsiOkKZAfr8y05IElNJvi1WXASyIAEdszJke4WbkzykvidB5UHVRlRaR8EkS6399X1t96hiNlZBSDKAsifMQF5eucYUcHUZAnHi1vaOLd9bec6veCH9B53ZAZAL3BMPohfRkDviZABtC8ZBh21IM7qUiMr2KHSmcAy";
-        String oAuthAppId = "769989899780324";
-        String oAuthAppSecret = "1b3f6821328040af2e017b685b72ea5d";
-
-
-        return "oAuthAppId=" + oAuthAppId + "&oAuthAppSecret=" + oAuthAppSecret + "&oAuthAccessToken=" + oAuthAccessToken;
     }
 }

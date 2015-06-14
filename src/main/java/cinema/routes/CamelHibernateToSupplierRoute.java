@@ -43,22 +43,21 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
                         List<Item> itemList = enquiry.getItems();
                         String message = "enquiry -> id: " + enquiry.getId() + ", ITEMS[";
 
-                        for(Item i : itemList){
+                        for (Item i : itemList) {
                             message += " " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + ";";
                         }
                         logger.info(message + " ]");
-                    }})
+                    }
+                })
                 .setHeader("CamelFileName", simple("enquiry_${in.header.CamelFileName}.json"))
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out/enquiry?binary=true&password=OmaOpa_12")
                 .log("upload enquiry to ftp server");
+    }
 
+    @Bean
+    private AggregationStrategy enquiryAggregationStrategyProcessor() {
+        return new EnquiryAggregationStrategyProcessor();
+    }
 
-                    }
-
-                    @Bean
-                    private AggregationStrategy enquiryAggregationStrategyProcessor() {
-                        return new EnquiryAggregationStrategyProcessor();
-                    }
-
-                }
+}

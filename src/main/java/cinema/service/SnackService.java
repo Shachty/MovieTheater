@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Tyler on 19.05.2015.
- */
 @Component
 public class SnackService {
 
