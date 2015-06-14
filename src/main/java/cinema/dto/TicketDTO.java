@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 
-/**
- * Created by Daniel on 21.05.2015.
- */
 public class TicketDTO {
 
     public Ticket ticket;

@@ -10,10 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-
-/**
- * Created by Daniel on 10.05.2015.
- */
 @Configuration
 public class MongoConfig {
 

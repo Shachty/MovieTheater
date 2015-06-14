@@ -1,8 +1,5 @@
 package cinema.config;
 
-/**
- * Created by Daniel on 26.05.2015.
- */
 import org.apache.camel.Exchange;
 
 public class FOPConfig {

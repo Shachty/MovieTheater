@@ -15,9 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Tyler
- */
 @Component
 public class OrderService {
 
@@ -34,8 +31,6 @@ public class OrderService {
         List<Enquiry> returnVal = theOrderDao.findAll();
         this.log.debug(returnVal);
         return returnVal;
-
-
     }
 
     @Transactional
@@ -58,6 +53,5 @@ public class OrderService {
 
         Long lastId = theEnquiry.getId();
         theEnquiry.getItems().get(1).getId();
-
     }
 }

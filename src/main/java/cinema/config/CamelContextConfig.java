@@ -12,21 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-/**
- * Created by Daniel on 17.05.2015.
- */
-
-
-
-
 @Configuration
 public class CamelContextConfig {
 
 
-    //beans for selfregistering
     @Autowired
     Mongo mongoBean;
-
     @Autowired
     SnackService snackBean;
     @Autowired
@@ -38,7 +29,6 @@ public class CamelContextConfig {
     @Scope("singleton")
     public CamelContext camelContext(){
 
-        //If camelContext messed with the Spring registrated beans, register it yourself using the simpleRegistry
         SimpleRegistry simpleRegistry = new SimpleRegistry();
         simpleRegistry.put("mongoBean", mongoBean);
         simpleRegistry.put("snackService", snackBean);
@@ -46,6 +36,5 @@ public class CamelContextConfig {
         simpleRegistry.put("splitterBean", splitterBean);
 
         return new DefaultCamelContext(simpleRegistry);
-
     }
 }

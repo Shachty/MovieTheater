@@ -7,17 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
-/**
- * Created by Daniel on 13.05.2015.
- */
 public class Screening {
 
     private TheaterRoom theaterRoom;
     private Movie movie;
     private BigDecimal pricePerPerson;
     private String time;
-
-
 
     @JsonCreator
     public Screening(@JsonProperty("theaterRoom")TheaterRoom theaterRoom,

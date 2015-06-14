@@ -5,8 +5,6 @@ import org.apache.camel.component.jpa.Consumed;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- */
 @Entity
 @Table(name = "CINEMA_Snack")
 @NamedQueries({ @NamedQuery(name = "@HQL_GET_ALL_SNACKS",

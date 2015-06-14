@@ -3,8 +3,6 @@ package cinema.jpa.model;
 import javax.persistence.*;
 import java.util.Calendar;
 
-/**
- */
 @Entity
 @Table(name = "CINEMA_Screening")
 public class Screening {
@@ -49,5 +47,4 @@ public class Screening {
     public Calendar getScreeningTime() {
         return this.screeningTime;
     }
-
 }

@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-/**
- * Created by Daniel on 28.05.2015.
- */
 @Service
 public class CustomerIdNumberService {
 

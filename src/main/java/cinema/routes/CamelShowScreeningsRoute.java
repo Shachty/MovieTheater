@@ -14,15 +14,11 @@ import sun.misc.BASE64Decoder;
 
 import java.util.List;
 
-/**
- * Created by Daniel on 10.06.2015.
- */
 @Component
 public class CamelShowScreeningsRoute extends RouteBuilder {
 
     @Autowired
     ResponseProcessor responseProcessor;
-
 
     @Override
     public void configure() throws Exception {

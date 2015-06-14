@@ -12,9 +12,6 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-/**
- * Created by Daniel on 07.05.2015.
- */
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -23,20 +20,14 @@ public class CustomerController {
     private static final String URL = "http://localhost:8080/mongo";
     private static final String URL2 = "http://localhost:8080/test";
 
-
     @RequestMapping(value = "/test"/*,  produces = MediaType.APPLICATION_JSON_VALUE*/)
     public void testPost() throws URISyntaxException {
 
-
         URI uri = new URI(URL2);
-
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         RequestEntity<String> requestEntity = new RequestEntity<String>("##heyhey##", HttpMethod.PUT, uri);
         restTemplate.put(URL2, requestEntity, String.class);
-
-        //    restTemplate.postForEntity(URL2,"eeeeeeeeefff",String.class);
-
     }
 }

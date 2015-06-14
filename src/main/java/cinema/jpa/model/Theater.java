@@ -35,5 +35,4 @@ public class Theater {
     public void setSeatsTotal(Integer seats) {
         this.seatsTotal = seats;
     }
-
 }

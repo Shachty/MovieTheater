@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by Asus on 25.05.2015.
- */
 public class SupplierCsvCreatorProcessor implements Processor{
     @Override
     public void process(Exchange exchange) throws Exception {

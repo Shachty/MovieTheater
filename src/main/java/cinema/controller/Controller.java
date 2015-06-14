@@ -35,8 +35,6 @@ public class Controller {
     @Autowired
     ApplicationContext appContext;
 
-
-    //injected routes
     @Autowired
     ScreeningToMongo screeningToMongo;
 
@@ -50,9 +48,7 @@ public class Controller {
         }
 
         SpringApplication.exit(this.appContext);
-
     }
-
 
     @RequestMapping("/insert-screenings")
     public void insertScreenings(){
@@ -79,8 +75,6 @@ public class Controller {
         return "yess";
     }
 
-
-
     @RequestMapping("/reserve")
     public HttpStatus reserve(@RequestParam String body){
 
@@ -104,10 +98,4 @@ public class Controller {
         return new ResponseEntity<String>(HttpStatus.OK);
 
     }
-
-
-
-
-
-
 }

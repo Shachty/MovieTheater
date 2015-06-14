@@ -31,7 +31,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
-          <factory-entry name="default" />
+          <factory-entry name="default" value="273fe221-76ab-46e9-8267-a8888ca7ab8b" />
           <factory-entry name="emf" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />

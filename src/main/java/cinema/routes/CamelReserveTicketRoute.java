@@ -17,9 +17,6 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Daniel on 25.05.2015.
- */
 @Component
 public class CamelReserveTicketRoute extends RouteBuilder {
 
@@ -92,11 +89,5 @@ public class CamelReserveTicketRoute extends RouteBuilder {
                 })
                 .choice().when(header("errorMessage").isNull()).to("direct:ticketChecker").endChoice()
                 .otherwise().process(responseProcessor);
-
-
-
-
-
-
     }
 }

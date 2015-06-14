@@ -24,9 +24,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-/**
- * Created by Daniel on 27.05.2015.
- */
 @Component
 public class CamelSellTicketRoute extends RouteBuilder {
 
@@ -94,11 +91,8 @@ public class CamelSellTicketRoute extends RouteBuilder {
 
                             BasicDBObject query = new BasicDBObject().append("screening.time", time).append("screening.theaterRoom.theaterRoomId", theaterRoomId).append("screening.movie.movieName", moviename);
 
-                            //   exchange.getIn().setBody(query);
-
                             exchange.getIn().setBody(query);
                             exchange.getIn().getHeaders().put("isReservation", false);
-
                         }
                     }
                 })

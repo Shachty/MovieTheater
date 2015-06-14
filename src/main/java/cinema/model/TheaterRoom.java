@@ -3,9 +3,6 @@ package cinema.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by Daniel on 13.05.2015.
- */
 public class TheaterRoom {
 
     private long theaterRoomId;

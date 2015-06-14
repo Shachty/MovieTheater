@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-/**
- * Created by Daniel on 26.05.2015.
- */
 @Component
 public class CamelConsumeTicketRoute extends RouteBuilder {
 
@@ -26,12 +23,10 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-
         from("restlet:{{restlet.url}}/consume-reservation?restletMethods=POST,DELETE,PUT,GET")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
-
 
                         int reservationNumber = Integer.parseInt(exchange.getIn().getHeader("CamelHttpQuery").toString());
                         BasicDBObject query = new BasicDBObject().append("customerId", reservationNumber);
@@ -49,7 +44,6 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                 }).to("mongodb:mongoBean?database=workflow&collection=tickets&operation=remove");
 
         from("seda:marshalConsumedTicket")
-            //    .removeHeaders("*")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -71,7 +65,6 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                 .to("seda:toPdf");
 
         from("seda:toPdf")
-            //    .removeHeaders("*")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
@@ -92,8 +85,6 @@ public class CamelConsumeTicketRoute extends RouteBuilder {
                 })
                 .setHeader("CamelFileName", simple("Ticket_${property[name]}.txt"))
                 .to("file:src/main/resources/pdf");
-
-
 
         from("file:src/main/resources/pdf?noop=true")
                 .routeId("textToPdf")

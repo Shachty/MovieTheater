@@ -14,9 +14,6 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Daniel on 28.05.2015.
- */
 @Component
 public class CamelTicketCheckerRoute extends RouteBuilder {
 
@@ -44,7 +41,7 @@ public class CamelTicketCheckerRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, ScreeningMongoDTO.class)
                 .to("direct:checkScreening");
 
-        //checks wheter the screening is ready to attend
+        //checks if the screening is ready to attend
         from("direct:checkScreening")
                 .process(checkScreeningProcessor)
                 .choice()

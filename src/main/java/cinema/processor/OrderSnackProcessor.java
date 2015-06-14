@@ -1,6 +1,5 @@
 package cinema.processor;
 
-
 import cinema.service.SnackService;
 import cinema.service.TicketReservationService;
 import org.apache.camel.Exchange;

@@ -7,9 +7,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Daniel on 27.05.2015.
- */
 @Component
 public class ScreeningUpdateProcessor implements Processor {
     @Override

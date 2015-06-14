@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.restlet.Response;
 
-/**
- * Created by Daniel on 27.05.2015.
- */
 @Component
 public class ResponseProcessor implements Processor {
 

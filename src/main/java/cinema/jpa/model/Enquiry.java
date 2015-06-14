@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- */
 @Entity
 @Table(name = "CINEMA_Enquiry")
 @NamedQueries({ @NamedQuery(name = "@HQL_GET_UNPROCESSED_ORDERS",

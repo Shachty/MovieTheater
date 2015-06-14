@@ -5,9 +5,6 @@ import org.apache.camel.Processor;
 
 import java.util.Random;
 
-/**
- * Created by Asus on 27.05.2015.
- */
 public class RandomWaitingTimeProcessor implements Processor{
 
     @Override

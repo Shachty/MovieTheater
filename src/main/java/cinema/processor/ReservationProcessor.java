@@ -38,10 +38,6 @@ public class ReservationProcessor implements Processor {
                     numberOfPeople,
                     time);
 
-            // use Restlet API to create the response
-  /*          response.setStatus(Status.SUCCESS_OK);
-            response.setEntity("<response><message>We received your reservation. You will get a confirmation or declining message on your provided e-mail address soon.</message></response>", MediaType.TEXT_XML);
-*/
         } catch (Exception e) {
       /*      // use Restlet API to create the response
             response.setStatus(Status.CLIENT_ERROR_NOT_ACCEPTABLE);

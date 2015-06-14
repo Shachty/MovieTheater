@@ -28,7 +28,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
         ApplicationContext context = new AnnotationConfigApplicationContext("cinema");
         startCamelContext(context);
-
     }
 
     public static void startCamelContext(ApplicationContext ctx) {
@@ -48,37 +47,26 @@ public class Application {
         camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
         camelAutoloadRoutes.add(CamelMailRoute.class);
         camelAutoloadRoutes.add(CamelConsumeTicketRoute.class);
-       camelAutoloadRoutes.add(CamelMongoToSocialMediaRoute.class);
+        camelAutoloadRoutes.add(CamelMongoToSocialMediaRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToCsvRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToJsonRoute.class);
         camelAutoloadRoutes.add(CamelSupplierJsonToXmlRoute.class);
         camelAutoloadRoutes.add(CamelSupplierPublishSubscribeRoute.class);
-
         camelAutoloadRoutes.add(CamelHttpSnackOrderingRoute.class);
-
-//        camelAutoloadRoutes.add(CamelMongoToTwitterRoute.class);
-//        camelAutoloadRoutes.add(CamelMongoToFacebookRoute.class);
-
         camelAutoloadRoutes.add(CamelReserveTicketRoute.class);
         camelAutoloadRoutes.add(CamelSellTicketRoute.class);
         camelAutoloadRoutes.add(CamelTicketCheckerRoute.class);
         camelAutoloadRoutes.add(CamelChooseSupplierRoute.class);
         camelAutoloadRoutes.add(CamelShowScreeningsRoute.class);
- //       camelAutoloadRoutes.add(ScreeningToMongo.class);
 
-//        for(String str : ctx.getBeanDefinitionNames()) {
-//            logger.info(str);
-//        }
-
-        for(Class c : Application.camelAutoloadRoutes)
-        {
+        for (Class c : Application.camelAutoloadRoutes) {
             Object cBean = ctx.getBean(c);
-            if(cBean instanceof org.apache.camel.builder.RouteBuilder == false) {
+            if (cBean instanceof org.apache.camel.builder.RouteBuilder == false) {
                 logger.error("Configured route for WFPM route: " + c.getClass() + " must extend RouteBuilder");
                 continue;
             }
 
-            RouteBuilder routeBuilder = (RouteBuilder)cBean;
+            RouteBuilder routeBuilder = (RouteBuilder) cBean;
             try {
                 camelContext.addRoutes(routeBuilder);
             } catch (Exception e) {

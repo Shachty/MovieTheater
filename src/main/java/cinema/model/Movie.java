@@ -3,9 +3,6 @@ package cinema.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by Daniel on 07.05.2015.
- */
 public class Movie {
 
 
@@ -36,13 +33,4 @@ public class Movie {
     public void setMovieId(long movieId) {
         this.movieId = movieId;
     }
-
-    /*
-    @Override
-    public String toString(){
-        return "{" +
-                "movieName=" + movieName.toString() + "," +
-                "theaterRoom=" + theaterRoonm +
-                "}";
-    }*/
 }

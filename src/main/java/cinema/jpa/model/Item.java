@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- */
 @Entity
 @Table(name = "CINEMA_Item")
 public class Item {
@@ -59,5 +57,3 @@ public class Item {
         this.orderSnackNumber = nr;
     }
 }
-
-//order.snack.setNumber = order.snack.getNumber + order.orderSnackNumber;

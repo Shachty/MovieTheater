@@ -10,12 +10,8 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Daniel on 27.05.2015.
- */
 @Component
 public class CheckScreeningProcessor implements Processor {
-
 
     @Override
     public void process(Exchange exchange) throws Exception {
@@ -39,8 +35,6 @@ public class CheckScreeningProcessor implements Processor {
             ticket.setPricePerPerson(screening.getPricePerPerson());
 
         }
-
-//        exchange.getIn().setBody(ticketDTO);
         exchange.getIn().setHeader("ticketStatus", ticket.getTicketStatus());
     }
 }

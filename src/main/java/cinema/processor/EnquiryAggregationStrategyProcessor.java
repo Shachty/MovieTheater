@@ -1,9 +1,5 @@
 package cinema.processor;
 
-/**
- * Created by Jakob on 25.05.2015.
- */
-
 import cinema.dto.EnquiryDTO;
 import cinema.jpa.model.Snack;
 import cinema.model.Enquiry;

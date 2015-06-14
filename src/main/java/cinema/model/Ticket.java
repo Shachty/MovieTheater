@@ -40,31 +40,6 @@ public class Ticket {
         this.customerId = customerId;
         this.mail = mail;
     }
-/*
-
-    @JsonCreator
-    public Ticket(@JsonProperty("isReservation") boolean isReservation,
-                  @JsonProperty("firstName")String firstName,
-                  @JsonProperty("lastName")String lastName,
-                  @JsonProperty("numberOfPersons")int numberOfPersons,
-                  @JsonProperty("theaterRoom") int theaterRoom,
-                  @JsonProperty("movieName")String movieName,
-                  @JsonProperty("time")String time,
-                  @JsonProperty("customerId")long customerId,
-                  @JsonProperty("mail")String mail,
-                  @JsonProperty("pricePerPerson")BigDecimal pricePerPerson) {
-        this.isReservation = isReservation;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.pricePerPerson = pricePerPerson;
-        this.numberOfPersons = numberOfPersons;
-        this.theaterRoom = theaterRoom;
-        this.movieName = movieName;
-        this.time = time;
-        this.customerId = customerId;
-        this.mail = mail;
-    }
-*/
 
     public static String toXmlString(Ticket ticket){
         String ret = "<Ticket>" +
@@ -81,8 +56,6 @@ public class Ticket {
 
         return ret;
     }
-
-
 
     public String getFirstName() {
         return firstName;

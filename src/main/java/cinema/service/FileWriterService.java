@@ -6,11 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Daniel on 21.05.2015.
- */
 @Service
-
 public class FileWriterService {
 
     public void writeFile(String path ,String content, int counter, String suffix) {

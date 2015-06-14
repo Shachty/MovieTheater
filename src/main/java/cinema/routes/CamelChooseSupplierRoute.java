@@ -18,9 +18,6 @@ import javax.xml.bind.JAXBContext;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Created by Jakob on 08.06.2015.
- */
 @Component
 public class CamelChooseSupplierRoute extends RouteBuilder {
 
@@ -64,9 +61,5 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
                 })
                 .to("direct:mail_ChooseSupplier")
                 .log("send confirm-notification to supplier");
-
-
     }
-
-
 }
