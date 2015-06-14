@@ -5,13 +5,11 @@ import cinema.processor.RandomWaitingTimeProcessor;
 import cinema.processor.SupplierCsvCreatorProcessor;
 import cinema.processor.SupplierOfferProcessor;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import facebook4j.FacebookException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
-import twitter4j.TwitterException;
 
 @Component
 public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
@@ -50,7 +48,7 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
                 .process(new RandomWaitingTimeProcessor())
                 .marshal().csv()
                 .delay(simple("${in.header.waitingTime}"))
-                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in?binary=true&password=OmaOpa_12"))//.recipientList(simple("file://tmp/test/out/offers_3${property.CamelLoopIndex}"))//
+                .recipientList(simple("ftp://{{ftp.username}}@{{ftp.hostname}}:21/htdocs/in?binary=true&password={{ftp.password}}"))//.recipientList(simple("file://tmp/test/out/offers_3${property.CamelLoopIndex}"))//
                 .log(simple("written to ftpServer - offers_3${property.CamelLoopIndex}").getText());
 
     }

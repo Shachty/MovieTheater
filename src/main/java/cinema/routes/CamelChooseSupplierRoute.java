@@ -32,7 +32,7 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
 
         OfferAggregationStrategyProcessor offerAggregationStrategyProcessor = new OfferAggregationStrategyProcessor();
         
-        from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in?binary=true&password=OmaOpa_12&recursive=true&consumer.delay=35000&delete=true")
+        from("ftp://{{ftp.username}}@{{ftp.hostname}}:21/htdocs/in?binary=true&password={{ftp.password}}&recursive=true&consumer.delay=35000&delete=true")
                 .choice()
                 .when(header("CamelFileName").endsWith(".csv"))
                 .unmarshal().csv()
