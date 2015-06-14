@@ -46,7 +46,7 @@ public class CamelSupplierJsonToJsonRoute extends RouteBuilder {
                 .process(new RandomWaitingTimeProcessor())
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .delay(simple("${in.header.waitingTime}"))
-                .recipientList(simple("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in?binary=true&password=OmaOpa_12"))//.recipientList(simple("file://tmp/test/out/offers_2${property.CamelLoopIndex}"))//
+                .recipientList(simple("ftp://{{ftp.username}}@{{ftp.hostname}}:21/htdocs/in?binary=true&password={{ftp.password}}"))//.recipientList(simple("file://tmp/test/out/offers_2${property.CamelLoopIndex}"))//
                 .log(simple("written to ftpServer - offers_2${property.CamelLoopIndex}").getText());
     }
 }

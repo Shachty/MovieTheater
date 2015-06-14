@@ -47,7 +47,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
                     }})
                 .setHeader("CamelFileName", simple("enquiry_${in.header.CamelFileName}.json"))
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
-                .to("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out/enquiry?binary=true&password=OmaOpa_12")
+                .to("ftp://{{ftp.username}}@{{ftp.hostname}}:21/htdocs/out/enquiry?binary=true&password={{ftp.password}}")
                 .log("upload enquiry to ftp server");
 
 
