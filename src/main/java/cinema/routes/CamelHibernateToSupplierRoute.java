@@ -25,9 +25,6 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
 
     private final Logger logger = Logger.getLogger(this.getClass().toString());
 
-    @PersistenceContext
-    EntityManager theManager;
-
     @Override
     public void configure() throws Exception {
         this.logger.info("CamelHibernateToSupplierRoute");
