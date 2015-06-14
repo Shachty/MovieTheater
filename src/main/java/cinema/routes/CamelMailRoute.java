@@ -70,8 +70,8 @@ public class CamelMailRoute extends RouteBuilder {
                             Item i = iterator.next();
                             message += "\n" + i.getOrderSnackNumber() + "x " + i.getSnack().getName();
                         }
-                        message += " \nFor the price of:" + offer.getSumPrice() + "€" +
-                                "\n\nBest regards\nThe Movie Theater";
+                        message += String.format(" \nFor the price of: %.2f" + "€" +
+                                "\n\nBest regards\nThe Movie Theater", offer.getSumPrice());
                         exchange.getIn().setBody(message);
                     }
                 })
