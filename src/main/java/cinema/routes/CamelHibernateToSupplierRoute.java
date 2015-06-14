@@ -32,7 +32,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     public void configure() throws Exception {
         this.logger.info("CamelHibernateToSupplierRoute");
 
-        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=15000")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=35000")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)
                 .log("aggregate Snacks to enquiry")
                 .process(new Processor() {

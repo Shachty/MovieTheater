@@ -35,57 +35,18 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
 
         OfferAggregationStrategyProcessor offerAggregationStrategyProcessor = new OfferAggregationStrategyProcessor();
         
-        from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in?binary=true&password=OmaOpa_12&recursive=true&consumer.delay=15000")
-                .log(simple("${in.header.CamelFileName}").getText())
+        from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/in?binary=true&password=OmaOpa_12&recursive=true&consumer.delay=35000&delete=true")
                 .choice()
                 .when(header("CamelFileName").endsWith(".csv"))
-                .log("Offer aggregator got .csv-file")
                 .unmarshal().csv()
                 .process(new SupplierCsvUnmarshalProcessor())
-                .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
-                        Offer offer = offerDTO.getOffer();
-                        List<Item> itemList = offer.getItems();
-                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
-
-                        for (Item i : itemList) {
-                            message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
-                        }
-                        logger.info(message + " ]");
-                    }
-                })
-                .log("choose best offer")
-                .to("direct:mail_ChooseSupplier")
-                .log("send confirm-notification to supplier")
                 .endChoice()
                 .when(header("CamelFileName").endsWith(".json"))
-                .log("Offer aggregator got .json-file")
                 .unmarshal().json(JsonLibrary.Jackson, OfferDTO.class)
-                .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
-                        Offer offer = offerDTO.getOffer();
-                        List<Item> itemList = offer.getItems();
-                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
-
-                        for (Item i : itemList) {
-                            message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
-                        }
-                        logger.info(message + " ]");
-                    }
-                })
-                .log("choose best offer")
-                .to("direct:mail_ChooseSupplier")
-                .log("send confirm-notification to supplier")
                 .endChoice()
                 .when(header("CamelFileName").endsWith(".xml"))
-                .log("Offer aggregator got .xml-file")
                 .unmarshal(jaxb)
+                .end()
                 .aggregate(constant(true), new OfferAggregationStrategyProcessor()).completionTimeout(3000)
                 .process(new Processor() {
                     @Override
@@ -93,7 +54,7 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
                         OfferDTO offerDTO = (OfferDTO) exchange.getIn().getBody();
                         Offer offer = offerDTO.getOffer();
                         List<Item> itemList = offer.getItems();
-                        String message = "best offer -> id: " + offer.getId() + " price:" + offer.getSumPrice() + ", ITEMS[";
+                        String message = "best offer -> email: " + offer.getCompanyMail() + " price:" + offer.getSumPrice() + ", ITEMS[";
 
                         for (Item i : itemList) {
                             message += " name: " + i.getSnack().getName() + " order size: " + i.getOrderSnackNumber() + " price: " + i.getPrice() + ";";
@@ -101,11 +62,8 @@ public class CamelChooseSupplierRoute extends RouteBuilder {
                         logger.info(message + " ]");
                     }
                 })
-                .log("choose best offer")
-                        //.to("direct:mail_ChooseSupplier")
-                .to("file:tmp/ftp/out")
-                .log("send confirm-notification to supplier")
-                    .end();
+                .to("direct:mail_ChooseSupplier")
+                .log("send confirm-notification to supplier");
 
 
     }
