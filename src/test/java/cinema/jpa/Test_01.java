@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class Test_01 {
 
     private  EntityManagerFactory getEntityManagerFactory() {
-        return Persistence.createEntityManagerFactory("thePersistenceUnit");
+        return Persistence.createEntityManagerFactory("default");
     }
 
 
