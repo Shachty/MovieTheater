@@ -81,7 +81,7 @@ public class CamelMailRoute extends RouteBuilder {
                         exchange.getIn().setHeaders(new HashMap<String, Object>());
                     }
                 })
-                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Snack Offer"));
+                .recipientList(simple("smtps://smtp.gmail.com?username={{mail.username}}&password={{mail.password}}&to=${property[mail]}&subject=Snack Offer"));
 
 
         from("seda:mail")
@@ -91,7 +91,7 @@ public class CamelMailRoute extends RouteBuilder {
                         exchange.getIn().setHeaders(new HashMap<String, Object>());
                     }
                 })
-                .recipientList(simple("smtps://smtp.gmail.com?username=moviecenter.wmpm@gmail.com&password=workflow&to=${property[mail]}&subject=Your reservation"));
+                .recipientList(simple("smtps://smtp.gmail.com?username={{mail.username}}&password={{mail.password}}&to=${property[mail]}&subject=Your reservation"));
     }
 
 }
