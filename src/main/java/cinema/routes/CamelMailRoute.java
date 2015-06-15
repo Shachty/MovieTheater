@@ -32,7 +32,6 @@ public class CamelMailRoute extends RouteBuilder {
                     public void process(Exchange exchange) throws Exception {
                         TicketDTO ticketDTO = (TicketDTO) exchange.getProperty("ticket");
                         Ticket ticket = ticketDTO.getTicket();
-
                         exchange.getProperties().put("mail", ticket.getMail());
 
                         String message = "Dear " + ticket.getFirstName() + " " + ticket.getLastName() + ",\n" +
