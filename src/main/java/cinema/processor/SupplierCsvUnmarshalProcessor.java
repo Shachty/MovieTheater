@@ -36,7 +36,7 @@ public class SupplierCsvUnmarshalProcessor  implements Processor {
             List<String> csvRow = (List<String>)i.next();
             Item item = new Item(Long.parseLong(csvRow.get(indexMap.get("itemId"))),csvRow.get(indexMap.get("supplierProductId")),new Snack(Long.parseLong(csvRow.get(indexMap.get("snackId"))), csvRow.get(indexMap.get("name")),Double.parseDouble(csvRow.get(indexMap.get("number")))),Long.parseLong(csvRow.get(indexMap.get("orderSnackNumber"))),Double.parseDouble(csvRow.get(indexMap.get("price"))));
             itemList.add(item);
-            offerId = Integer.parseInt(csvRow.get(indexMap.get("itemId")));
+            offerId = Integer.parseInt(csvRow.get(indexMap.get("offerId")));
             sumprice = Double.parseDouble(csvRow.get(indexMap.get("sumprice")));
             companyName = csvRow.get(indexMap.get("companyName"));
             companyMail = csvRow.get(indexMap.get("companyMail"));

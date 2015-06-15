@@ -12,8 +12,6 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,7 +27,7 @@ public class CamelHibernateToSupplierRoute extends RouteBuilder {
     public void configure() throws Exception {
         this.logger.info("CamelHibernateToSupplierRoute");
 
-        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=35000")
+        from("jpa:cinema.jpa.model.Snack?persistenceUnit=default&consumer.namedQuery=@HQL_GET_ALL_SNACKS&consumeDelete=true&consumer.delay=25000")
                 .aggregate(constant(true), enquiryAggregationStrategyProcessor()).completionTimeout(3000)
                 .log("aggregate Snacks to enquiry")
                 .process(new Processor() {

@@ -66,7 +66,7 @@ public class SupplierOfferProcessor implements Processor{
             price = getRandomPrice();
             item.setPrice(price);
             list.add(item);
-            sumPrice += price;
+            sumPrice += price*item.getOrderSnackNumber();
         }
         modcount = counter % 10;
         counter ++;

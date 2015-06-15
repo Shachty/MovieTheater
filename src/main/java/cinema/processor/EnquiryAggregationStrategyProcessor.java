@@ -17,6 +17,7 @@ public class EnquiryAggregationStrategyProcessor implements AggregationStrategy 
 
     private ArrayList<Double> minimalStockList;
     private final Logger logger = Logger.getLogger(this.getClass().toString());
+    private static int count =1;
 
     public EnquiryAggregationStrategyProcessor() {
         super();
@@ -49,7 +50,7 @@ public class EnquiryAggregationStrategyProcessor implements AggregationStrategy 
             EnquiryDTO enquiryDTO;
             List<Item> list;
             if (oldExchange == null) {
-                enquiry = new Enquiry(1, null);
+                enquiry = new Enquiry(count ++, null);
                 enquiry.addItemToOffer(item);
                 enquiryDTO = new EnquiryDTO(enquiry);
                 newExchange.getIn().setBody(enquiryDTO);

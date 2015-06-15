@@ -21,7 +21,9 @@ public class OfferAggregationStrategyProcessor implements AggregationStrategy {
         Message newIn = newExchange.getIn();
         OfferDTO newOfferDTO = (OfferDTO) newIn.getBody();
         Offer newOffer = newOfferDTO.getOffer();
-        logger.info("load offer -> id:" + newOffer.getId() +" name: " + newOffer.getCompanyName() +" mail: " + newOffer.getCompanyMail() +" price: " + newOffer.getSumPrice());
+        String message = "load offer -> id:" + newOffer.getId() +" name: " + newOffer.getCompanyName() +" mail: " + newOffer.getCompanyMail();
+        message += String.format("price: %.2f" , newOffer.getSumPrice());
+        logger.info(message);
 
         if (oldExchange != null) {
             Message oldIn = oldExchange.getIn();
