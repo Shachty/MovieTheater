@@ -39,7 +39,6 @@ public class CamelSupplierJsonToJsonRoute extends RouteBuilder {
 
         from("direct:supplierJson")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
                 .loop(4).copy()
-                .log("got file from ftpServer - enquiries_2")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .setHeader("CamelFileName", simple("offer_${in.header.CamelFileName}_2${property.CamelLoopIndex}.json"))
@@ -47,6 +46,6 @@ public class CamelSupplierJsonToJsonRoute extends RouteBuilder {
                 .marshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .delay(simple("${in.header.waitingTime}"))
                 .recipientList(simple("ftp://{{ftp.username}}@{{ftp.hostname}}:21/htdocs/in?binary=true&password={{ftp.password}}"))//.recipientList(simple("file://tmp/test/out/offers_2${property.CamelLoopIndex}"))//
-                .log(simple("written to ftpServer - offers_2${property.CamelLoopIndex}").getText());
+                .log("written offer to ftpServer");
     }
 }

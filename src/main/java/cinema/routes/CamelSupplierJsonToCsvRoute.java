@@ -40,7 +40,6 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
 
         from("direct:supplierCsv")//from("ftp://b7_16249111@ftp.byethost7.com:21/htdocs/out?binary=true&password=OmaOpa_12")
                 .loop(4).copy()
-                .log("got file from ftpServer - enquiries_3")
                 .unmarshal().json(JsonLibrary.Jackson, EnquiryDTO.class)
                 .process(new SupplierOfferProcessor())
                 .process(new SupplierCsvCreatorProcessor())
@@ -49,7 +48,8 @@ public class CamelSupplierJsonToCsvRoute extends RouteBuilder {
                 .marshal().csv()
                 .delay(simple("${in.header.waitingTime}"))
                 .recipientList(simple("ftp://{{ftp.username}}@{{ftp.hostname}}:21/htdocs/in?binary=true&password={{ftp.password}}"))//.recipientList(simple("file://tmp/test/out/offers_3${property.CamelLoopIndex}"))//
-                .log(simple("written to ftpServer - offers_3${property.CamelLoopIndex}").getText());
+                .log("written offer to ftpServer");
+
 
     }
 }
