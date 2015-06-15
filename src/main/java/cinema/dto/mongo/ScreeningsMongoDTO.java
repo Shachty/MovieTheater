@@ -1,14 +1,10 @@
 package cinema.dto.mongo;
 
-import cinema.model.Screening;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-/**
- * Created by AnitaS on 27.05.2015.
- */
 public class ScreeningsMongoDTO {
 
 

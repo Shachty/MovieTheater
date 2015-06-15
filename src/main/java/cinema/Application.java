@@ -40,7 +40,6 @@ public class Application {
 
         camelAutoloadRoutes = new ArrayList<>();
         camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
-        camelAutoloadRoutes.add(CamelCsvToHibernateRoute.class);
         camelAutoloadRoutes.add(CamelMongoRoute.class);
         camelAutoloadRoutes.add(CamelHibernateToSupplierRoute.class);
         camelAutoloadRoutes.add(CamelMailRoute.class);

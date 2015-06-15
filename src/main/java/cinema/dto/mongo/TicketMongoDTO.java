@@ -1,15 +1,11 @@
 package cinema.dto.mongo;
 
-import cinema.model.Ticket;
 import cinema.model.TicketStatus;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
-/**
- * Created by Daniel on 21.05.2015.
- */
 public class TicketMongoDTO {
 
     private MongoId _id;
