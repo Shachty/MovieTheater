@@ -1,6 +1,11 @@
-<!doctype html> <html> 
-<head> <meta charset="utf-8"> <title>Snack Ordering</title> </head>
-<body> <form method="POST" action="http://localhost:8081/restlet/buy-snack">
+<!doctype html>
+<html> 
+<head> <meta charset="utf-8"> <title>Snack Ordering</title> 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+ <form method="POST" action="http://localhost:8081/restlet/buy-snack">
  <label for="snack1">snack1</label>
  <input type="number" id="snack1" name="snack1" maxlength="40" value="0"><br/>
  <label for="snack2">snack2</label>
@@ -25,6 +30,6 @@
  <button type="submit">Eingaben absenden</button>
 
  </form> 
- 
+    </div>
  </body> 
  </html>

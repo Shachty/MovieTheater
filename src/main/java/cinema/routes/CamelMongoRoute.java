@@ -48,7 +48,7 @@ public class CamelMongoRoute extends RouteBuilder {
               .process(new Processor() {
                   @Override
                   public void process(Exchange exchange) throws Exception {
-                      exchange.getIn().setBody("Check your mail. You'lll get a confirmation mail soon.");
+                      exchange.getIn().setBody("Check your mail. You'll get a confirmation mail soon.");
                   }
               });
 

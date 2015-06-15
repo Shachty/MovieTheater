@@ -1,21 +1,37 @@
 <!doctype html> <html> 
-<head> <meta charset="utf-8"> <title>Sell Ticket</title> </head> 
-<body> <form method="POST" action="http://localhost:8081/restlet/sell-ticket">
-<input type="text" id="moviename" name="moviename" maxlength="40" value="movie2">
+<head> <meta charset="utf-8"> <title>Sell Ticket</title> 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head> 
+<body>
+<div class="container">
+ <form method="POST" action="http://localhost:8081/restlet/sell-ticket"> 
+ <div>
+ <label for="namemovie">name of movie</label>
+ <input type="text" id="moviename" name="moviename" maxlength="40" value="Titanic">
+</div>
+ <div>
  <label for="theaterroom">theaterroom</label>
- <input type="text" id="theaterroom" name="theaterroom" maxlength="40" value="3">
+ <input type="text" id="theaterroom" name="theaterroom" maxlength="40" value="1">
+</div>
+ <div>
  <label for="time">time</label>
  <input type="text" id="time" name="time" maxlength="40" value="19:30">
+</div>
+ <div>
  <label for="numberofpersons">numberofpersons</label>
  <input type="text" id="numberofpersons" name="numberofpersons" maxlength="40" value="2">
+</div>
+ <div>
  <label for="first name">first name</label> 
 <input type="text" id="first name" name="first name" maxlength="30" value="bron">
+</div>
+ <div>
  <label for="last name">last name</label> 
  <input type="text" id="last name" name="last name" maxlength="40" value="son">
-
+</div>
  <button type="submit">sell ticket</button>
-
  </form> 
+</div>
  
  </body> 
  </html>
